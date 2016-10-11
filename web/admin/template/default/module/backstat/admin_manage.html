@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset=utf-8" />
+        <title></title>
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"/>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"/>
+        <style type="text/css">
+
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%; float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+        </style>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+        <script type="text/javascript">
+            function checkAll (chkbox) {
+                $(chkbox).attr("checked",'true')
+            }
+
+            function checkNone(chkbox){
+                $(chkbox).removeAttr("checked");
+            }
+
+            function checkReverse(chkbox){
+                $(chkbox).each(function(){
+                if($(this).attr("checked"))
+                    $(this).removeAttr("checked");
+                else
+                    $(this).attr("checked",'true');
+                })
+            }
+        </script>
+    </head>
+    <body>
+        <div id="all">
+            <div id="position">后台管理：更新管理员信息</div>
+            <div id="main">
+                <form  name=checkboxform action="" method="post">
+                    <input type='hidden' name='action' value='<{$action}>'/>
+                    <input type="hidden" name="uid" value="<{$admin.uid}>"/>
+                    <table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#FFFFFF">
+                        <tr bgcolor="#D2E9FF">
+                            <td width="15%">用户名：</td>
+                            <td width="85%">      
+                            <input type="text" name="username" id="username" value="<{$admin.username}>"
+                                  <{if $action == 'update'}>  readonly="readonly" <{/if}>
+                                  />
+
+                            </td>
+                        </tr>
+                        <tr bgcolor="#D2E9FF">
+                            <td width="15%">密码：</td>
+                            <td width="85%"><input type="password" id="passwd"  name="passwd" value=""/></td>
+                        </tr>
+                        <tr bgcolor="#D2E9FF">
+                            <td width="15%">群组：</td>
+                            <td width="85%">
+                                <select  name="gid">
+                                    <{foreach key=key item=item from=$group}>
+                                    <option value="<{$item.gid}>" <{ if $item.gid == $admin.gid }>selected <{/if}> ><{$item.name}></option>
+                                    <{/foreach}>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#D2E9FF">
+                            <td width="15%">描述：</td>
+                            <td width="85%"><input type="text" size="90"  name="admin_desc" value="<{$admin.admin_desc}>"/></td>
+                        </tr>
+                        <tr bgcolor="#D2E9FF">
+                            <td colspan='1' width="15%">设置功能操作：</td>
+                            <td colspan='1' width="85%">
+                                <input type=button value="全部选中" onclick="checkAll('.chkbox')"/>
+                                <input type=button value="全部不选" onClick="checkNone('.chkbox')"/>
+                                <input type=button value="反选" onClick="checkReverse('.chkbox')"/>
+                            </td>
+                        </tr>
+
+                        <tr bgcolor="#D2E9FF">
+                            <td colspan='1' width="15%">运营商权限：</td>
+                            <td width="85%">
+                                <table>
+                                    <tr>
+                                        <{foreach key=key item=item from=$agent_name}>
+                                        <td style="white-space:nowrap"><input type="checkbox"  class="chkbox" name="agent[]" value="<{$item.id}>" <{if $item.check_flag == 1 }>checked<{/if}> /><{$item.desc}></td>
+                                        <{/foreach}>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div align="center">
+                                    <input type="submit" name="submit" value="保存"/>
+                                    <input type="reset" name="reset" value="重置" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </body>
+    <script>
+        var action = "<{$action}>";
+        $(document).ready(function(){
+            if(action=='new'){
+                $("#username").val('');
+                $("#passwd").val('');
+            }
+        });
+        </script>
+</html>
+

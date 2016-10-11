@@ -1,0 +1,102 @@
+/***********  main.html页面第一个tag的样式  ********/
+body { 
+    font-family: "宋体" 
+}
+h3{ 
+    font-size:15pt;
+    color:#2e6fac;
+    margin-top:3px;
+    margin-bottom:3px;
+}
+ol li { margin: 8px }
+#con { 
+    font-size: 13pt;
+    margin: 0px auto; 
+    width: 100%;
+    height:100%;
+}
+#tags { 
+    margin: 10px 10px 0px 0px; 
+    width: 414px; 
+    padding: 1px 1px 1px 1px; 
+    height: 30px;
+    background-color:#999;/* tag栏背景色*/
+}
+#tags li { float: left; margin-right: 1px; list-style-type: none; height: 30px; }
+#tags li a { padding-right: 10px; padding-left: 10px; float: left; padding-bottom: 0px; color: white; line-height: 23px; padding-top: 4px; height: 23px; TEXT-DECORATION: none }/*tag 栏字体样式*/
+#tags li.emptyTag { BACKGROUND: none transparent scroll repeat 0% 0%; width: 4px }
+#tags li.selectTag { BACKGROUND-POSITION: left top; margin-bottom: -2px; POSITION: relative; height: 30px;background-color:#2e6fac; }
+#tags li.selectTag a { BACKGROUND-POSITION: right top; color: #000; line-height: 25px; height: 25px }
+#tagContent { border-right: white 0px solid; padding-right: 0px; border-top: white 0px solid; padding-left: 0px; padding-bottom: 0px; border-left: white 0px solid; padding-top: 0px; border-bottom: white 2px solid; background-color: #fff }/*内容框边框设置*/
+.tagContent { padding-right: 0px; display: none; padding-bottom: 5px; width:100%; color: #474747; padding-top: 0px; height: 600px; background-color:white;}/*内容框属性  背景色 #aecbd4 */
+#tagContent div.selectTag { display: block }
+
+
+
+
+/***********  main.html页面第二个tag的样式  ********/
+#con2 { font-size: 13pt;margin: 0px auto; width: 50%;height:100%;float:left;}
+
+/***********  main.html页面第三个tag的样式  ********/
+#con3 { font-size: 13pt;margin: 0px auto;width: 50%;height:100%;float:right;}
+
+
+
+button{
+   background-color:#2e6fac;
+   color:white;
+   width:90px;
+   height:35px; 
+   font-size:11pt;
+}
+
+
+.trEven {
+	background-color:#edeef0;
+}
+.trOdd {
+	background-color:#d7e4f5;
+}
+.even{
+    text-align:left;
+}
+#main_div{
+    width:100%;
+    height:100%; 
+    /*border-top: #aecbd4 2px solid;
+    border-left: #aecbd4 2px solid;
+    border-right: #aecbd4 2px solid;
+    border-bottom: #aecbd4 2px solid;*/
+}
+#main_table{
+    width:100%;
+}
+td{
+    text-align:center;
+    
+}
+span{
+    color:#2e6fac;
+    
+}
+.explain{
+    border-top: #aecbd4 2px solid;
+    border-left: #aecbd4 2px solid;
+    border-right: #aecbd4 2px solid;
+    border-bottom: #aecbd4 2px solid;
+}
+/*=====首页表格样式====*/
+.td1{
+    background-color:#2e6fac;
+    font-size:5pt;
+    text-align:left;
+    color:white;
+    padding-left:2px;
+}
+/*=====数据表格同意样式====*/
+.td_all{
+    background-color:#2e6fac;
+    font-size:12pt;
+    text-align:left;
+    color:white;
+}

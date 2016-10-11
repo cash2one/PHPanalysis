@@ -1,0 +1,152 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/FusionCharts.js"></script>
+
+
+
+        <script>
+
+
+            function setdate(flag){
+                var start = end = new Date();
+                switch(flag){
+                    case 1:
+                        var t = new  Date(start.getTime()-2*60*60*24*1000);
+                        var month1 = t.getMonth()*1+1,date1=t.getDate();
+                        var dateStr = t.getFullYear()+'-'+ add_zero(month1) +'-'+ add_zero(date1);
+                        $("#dStartDate").val(dateStr);
+                        var month2 = end.getMonth()*1+1,date2=end.getDate();
+                        var dateStr = end.getFullYear()+'-'+ add_zero(month2)+'-'+add_zero(date2);
+                        $("#dEndDate").val(dateStr);
+                        search();
+                        break;
+                    case 2:
+                        var weekday = start.getDay()||7;
+                        var t = new  Date(start.getTime()-(weekday-1+14)*60*60*24*1000);
+                        var month1 = t.getMonth()*1+1,date1 = t.getDate();
+                        var dateStr = t.getFullYear()+'-'+ add_zero(month1) +'-'+ add_zero(date1);
+                        $("#dStartDate").val(dateStr);
+                        var weekday = end.getDay()||7;
+                        var t = new  Date(end.getTime()+(7-weekday)*60*60*24*1000);
+                        var month2 = t.getMonth()*1+1,date2=t.getDate();                 
+                        var dateStr = t.getFullYear()+'-'+add_zero(month2)+'-'+add_zero(date2);
+
+                        $("#dEndDate").val(dateStr);
+                        search();
+                        break;
+                    case 3:
+                        var month1 = start.getMonth()*1+1-2, month2 = start.getMonth()*1+13-2;                       
+                        if(start.getMonth()>1)
+                            var dateStr = start.getFullYear()+'-'+ add_zero(month1) +'-01';
+                        else
+                            var dateStr = (start.getFullYear()-1)+'-'+ add_zero(month2)+'-01';
+                        $("#dStartDate").val(dateStr);
+                        search();
+                        break;
+                }
+            }
+
+            function add_zero(num){
+                if(num<10)
+                    return '0'+num;
+                else
+                    return num;
+            }
+
+
+
+        </script>
+        <!--  添加回到顶部   end        -->
+        <style type="text/css">
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%;float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+            .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+
+            BODY { position: relative;}
+
+
+
+        </style>
+        <title><{$_lang.new.wish_pool}> </title>
+    </head>
+    <body>
+        <div id="all">
+            <div id="position"><{$_lang.new.wish_pool}> </div>
+            <div id="main">
+                <form name="form1" method="get">
+                    <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+                        <tr><td  bgcolor="#D7Eff5">
+                                &nbsp;<{$_lang.conmon.start_day_time}>：
+                                <input value="<{$time_start}>" class="Wdate" id="dStartDate" readonly="readonly" name="dStartDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                <{$_lang.conmon.end_day_time}>：
+                                <input value="<{$time_end}>" class="Wdate" id="dEndDate" readonly="readonly" name="dEndDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                <input value="<{$_lang.conmon.view}>" type="submit" onclick="search()" name="submit" />
+                            </td>
+                        </tr>
+
+                    </table>
+                </form>
+                <table width="100%"  border="0" cellpadding="4" cellspacing="1">
+                    <tr class='table_list_head' align='center'>
+                        <td colspan="4">许愿池参与统计：<{$time_start}>至<{$time_end}></td>
+                    </tr>
+                    <tr class='table_list_head' align='center'>
+                        <td>许愿池类型</td><td>次数</td><td>人数</td><td>活动元宝消耗量</td>
+                    </tr>
+                  <{foreach key=key item=item from=$total}>
+                   <{if $key % 2 == 0}>
+                                            <tr class='trEven' align='center'>
+                                                <{else}>
+                                                <tr class='trOdd' align='center'>
+                                                    <{/if}>
+                      <td><{$item.desc}></td><td><{$item.operate_times}></td><td><{$item.role_times}></td><td><{$item.gold}></td>
+                  </tr>
+                  <{/foreach}>
+                </table>
+                <br></br>
+                <p align="left" ><font size="4"><b>许愿池道具统计</b></font></p>
+                <table style="background:#bbdde5" border="2" cellpadding="0" cellspacing="0"  >
+                    <tr><{$output}></tr>
+                </table>
+
+            </div>
+        </div>
+
+
+    </body>
+    <script type="text/javascript">
+
+        function search(){
+            var dStartTime = $("#dStartDate").val();
+            var dEndTime = $("#dEndDate").val();
+            if(dStartTime =="" || dEndTime =="" || dEndTime<dStartTime){
+                alert("<{$_lang.new.endtime_cannot_smaller_starttime}>");
+                return false;
+            }
+
+            $('#btnsubmit').click()
+        }
+
+
+            
+ 
+
+
+
+
+
+
+
+
+    </script>
+
+</html> 

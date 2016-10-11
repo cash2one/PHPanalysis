@@ -1,0 +1,54 @@
+
+Warning: include(/data/mge_test/client/web/config/config.php): failed to open stream: No such file or directory in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 7
+
+Warning: include(): Failed opening '/data/mge_test/client/web/config/config.php' for inclusion (include_path='.:/usr/local/php/lib/php') in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 7
+
+Warning: include(/data/mge_test/client/web/config/config.center.php): failed to open stream: No such file or directory in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 8
+
+Warning: include(): Failed opening '/data/mge_test/client/web/config/config.center.php' for inclusion (include_path='.:/usr/local/php/lib/php') in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 8
+
+Warning: include(/data/mge_test/client/web/include/global.php): failed to open stream: No such file or directory in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 9
+
+Warning: include(): Failed opening '/data/mge_test/client/web/include/global.php' for inclusion (include_path='.:/usr/local/php/lib/php') in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 9
+2015-09-14 16:30:20 start to run pay log script
+
+Warning: Invalid argument supplied for foreach() in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 19
+
+Warning: fopen(/data/mge_test/client/web/config/config.center.php): failed to open stream: No such file or directory in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 144
+
+Warning: fwrite(): supplied argument is not a valid stream resource in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 145
+
+Warning: fclose(): supplied argument is not a valid stream resource in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 146
+2015-09-14 16:30:20 finish running pay log script
+
+Warning: include(/data/mge_test/client/web/config/config.php): failed to open stream: No such file or directory in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 7
+
+Warning: include(): Failed opening '/data/mge_test/client/web/config/config.php' for inclusion (include_path='.:/usr/local/php/lib/php') in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 7
+
+Warning: include(/data/mge_test/client/web/config/config.center.php): failed to open stream: No such file or directory in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 8
+
+Warning: include(): Failed opening '/data/mge_test/client/web/config/config.center.php' for inclusion (include_path='.:/usr/local/php/lib/php') in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 8
+
+Warning: include(/data/mge_test/client/web/include/global.php): failed to open stream: No such file or directory in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 9
+
+Warning: include(): Failed opening '/data/mge_test/client/web/include/global.php' for inclusion (include_path='.:/usr/local/php/lib/php') in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 9
+2015-09-14 16:44:35 start to run pay log script
+
+Warning: Invalid argument supplied for foreach() in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 19
+
+Warning: fopen(/data/mge_test/client/web/config/config.center.php): failed to open stream: No such file or directory in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 144
+
+Warning: fwrite(): supplied argument is not a valid stream resource in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 145
+
+Warning: fclose(): supplied argument is not a valid stream resource in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 146
+2015-09-14 16:44:35 finish running pay log script
+2015-09-14 16:47:34 start to run pay log script
+
+Warning: fopen(/data/mge_test/client/web/config/config.center.php): failed to open stream: No such file or directory in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 144
+
+Warning: fwrite(): supplied argument is not a valid stream resource in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 145
+
+Warning: fclose(): supplied argument is not a valid stream resource in /mnt/hgfs/sg_php/web/admin/module/center/script_paylog.php on line 146
+2015-09-14 16:47:34 finish running pay log script
+2015-09-14 16:50:58 start to run pay log script
+2015-09-14 16:50:58 finish running pay log script

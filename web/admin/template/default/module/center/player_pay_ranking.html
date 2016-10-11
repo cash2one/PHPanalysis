@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><{$_lang.left.c1_charge_day_t}></title>
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+        <style type="text/css">
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%;float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+            .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+            .tr_odd {background-color:#EDF2F7; text-align:center;  height:25; font-size:12px;}
+            .tr_even {background-color:#E0F0F0; text-align:center;  height:25; font-size:12px;}
+        </style>
+        <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.json-2.3.js"></script>
+        <script type="text/javascript">
+
+            
+
+        </script>
+
+
+    </head>
+
+
+    <body onload="Search();">
+        <div id="all">
+
+            <div id="position2"><{$_lang.left.online_register}>：<{$_lang.left.c1_charge_day_t}></div>
+            <form name="form" method="POST">
+                <input type="hidden" name="whichpage" value="1">
+                <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+
+                    <tr><td>&nbsp;<{$_lang.left.select_agents}>：</td></tr>
+                    <tr>
+                        <td >
+                            <input type="radio" name="radio_agent" id="radio_agent" onclick="GetPlatServer(this.value)" value="0" <{if $agent_id==0}> checked <{/if}>  />所有
+                                   <{foreach key=key item=item from=$allAgentName}>
+                                   <input type="radio" name="radio_agent" id="radio_agent" onclick="GetPlatServer(this.value)" value="<{$key}>"  <{if $agent_id==$key}> checked <{/if}> /><{$item}>
+                                   <{/foreach}>
+                                   </td>
+                                    </tr>
+                                    <tr id="sServerName_TD1" style="display:none"><td >&nbsp;请选择服务器：</td></tr>
+                                    <tr id="sServerName_TD2" style="display:none"><td id="sServer"></td></tr>
+                                    </table>
+
+                                    &nbsp;累计充值：<input type="text" id="totalCost" height="45" size="8"  name="cost_money"  value="<{$cost_money}>">人民币&nbsp;
+                                        &nbsp;账号:<input type="text" id="accountName" size="16" name="account_name" value="<{$account_name}>">&nbsp;
+                                            <input value="<{$_lang.conmon.view}>"  type="submit" id="btnsubmit">
+                                                <font color="#FF0000"><{$_lang.new.data_interval}>：1 day</font>
+
+                                                </form>
+                                                <br>
+                                                    <div><center>
+                                                            <{$page}>
+                                                        </center>
+                                                    </div>
+                                                    <table cellspacing="1" cellpadding="4" border="0"  bgcolor="#D7E4F5" width="100%" valign="top">
+                                                        <{$tbody}>
+                                                    </table>
+
+                                                    <div ><center>
+                                                            <{$page}>
+                                                        </center>
+                                                    </div>
+
+
+
+
+                                                    <center>
+                                                        <div
+                                                            style="
+                                                            display:none;
+                                                            background-color:#ffffdd;
+                                                            border-style:outset;
+                                                            border-width:2;
+                                                            position:absolute;
+                                                            top:50%;
+                                                            left:40%;
+                                                            border:1px solid red;
+                                                            z-index:999;
+                                                            cursor:wait" id="showmes" valign="middle">
+                                                            <table border=0 height="59" width="200">
+                                                                <tr>
+                                                                    <td align='middle' width="115" background='/web/admin/static/images/dtzl2.png'>
+                                                                    </td>
+                                                                    <td valign='middle'>
+                                                                        <{$_lang.new.statistics_loading}>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </center>
+
+                                                    </div>
+                                                    </body>
+
+                                                    <script type="text/javascript">
+                                                        var server_id ="<{$server_id}>",agent_id = "<{$agent_id}>",ttype = '<{$ttype}>',money_type = '<{$money_type}>';
+
+
+
+
+                                                        $(function(){
+                                                            //初始化搜索条件
+                                                            if(agent_id > 0){
+                                                                $("#sServerName_TD1").css("display", "block");
+                                                                $("#sServerName_TD2").css("display", "block");
+                                                                getServerRadios(agent_id,server_id);
+                                                            }
+
+                                                            $('input[name=ttype]').get(ttype-1).checked = true;
+                                                            $('#sel_money').val(money_type)
+                                                        })
+
+                                                        function search(){
+                                                          
+
+                                                            $('#btnsubmit').click()
+                                                        }
+
+                                                        function GetPlatServer(value) {
+                                                            if (value == "0") {// hide servers if select all
+                                                                $("#sServerName_TD1").css("display", "none");
+                                                                $("#sServerName_TD2").css("display", "none");
+                                                            } else {
+                                                                $("#sServerName_TD1").css("display", "block");
+                                                                $("#sServerName_TD2").css("display", "block");
+                                                            }
+
+                                                            getServerRadios(agent_id,0);
+                                                            search();
+                                                        }
+
+                                                        function getServerRadios(agent_id,server_id){
+                                                            var servers=<{$servers}>;
+                                                            var server = servers[agent_id];
+                                                            var radios = "<input name='radio_server'  value='0' onclick='search();' "
+                                                                +(server_id == 0? "checked='checked'":' ')
+                                                                +"type='radio'/>所有 ";
+                                                            for(var i in server){
+                                                                radios += "<input name='radio_server'  value='" + i + "' onclick='search();' "
+                                                                    +(server_id == i? "checked='checked'":' ')
+                                                                    +"type='radio'/>" + server[i];
+                                                            }
+                                                            $("#sServer").html(radios);
+                                                        }
+
+
+
+
+
+                                                    </script>
+                                                    </html>

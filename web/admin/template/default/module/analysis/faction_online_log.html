@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.new.faction_online}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+
+<body>
+	<div id="all">
+		<div id="position"><{$_lang.left.data_analysis}>：<{$_lang.new.faction_online}></div>
+    	<div><{$errorMsg}></div>
+                	<table cellspacing="1" cellpadding="3" border="0" class='table_list'>
+                        <tr>	
+                            <td colspan=9><{$_lang.conmon.sys_time_now}>：<{$smarty.now|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                        </tr>
+                    </table>
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF"> 
+                            <td align="center" colspan="3" background="/web/admin/static//images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b><{$_lang.left.daily_dtatistics_view}></b></font>
+                            </td>
+                        </tr>
+						<tr bgcolor="#E5F9FF">
+						<td>
+						<form name="myform" method="post" >
+                <{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>:<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$dateStart}>'/>
+                <{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$dateEnd}>'/>
+                &nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+                </form>
+				</td>
+				</tr>
+					</table>
+					<table width="100%"  border="0" cellpadding="4" cellspacing="1">
+                        <tr class='table_list_head' align='center'> 
+                          <td><{$_lang.new.time}></td>					
+                          <td><{$_lang.new.t_role_num}></td>
+						  <td><{$_lang.new.s_role_num}></td>
+                          <td><{$_lang.new.t_online}></td>
+						  <td><{$_lang.new.s_online}></td>
+                          <td><{$_lang.new.t_rate}></td>
+                          <td><{$_lang.new.s_rate}></td>
+                        </tr>
+                        <{foreach from=$result item=online key=key}>
+						<!-- <{if $online.day % 2 == 0}>
+						<tr class='trEven' align='center'>
+						<{else}>
+						<tr class='trOdd' align='center'>
+						<{/if}> -->
+						<tr class='trOdd' align='center'>
+                          <td><{$online.mtime|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                          <td><{$online.t_role_num}></td>
+                          <td><{$online.s_role_num}></td>
+						  <td><{$online.tonline}></td>
+						  <td><{$online.sonline}></td>
+                          <td><{$online.tonline}>/(<{$online.tonline}>+<{$online.sonline}>) = <{$online.t_online_rate}>%</td>
+                          <td><{$online.sonline}>/(<{$online.tonline}>+<{$online.sonline}>) = <{$online.s_online_rate}>%</td>
+
+                        </tr>
+                        <{foreachelse}>
+                        <{/foreach}>
+                        
+                     </table>
+                     <div id='1'><center>
+                        <{$page}>
+                    </center>
+                </div>
+
+	</div>
+</body>
+</html>

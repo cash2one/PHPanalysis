@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.admin_manage_record}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+</script>
+
+<body>
+	<div id="all">
+	<div id="position"><{$_lang.left.admin_manage}>：<{$_lang.left.admin_manage_record}></div>
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#FFFFFF">
+                        <tr>
+                            <td colspan="8">
+                                <form  name=form action="<{$URL_SELF}>" method="post">
+                                    <input type='hidden' name='dopost' value='submit'>
+                                    <{$_lang.left.admin}>：<input type="text" name="admin_name" value="<{$admin_name}>" />&nbsp;&nbsp;
+                                    <{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$search_keyword1}>'/>
+                                    <{$_lang.conmon.start_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$search_keyword2}>'/>&nbsp;&nbsp;
+                                    <input type="checkbox" name="gulvxt" value="9001"  checked="checked"  /><{$_lang.left.filter_login_action}>
+                                    <select name=op_id>
+				              <{foreach key=key item=item from=$op_name}>
+					          <{if $key == $op_id}>
+							  <option value="<{$key}>" selected="selected"><{$item}></option>
+						      <{else}>
+							  <option value="<{$key}>"><{$item}></option>
+						      <{/if}>
+				              <{/foreach}>
+			            </select>
+		                    <input type="submit" name="submit" value="<{$_lang.conmon.search}>" />
+		                </form>
+                            </td>
+			</tr>
+			<tr bgcolor="#D2E9FF">
+                            <td colspan="8"><{$_lang.left.time_statistics}>：<{$search_keyword1}>&nbsp;00:00:00&nbsp;~&nbsp;<{$search_keyword2}>&nbsp;23：59：59</td>
+			</tr>
+                    <{section name=loop loop=$keywordlist}>
+	                <{if $smarty.section.loop.rownum % 20 == 1}>
+                        <tr bgcolor="#D2E9FF" align="center">
+                            <td width="5%"><{$_lang.new.time}></td>
+                            <td width="5%"><{$_lang.left.admin}></td>
+                            <td width="5%">IP</td>
+                            <td width="10%"><{$_lang.conmon.operating}></td>
+                            <td width="15%"><{$_lang.conmon.user}></td>
+                            <td width="55%"><{$_lang.left.detail}></td>
+                            <td width="5%"><{$_lang.conmon.num}></td>
+                        </tr>
+                        <{/if}>
+	                <{if $smarty.section.loop.rownum % 2 == 0}>
+	                <tr class='trEven' bgcolor="#E0EEEE">
+	                <{else}>
+	                <tr class='trOdd'  bgcolor="#E0EEEE">
+	                <{/if}>
+                            <td>
+			        <{$keywordlist[loop].mtime|date_format:"%Y-%m-%d %H:%M:%S"}>
+                            </td>
+                            <td>
+                                <{$keywordlist[loop].admin_name}>
+                            </td>
+                           <td>
+                             <{$keywordlist[loop].admin_ip}>
+                           </td>
+                           <td>
+                                 <{$keywordlist[loop].desc}>
+                           </td>
+                           <td>
+                                 <{$keywordlist[loop].user_name}>
+                           </td>
+                           <td>
+                                 <{if $keywordlist[loop].mdetail_str!=''}><{$keywordlist[loop].mdetail_str}><{$keywordlist[loop].mdetail}><{else}><{$keywordlist[loop].mdetail}><{/if}>
+                           </td>
+                           <td>
+                                 <{$keywordlist[loop].number}>
+                           </td>
+	                    </tr>
+                    <{/section}>
+                  </table>
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

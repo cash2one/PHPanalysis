@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.online_list}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+
+<body>
+	<div id="all">
+		<div id="position"><{$_lang.left.online_register}>：<{$_lang.left.online_list}></div>
+    	<div><{$errorMsg}></div>
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                	<table>
+                    	<tr>
+						<form method="get" action="">
+                        	<{foreach from=$pageHTML key=page_name item=page_id}>
+                        	<td><a href="?pid=<{$page_id}>&role_id=<{$role_id}>&nickname=<{$nickname}>&acname=<{$acname}>"><{$page_name}></a></td>
+                            <{/foreach}>
+							<td><{if $page_count > 0}><{$_lang.conmon.all_page}>(<{$page_count}>)<{/if}></td>
+              <td>
+                &nbsp;<{$_lang.conmon.user_id}>:<input type="text" id="role_id" name="role_id" size="10" value="<{$role_id}>" />
+                &nbsp;<{$_lang.conmon.role_name}>：<input type='text' id="nickname" name='nickname' size='10' value='<{$nickname}>'/> 
+                &nbsp;<{$_lang.conmon.user_account}>：<input type='text' id="acname" name='acname' size='10' value='<{$acname}>'/>
+              </td>
+							<td><input name="pid" type="text" class="text" size="3" maxlength="6">&nbsp;
+								<input type="submit" class="button" name="Submit" value="GO">
+							</td>
+						</form>
+          </tr>
+          
+
+          
+              
+                    </table>
+                	<table width="100%" cellspacing="1" cellpadding="3" border="0" class='table_list'>
+                        <tr>
+                            <td colspan=9><{$_lang.conmon.sys_time_now}>：<{$smarty.now|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                        </tr>
+                    </table>
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="5" background="/web/admin/static/images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b><{$_lang.left.online_user_list_15second_per}></b></font>
+                            </td>
+                        </tr>
+                        <tr class='table_list_head'>
+                          <td width="15%"><{$_lang.conmon.user_id}></td>
+                          <td width="25%"><{$_lang.conmon.role_name}></td>
+                          <td width="25%"><{$_lang.conmon.user_account}></td>
+                          <td width="15%"><{$_lang.conmon.current_online_time}>(<{$_lang.conmon.minute}>)</td>
+                          <td width="20%"><{$_lang.conmon.login_ip}></td>
+                        </tr>
+                        <{foreach from=$onlines item=online key=key}>
+						<{if $key % 2 == 0}>
+						<tr class='trEven'>
+						<{else}>
+						<tr class='trOdd'>
+						<{/if}>
+                          <td width="15%"><{$online.role_id}></td>
+                          <td width="25%"><{$online.role_name}></td>
+                          <td width="25%"><{$online.account_name}></td>
+                          <td width="15%"><{math equation = "(now - lasttime)/60" now = $smarty.now lasttime = $online.last_login_time format="%.d"}></td>
+                          <td width="20%"><{$online.last_login_ip}></td>
+                        </tr>
+                        <{foreachelse}>
+                       	<tr bgcolor="#FFFFFF">
+                          <td colspan="5"><font color="#FF0000"><{$_lang.left.no_record}></font></td>
+                        </tr>
+                        <{/foreach}>
+
+                     </table>
+
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

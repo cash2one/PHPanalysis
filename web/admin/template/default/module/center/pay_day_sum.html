@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.c1_charge_day_t}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+<style type="text/css">
+    #all {text-align:left;margin-left:4px; line-height:1;} 
+	#nodes {width:100%;float:left;border:1px #ccc solid;} 
+	#result {width: 100%; height:100%; clear:both;border:1px #ccc solid;} 
+	.table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+</style>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/jquery.json-2.3.js"></script>
+<script type="text/javascript">
+    function GetPlatServer(value) { 
+        if (value == "allPlat") {// hide servers if select all
+            $("#sServerName_TD1").css("display", "none");
+            $("#sServerName_TD2").css("display", "none");
+        } else {
+            $("#sServerName_TD1").css("display", "block");
+            $("#sServerName_TD2").css("display", "block");
+        }
+		$.post('../../agent_server.php',{sPlatName:value,iFlag:1},
+			function (data){
+				$("#sServer").html(data); 
+				Search();
+			}
+		);
+    }
+
+	function Search(){
+		var sPlatName = GetRadioCheck("sPlatName");
+		if(sPlatName == "allPlat"){
+			var sServerName = "allServer";
+		}else{
+			var sServerName = GetRadioCheck("sServerName");
+		}
+		var dStartTime = $("#dStartTime").val();
+		var dEndTime = $("#dEndTime").val();
+		if(dStartTime !="" && dEndTime !="" && dEndTime<dStartTime){
+			alert("<{$_lang.new.endtime_cannot_smaller_starttime}>");
+			return false;
+		}
+		//统计昨日此时数据
+		$("#showmes").css("display", "block");
+		$.getJSON('../center/pay_day_sum_data.php',{sPlatName:sPlatName,sServerName:sServerName,dStartTime:dStartTime,dEndTime:dEndTime},function (data){
+					$("#showmes").css("display", "none");
+
+					$("#iLastDayInfo_TR").css("display","block");
+                                        $("#table").html(data);
+                                        
+					$.each(data,function(index,dataInfo){
+						if(index == "sYestodayInfo"){    //昨天和上周信息
+							$("#iLastDayInfo").html(dataInfo);
+						}else if(index == "sSearchInfo"){   //左边栏统计信息
+							$("#iSearchTD").html(dataInfo);
+						}else if(index == "iSearchToday"){	//右边栏各平台信息和各服信息
+							$("#iSearchTodayTD").html(dataInfo);
+						}
+						
+					});	
+				}
+		);
+	}
+
+	//取出radiio被选择中的控件值。
+	function GetRadioCheck(sObjName) {
+		var sPlatName = "";
+		var aPlatName = document.getElementsByName(sObjName);
+		for (i = 0; i < aPlatName.length; i++)　　 {
+			if (aPlatName[i].checked) {
+				sPlatName = aPlatName[i].value;
+				break;
+			}　　
+		}
+		return sPlatName;
+	}
+
+	//查看某天的各代理充值明细(当前页面右边)
+	function GetDatePay(sDate) {
+		var sPlatName = GetRadioCheck("sPlatName");
+		if (sPlatName == "allPlat") 
+			var sServerName = "allServer";
+		else 
+			var sServerName = GetRadioCheck("sServerName");
+
+		//统计昨日此时数据
+		WaitBar.show("<{$_lang.left.statistics_loading}>");
+		$.post('../pay/stat_everday_pay.php', {
+			sPlatName: sPlatName,
+			sServerName: sServerName,
+			dStartTime: sDate,
+			dEndTime: sDate,
+			dGetDate: sDate,
+			iFlag: 2
+		},
+		function(data) {
+			WaitBar.hide();
+			var sJson = jQuery.JSON.decode(data);
+			$("#iLastDayInfo").html(sJson.sYestodayInfo);
+			$("#iSearchTodayTD").html(sJson.iSearchToday);
+		});
+	}
+
+	//查看当月每日充值情况(1-30天)
+	function GetDatePayDetail(sFromDate, sEndDate) {
+		WindowOpen("../pay/stat_everyday_detail.php?iSearchFlag=1&iSearchFromPay=1&dStartTime=" + sFromDate + "&dEndTime=" + sEndDate);
+	}
+</script>
+
+
+</head>
+
+
+<body onload="Search();">
+<div id="all">
+
+<div id="position2"><{$_lang.left.online_register}>：<{$_lang.left.c1_charge_day_t}></div>
+
+<table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+<form name="form" method="GET"></form>
+<tr><td>&nbsp;<{$_lang.left.select_agents}>：</td></tr>
+<tr>
+	<td>
+		<input type="radio" name="sPlatName" id="sPlatName" value="allPlat" checked onClick="GetPlatServer(this.value);"><{$_lang.conmon.any}>
+		<{foreach key=key item=item from=$allAgentName}>
+		<input type="radio" name="sPlatName" id="sPlatName" value="<{$key}>" onClick="GetPlatServer(this.value);"><{$item}>
+		<{/foreach}>
+	</td>
+</tr>
+<tr id="sServerName_TD1" style="display:none"><td>&nbsp;<{$_lang.top.server_select}>：</td></tr>
+<tr id="sServerName_TD2" style="display:none"><td id="sServer"></td></tr>
+</table>
+
+  &nbsp;<{$_lang.conmon.start_day_time}>：
+  <input value="<{$dStartTime}>" class="Wdate" id="dStartTime" readonly="readonly" name="dStartTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14">&nbsp;
+  <{$_lang.conmon.end_day_time}>：
+  <input value="<{$dEndTime}>" class="Wdate" id="dEndTime" readonly="readonly" name="dEndTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14">&nbsp;
+  <input value="<{$_lang.conmon.view}>" onclick="Search();" type="button">
+       <font color="#FF0000"><{$_lang.new.data_interval}>：10 min</font>
+  
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%"> 
+  <tr style="display: block;" id="iLastDayInfo_TR" align="left" bgcolor="#D7E4F5">
+    <td colspan="7" id="iLastDayInfo" height="25" width="10%">
+	</td>
+  </tr>  
+  <tr>
+    <td colspan="7" width="100%">
+	<table align="center" bgcolor="#bbdde5" border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tbody>
+		<tr bgcolor="#ffffff" valign="top">
+		
+		<!-- 左边汇总表 -->
+		<td id="iSearchTD" valign="top" width="55%">
+		</td>
+		<!-- 中间分隔栏 -->
+		<td></td>
+		<td bgcolor="#bbdda5" width="10"></td>
+		<td></td>
+		
+		<!-- 右边今天汇总表 -->
+		<td id="iSearchTodayTD" valign="top" width="44%">
+		</td>
+
+		</tr>
+		</tbody>
+	</table>
+	</td>
+  </tr>
+</table>
+
+
+<table align="center" border="0" cellpadding="2" cellspacing="1" width="98%">
+  <tbody>
+	<tr>
+		<td align="right" height="25">&nbsp;</td>
+	</tr>
+  </tbody>
+</table>
+
+
+<center>
+<div 
+style="
+display:none;
+background-color:#ffffdd;
+border-style:outset;
+border-width:2;
+position:absolute; 
+top:50%; 
+left:40%; 
+border:1px solid red; 
+z-index:999;
+cursor:wait" id="showmes" valign="middle">
+    <table border=0 height="59" width="200">
+        <tr>
+            <td align='middle' width="115" background='/web/admin/static/images/dtzl2.png'>
+            </td>
+            <td valign='middle'>
+                <{$_lang.new.statistics_loading}>
+            </td>
+        </tr>
+    </table>
+</div>
+</center> 
+
+</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+<title>
+	<{$_lang.left.activity_data_statistical}>
+</title>
+</head>
+
+<body>
+
+<div id="position"><{$_lang.left.data_analysis}>：<{$_lang.left.activity_data_statistical}></div>
+
+<form action="?action=search" id="frm" method="POST" >
+	<table cellspacing="1" cellpadding="5" class="SumDataGrid" width="800">
+		<tr>
+			<td><{$_lang.left.activity_type}>：&nbsp;&nbsp;<select name="act_type" id="act_type"><{html_options options=$act_type_option selected=$act_type}></select></td>
+			<td><{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$search_keyword1}>'/></td>
+			<td><{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$search_keyword2}>'/></td>
+			<td width="15%"><input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/></td>
+		</tr>
+	</table>
+	<br>
+</form>
+<!-- 竞技场数据统计 -->
+<{if $match_data}>
+	<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.left.arena_data_statistical}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$match_data}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.conmon.date_time}></td>
+				<td><{$_lang.left.applicants_num}></td>
+				<td><{$_lang.left.actual_num_participants}></td>
+				<td><{$_lang.new.remarks}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$match_data[loop].time}></td>
+			<td><{$match_data[loop].sign_up_cnt}></td>
+			<td><{$match_data[loop].attend_cnt}></td>
+			<td><{$match_data[loop].other}></td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+<{/if}>
+
+</body>
+</html>

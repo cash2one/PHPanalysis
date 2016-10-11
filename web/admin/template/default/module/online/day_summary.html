@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>每日查询统计</title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+
+<body>
+	<div id="all">
+		<div id="position"><{$_lang.left.online_register}>：<{$_lang.left.daily_dtatistics_view}></div>
+    	<div><{$errorMsg}></div>
+                	<table cellspacing="1" cellpadding="3" border="0" class='table_list'>
+                        <tr>	
+                            <td colspan=9><{$_lang.conmon.sys_time_now}>：<{$smarty.now|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                        </tr>
+                    </table>
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF"> 
+                            <td align="center" colspan="3" background="/web/admin/static//images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b><{$_lang.left.daily_dtatistics_view}></b></font>
+                            </td>
+                        </tr>
+						<tr bgcolor="#E5F9FF">
+						<td>
+						<form name="myform" method="post" >
+                <{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>:<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$dateStart}>'/>
+                <{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$dateEnd}>'/>
+                &nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+                </form>
+				</td>
+				</tr>
+					</table>
+					<table width="100%"  border="0" cellpadding="4" cellspacing="1">
+                        <tr class='table_list_head' align='center'> 
+                          <td> <{$_lang.conmon.date_time}></td>
+                          <td><{$_lang.left.register_num}></td>
+                          <td><{$_lang.conmon.cjjs}></td>
+						  <td><{$_lang.left.login_num}></td>
+                          <td><{$_lang.left.login_times}></td>
+						  <td>充值总额(Q点)</td>
+                         <!-- <td>Q点总额(Q点)</td>
+                          <td>代金券总额(Q点)</td>-->
+						  <td><{$_lang.left.recharge_times}></td>
+						  <td><{$_lang.left.recharge_num}></td>
+						  <td><{$_lang.conmon.user}><{$_lang.conmon.arpu}></td>
+						  <td><{$_lang.left.daily_use_ingot}></td>
+                          <td><{$_lang.left.top_online}></td>
+                        </tr>
+                        <{foreach from=$result item=online key=key}>
+						<!-- <{if $online.day % 2 == 0}>
+						<tr class='trEven' align='center'>
+						<{else}>
+						<tr class='trOdd' align='center'>
+						<{/if}> -->
+						<tr class='trOdd' align='center'>
+                          <td><{$online.date_time}></td>
+                          <td><{$online.reg_cnt}></td>
+                          <td><{$online.cjjs}></td>
+                          <td><{$online.total_login}></td>
+						  <td><{$online.once_login}></td>
+						  <td><{$online.pay_day}></td>
+                          <!--<td><{$online.pay_qq_day}></td>
+                          <td><{$online.pay_ticket_day}></td>-->
+						  <td><{$online.times_cnt}></td>
+                          <td><{$online.role_cnt}></td>
+                          <td><{$online.arpu}></td>
+						  <td><{$online.gold_spent}></td>
+                          <td><{$online.max_online}></td>
+                        </tr>
+                        <{foreachelse}>
+                        <{/foreach}>
+                        <tr class='trOdd' align='center'>
+                            <td style="background: #eac5c5"><span><{$_lang.left.collect}></span></td>
+                            <td><{$arr.reg_cnt}></td>
+                            <td><{$arr.cjjs}></td>
+                            <td><{$arr.total_login}></td>
+                            <td><{$arr.once_login}></td>
+                            <td><{$arr.pay_day}></td>
+                            <!--<td><{$online.pay_qq_day}></td>
+                            <td><{$online.pay_ticket_day}></td>-->
+                            <td><{$arr.times_cnt}></td>
+                            <td><{$arr.role_cnt}></td>
+                            <td><{$arr.arpu}></td>
+                            <td><{$arr.gold_spent}></td>
+                            <td><{$arr.max_online}></td>
+                        </tr>
+                     </table>
+
+	</div>
+</body>
+</html>

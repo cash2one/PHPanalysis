@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+    <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+    <title>
+        <{$_lang.left.pay_first}>
+    </title>
+</head>
+<body>
+<div id="position"><{$_lang.left.recharge_consumption}>：<{$_lang.left.pay_first}></div>
+
+<!--<div class='divOperation'style="width:50%">
+    <form name="myform" method="post" action="<{$URL_SELF}>">
+        &nbsp;<{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$search_keyword1}>'/>
+        &nbsp;<{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$search_keyword2}>'/>
+        &nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"  />
+        <span style="color: orangered">&nbsp;&nbsp;<{$_lang.left.p_recharge_amount}>：<{$moneys}>&nbsp<{$_lang.conmon.yuan}> &nbsp;&nbsp;<{$_lang.left.prepaid_num}>：<{$num}>&nbsp<{$_lang.conmon.ren}></span>
+    </form>
+</div>-->
+
+<div style="float:left;margin:5px 0;">
+    <form action="<{$URL_SELF}>" name="myform" method="get" >
+        &nbsp;<{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>：
+        <input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='datestart' name='dateStart' size='12' value='<{$search_keyword1|date_format:"%Y-%m-%d"}>'/>
+        &nbsp;<{$_lang.conmon.end_time}>：
+        <input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateend' name='dateEnd' size='12' value='<{$search_keyword2|date_format:"%Y-%m-%d"}>'/>
+        &nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+        &nbsp;&nbsp;&nbsp;<{$_lang.left.p_recharge_amount}>：<font color="red"><b><{$moneySum}>&nbsp;<{$_lang.conmon.yuan}></b></font>&nbsp;&nbsp;&nbsp;<{$_lang.left.prepaid_num}>：<font color="red"><b><{$numSum}></b></font>
+    </form>
+</div>
+<br><br>
+<div style='float:left;margin-right:5px;'>
+    <table cellspacing=1 cellpadding=3 border=0 class='table_list' style='width:auto;'>
+
+        <tr class='table_list_head'>
+            <td width="auto"><b><{$_lang.left.first_recharge_rank}></b></td>
+            <td width="100"><b><{$_lang.left.prepaid_num}></b></td>
+            <td width="100"><b><{$_lang.left.proportion}></b></td>
+        </tr>
+        <{section name=loop loop=$numStat}>
+        <{if $smarty.section.loop.rownum % 2 == 0}>
+        <tr class='trEven'>
+            <{else}>
+        <tr class='trOdd'>
+            <{/if}>
+            <td><{$numStat[loop].level}></td>
+            <td><{$numStat[loop].role_cnt}></td>
+            <td><{$numStat[loop].cnt}></td>
+        <tr>
+            <{/section}>
+    </table>
+</div>
+
+<div style='float:left;'>
+    <table cellspacing=1 cellpadding=3 border=0 class='table_list' style='width:auto;'>
+
+        <tr class='table_list_head'>
+            <td width="auto"><b><{$_lang.left.first_recharge_money}></b></td>
+            <td width="100"><b><{$_lang.left.prepaid_num}></b></td>
+            <td width="100"><b><{$_lang.left.proportion}></b></td>
+        </tr>
+        <{section name=loop loop=$moneyStat}>
+        <{if $smarty.section.loop.rownum % 2 == 0}>
+        <tr class='trEven'>
+            <{else}>
+        <tr class='trOdd'>
+            <{/if}>
+            <td><{$moneyStat[loop].first_pay_money/100}></td>
+            <td><{$moneyStat[loop].role_cnt}></td>
+            <td><{$moneyStat[loop].cnt}></td>
+        <tr>
+            <{/section}>
+    </table>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure>
+	<system>
+		<isTest>0</isTest>
+		<!--
+		<loginPage link='http://ming2.mingchaoonline.com'/>
+		<loginError link='http://ming2.mingchaoonline.com'/>
+		<servers>
+			<loginServer>
+				<host><{$loginServer}></host>
+				<port>6222</port>
+			</loginServer>
+			<chatServer>
+				<host><{$chatServer}></host> 
+				<port>4398</port>
+			</chatServer>
+			<portForwardServer>
+				<host><{$portServer}></host>
+				<port>1111</port>
+			</portForwardServer>
+			
+		</servers>
+		<gm link1='#' link2='#' link3='#' link4='http://bbs.mingchao.com/index.php?gid=7' content1='玩家QQ群：116013283'/>
+		<fcm url='<{$fcmApiUrl}>/'/>
+		<assets link='<{$clientRootUrl}>/'/>
+		-->
+	</system>
+	<resources rar="com/data/res_data.rar">
+		<xmls>
+			<xml id="1001" name="服务器协议转换配置" url="com/data/server_map.xml"
+				holder="config.Config::SERVER_MAP_URL"/>
+			<xml id="1003" name="技能树配置" url="com/data/skillTree.xml"
+				holder="LoadResource::SKILL_XML_PATH"/>
+			<xml id="1004" name="装备配置" url="com/assets/items/equips.xml"
+				holder="LoadResource::EQUIP_URL"/>
+			<xml id="1005" name="道具配置" url="com/assets/items/generals.xml"
+				holder="LoadResource::ITEM_URL"/>
+			<xml id="1006" name="石头配置" url="com/assets/items/stones.xml"
+				holder="LoadResource::STONE_URL"/>
+			<xml id="1007" name="图片资源配置" url="com/data/images.xml"
+				holder="config.Config::IMAGE_URL"/>
+			<xml id="1008" name="颜色配置" url="com/data/colors.xml"
+				holder="config.Config::COLOR_URL"/>
+			<xml id="1009" name="地图配置" url="com/maps/maps.xml"
+				holder="config.Config::WORD_URL"/>
+			<xml id="1010" name="怪物配置" url="com/data/monster.xml"
+				holder="com.engine.core.view.world.scene.mutual.monster.MonsterConfig::MONSTER_URL"/>
+			<xml id="1011" name="buff配置" url="com/data/buff.xml"
+				holder="modules.rolestate.views.BuffIconBox::BUFF_XML_PATH"/>
+			<xml id="1012" name="屏蔽词" url="com/data/wordfilter.txt"
+				holder="config.Config::WORDFILTER"/>
+			<xml id="1013" name="防沉迷配置" url="com/data/fcm.xml"
+				holder="config.Config::FCM"/>
+		</xmls>
+		<swfs>
+			<swf id="2001" name="新系统UI" url="com/assets/ui/mingUI.swf"
+				holder="LoadResource::UI_URL"/>
+			<swf id="2002" name="View UI" url="com/assets/viewUI/viewUI.swf"
+				holder="LoadResource::VIEWUI_URL"/>
+			<swf id="2003" name="登录UI" url="com/assets/loginUI/Login.swf"
+				holder="LoadResource::LOGINUI_URL"/>
+			<swf id="2006" name="核心UI" url="com/assets/coreResource/coreUI.swf"
+				holder="com.engine.core.view.world.scene.mutual.animal.SayWords::CORE_UI"/>
+			<swf id="2007" name="聊天表情" url="com/assets/chat/faceIcons.swf"
+				holder="com.engine.core.view.resource.chat.ResourceLib::FACES_URL"/>
+			<swf id="2008" name="游戏音效" url="com/assets/sound/sound.swf"
+				holder="LoadResource::SOUND_URL"/>
+		</swfs>
+		<images>
+			<image id="3001" name="人物默认图标" url = "com/ui/role/default.png"
+				holder="config.Config::AVATAR_DEFAULT"/>
+		</images>
+	</resources>
+</configure>

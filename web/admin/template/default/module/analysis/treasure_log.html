@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.today_online}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/highcharts.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/FusionCharts.js"></script>
+
+<script type="text/javascript">
+		
+			var chart;
+			$(document).ready(function() {
+				chart = new Highcharts.Chart({
+					chart: {
+						renderTo: 'container',
+						defaultSeriesType: 'spline'
+					},
+					title: {
+						text: '<{$_lang.left.online_real_graph}>'
+					},
+				//	subtitle: {
+				//		text: 'October 6th and 7th 2009 at two locations in Vik i Sogn, Norway'
+				//	},
+					xAxis: {
+						type: 'datetime'
+					},
+					yAxis: {
+						title: {
+							text: '<{$_lang.new.do_treasure_times}>'
+						},
+						min: 0,
+						maxPadding: 0.02,
+						minorGridLineWidth: 0, 
+						gridLineWidth: 0,
+						alternateGridColor: null,
+						plotBands: [{ 
+							from: 0,
+							to: 500,
+							color: 'rgba(0, 0, 0, 0)',
+							label: {
+								//text: 'Light air',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 500,
+							to: 1000,
+							color: 'rgba(68, 170, 213, 0.1)',
+							label: {
+								//text: 'Light breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 1000,
+							to: 1500,
+							color: 'rgba(0, 0, 0, 0)',
+							label: {
+								//text: 'Gentle breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 1500,
+							to: 2000,
+							color: 'rgba(68, 170, 213, 0.1)',
+							label: {
+								//text: 'Moderate breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 2000,
+							to: 2500,
+							color: 'rgba(0, 0, 0, 0)',
+							label: {
+								//text: 'Fresh breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 2500,
+							to: 3000,
+							color: 'rgba(68, 170, 213, 0.1)',
+							label: {
+								//text: 'Strong breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 3000,
+							to: 3500,
+							color: 'rgba(0, 0, 0, 0)',
+							label: {
+								//text: 'High wind',
+								style: {
+									color: '#606060'
+								}
+							}
+						}]
+					},
+					tooltip: {
+						formatter: function() {
+				                return '<b>'+ '<{$_lang.new.do_treasure_times}>' +'</b><br/>'+ this.series.name +
+								Highcharts.dateFormat(' %H:%M:%S', this.x) +', '+ this.y +' <{$_lang.new.times}>';
+						}
+					},
+					plotOptions: {
+						spline: {
+							lineWidth: 1,
+							states: {
+								hover: {
+									lineWidth: 2
+								}
+							},
+							marker: {
+								enabled: false,
+								states: {
+									hover: {
+										enabled: true,
+										symbol: 'circle',
+										radius: 5,
+										lineWidth: 1
+									}
+								}	
+							},
+							pointInterval: 30, // one hour
+							//pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+						}
+					},
+					series: [{
+						name: '<{$_lang.new.dragon_1}>:<{$today_str}>',
+						data: [<{$data}>]
+				
+					}, {
+						name: '<{$_lang.new.dragon_2}>:<{$yest_str}>',
+						data: [<{$data2}>]
+					}
+					],
+					navigation: {
+						menuItemStyle: {
+							fontSize: '10px'
+						}
+					}
+				});
+				
+				
+			});
+				
+		</script>
+</head>
+
+<body>
+	<div id="all">
+		<div id="position"><{$_lang.new.treasure_log}>：</div>
+    	<div><{$errorMsg}></div>
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                	<table cellspacing="1" cellpadding="3" border="0" class='table_list'>
+                        <tr>	
+                        	<td>
+                            <form action="" name="form" method="post">
+                            	<{$_lang.conmon.date_time}>：<input value="<{$dateStart}>" class="Wdate" id="dateStart" readonly="readonly" name="dateStart" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp; 
+                           		<input value="<{$_lang.conmon.view}>" type="submit" onclick="search()" name="submit" />
+                            </form>
+                            </td>
+            				<td style="text-align:left"><{$_lang.conmon.sys_time_now}>：<{$smarty.now|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                        </tr>
+						<tr bgcolor="#E5F9FF"> 
+                            <td colspan="3" background="/web/admin/static//images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b><{$_lang.new.treasure_log}>:---- <{$_lang.new.do_treasure_mans}>:<{$all_role}>	--- <{$_lang.new.do_treasure_times}> :<{$all_times}></b></font>
+                            </td>
+                        </tr>
+                    </table>
+					<div id="container" style="width: 95%; height: 100%"></div>
+					<center><b><{$_lang.left.full_service_alert}></b></center><br>
+                    
+                    
+                    
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF"> 
+                            <td colspan="5" background="/web/admin/static//images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b><{$_lang.new.dragon_info}></b></font>
+                            </td>
+                        </tr>
+                        <tr class='table_list_head'> 
+                          <td><{$_lang.new.type}></td>
+                          <td><{$_lang.new.do_treasure_1}>总次数</td>
+                          <td><{$_lang.new.lucky_num}></td>
+                          <td><{$_lang.new.lucky_clear_num}></td>
+                          <td><{$_lang.left.record_operating_man_num}></td>
+                        </tr>
+                        
+                        <{foreach from=$show item=show key=key}>
+                        <{if $key % 2 == 0}>
+						<tr class='trEven'>
+						<{else}>
+						<tr class='trOdd'>
+						<{/if}>
+                          <td><font color="red"><b><{$show.name}></b></font></td>
+                          <td><{$show.times}></td>
+                          <td><{$show.lucky_num}></td>
+                          <td><{$show.lucky_clear_num}></td>
+                          <td><{$show.role_num}></td>
+                        </tr>
+                        <{/foreach}>
+                        
+                     </table>
+
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

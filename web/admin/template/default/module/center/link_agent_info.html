@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+
+        <style type="text/css">
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%;float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+            .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+
+        </style>
+        <title>代理链接</title>
+    </head>
+    <body>
+        <div id="all">
+            <div id="position">代理链接</div>
+            <div id="main">
+                <table width="100%"  border="0" cellpadding="4" cellspacing="1">
+                    <tr class='table_list_head' align='center'><td colspan="6"><b>代理列表</b></td> </tr>
+                    <tr class='table_list_head' align='center'>
+                        <td>序号</td>
+                        <td >代理管理后台</td>
+                        <td>官网</td>
+                        <td>论坛</td>
+                        <td>首服时间</td>
+                        <td>已开服数量</td>
+                    </tr>
+                    <tbody>
+                       	<{section name=loop loop=$data}>
+                        <{if $smarty.section.loop.rownum % 2 == 0}>
+                        <tr class='trEven'>
+                            <{else}>
+                            <tr class='trOdd'>
+                                <{/if}>
+                                <td><{$smarty.section.loop.index+1 }></td>
+                                <td><a target="blank" href='<{$data[loop].agent_system}>'><{$data[loop].agent_name}></a></td>
+                                <td><a target="blank" href='<{$data[loop].official_website}>'><{$data[loop].official_website}></a></td>
+                                <td><a target="blank" href='<{$data[loop].bbs}>'><{$data[loop].bbs}></td>
+                                <td><{$data[loop].first_open_time}></td>
+                                <td><{$data[loop].server_num}></td>
+                            </tr>
+                            <{/section}>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

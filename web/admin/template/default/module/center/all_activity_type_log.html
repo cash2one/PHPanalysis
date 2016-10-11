@@ -1,0 +1,173 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+
+
+
+        
+        <script>
+            function setdate(flag){
+                var start = end = new Date();
+                //alert(start.getDate());
+                //var t = new  Date(start.getTime()-60*60*24*1000);
+                //var t = new Date("2012/1/4");
+                //alert(t.getDate());
+
+
+                switch(flag){
+                    case 1:
+                        var t = new  Date(start.getTime()-2*60*60*24*1000);
+                        var dateStr = t.getFullYear()+'-'+(t.getMonth()*1+1)+'-'+t.getDate();
+                        $("#dStartDate").val(dateStr);
+                        var dateStr = end.getFullYear()+'-'+(end.getMonth()*1+1)+'-'+end.getDate();
+                        $("#dEndDate").val(dateStr);
+                        search();
+                        break;
+                    case 2:
+                        var weekday = start.getDay()||7;
+                        var t = new  Date(start.getTime()-(weekday-1+14)*60*60*24*1000);
+                        var dateStr = t.getFullYear()+'-'+(t.getMonth()*1+1)+'-'+t.getDate();
+                        $("#dStartDate").val(dateStr);
+                        var weekday = end.getDay()||7;
+                        var t = new  Date(end.getTime()+(7-weekday)*60*60*24*1000);
+                        var dateStr = t.getFullYear()+'-'+(t.getMonth()*1+1)+'-'+t.getDate();
+
+                        $("#dEndDate").val(dateStr);
+                        search();
+                        break;
+                    case 3:
+                        if(start.getMonth()>1)
+                            var dateStr = start.getFullYear()+'-'+(start.getMonth()*1+1-2)+'-1';
+                        else
+                            var dateStr = (start.getFullYear()-1)+'-'+(start.getMonth()*1+13-2)+'-1';
+                        $("#dStartDate").val(dateStr);
+                        search();
+                        break;
+                }
+            }
+
+
+
+        </script>
+       
+        <style type="text/css">
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%;float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+            .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+
+            BODY { position: relative;}
+    
+        </style>
+        <title><{$_lang.new.activity_type_statistics}></title>
+    </head>
+    <body>
+        <div id="all">
+            <div id="position"><{$_lang.new.activity_type_statistics}></div>
+            <div id="main">
+                <form name="form1" method="get">
+                    <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+                        <tr><td >
+                                <b>&nbsp;<{$_lang.left.activity_type}>：</b>
+                                <input type="radio" id="radio_ttype" name="ttype" onclick="setdate(1)"  value="1"/><{$_lang.new.byday}>
+                                <input type="radio" id="radio_ttype" name="ttype" onclick="setdate(2)" value="2"/><{$_lang.new.byweek}>
+                                <input type="radio" id="radio_ttype" name="ttype" onclick="setdate(3)" value="3"/><{$_lang.new.bymonth}>
+                                <b>&nbsp;&nbsp;<{$_lang.left.activity_type}>：</b>
+                                <select id ="sel_money" name="act_type">
+                                    <option value="0"><{$_lang.new.please_select}><{$_lang.new.type}></option>
+                                    <{foreach key=key item=item from=$ctype_desc}>
+                                    <option value="<{$key}>"><{$item}></option>
+                                    <{/foreach}>
+                                </select>
+                            </td>
+                        </tr>
+                      <tr><td>&nbsp;请选择代理：</td></tr>
+                        <tr>
+                            <td >
+                                <input type="radio" name="radio_agent" id="radio_agent" onclick="GetPlatServer(this.value)" value="0" <{if $agent_id==0}> checked <{/if}>  />所有
+                                       <{foreach key=key item=item from=$allAgentName}>
+                                       <input type="radio" name="radio_agent" id="radio_agent" onclick="GetPlatServer(this.value)" value="<{$key}>"  <{if $agent_id==$key}> checked <{/if}> /><{$item}>
+                                       <{/foreach}>
+                                       </td>
+                                        </tr>
+                                        <tr id="sServerName_TD1" style="display:none"><td >&nbsp;请选择服务器：</td></tr>
+                                        <tr id="sServerName_TD2" style="display:none"><td id="sServer"></td></tr>
+                                        <tr><td  bgcolor="#D7Eff5">
+                                                &nbsp;<{$_lang.conmon.start_day_time}>：
+                                                <input value="<{$search_keyword1}>" class="Wdate" id="dStartDate" readonly="readonly" name="dStartDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                                <{$_lang.conmon.end_day_time}>：
+                                                <input value="<{$search_keyword2}>" class="Wdate" id="dEndDate" readonly="readonly" name="dEndDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                                <input value="<{$_lang.conmon.view}>" id="btnsubmit" type="submit" name="submit" />
+                                            </td>
+                                        </tr>
+
+                                        </table>
+                                        </form>
+
+                                        <table style="background:#bbdde5" border="2" cellpadding="0" cellspacing="0"  >
+                                            <tr><{$output}></tr>
+                                        </table>
+
+                                        </div>
+                                        </div>
+
+
+                                        </body>
+                                        <script type="text/javascript">
+                                       var server_id ="<{$server_id}>",agent_id = "<{$agent_id}>",ttype = '<{$ttype}>',act_type = '<{$act_type}>';
+                                            $(function(){
+                                                //初始化搜索条件
+                                                if(agent_id > 0){
+                                                    $("#sServerName_TD1").css("display", "block");
+                                                    $("#sServerName_TD2").css("display", "block");
+                                                    getServerRadios(agent_id,server_id);
+                                                }
+
+                                                $('input[name=ttype]').get(ttype-1).checked = true;
+                                                $('#sel_money').val(act_type);
+                                            })
+
+                                            function search(){  
+                                                $('#btnsubmit').click()
+                                            }
+
+                                            function GetPlatServer(value) {
+                                                if (value == "0") {// hide servers if select all
+                                                    $("#sServerName_TD1").css("display", "none");
+                                                    $("#sServerName_TD2").css("display", "none");
+                                                } else {
+                                                    $("#sServerName_TD1").css("display", "block");
+                                                    $("#sServerName_TD2").css("display", "block");
+                                                }
+                                                getServerRadios(value,0);
+                                                search();
+                                            }
+
+                                            function getServerRadios(agent_id,server_id){
+                                            
+                                                var servers=<{$servers}>;
+                                                var server = servers[agent_id];
+                                                
+                                                var radios = "<input name='radio_server'  value='0' onclick='search();' "
+                                                    +(server_id == 0? "checked='checked'":' ')
+                                                    +"type='radio'/>所有 ";
+                                                for(var i in server){
+                                                    radios += "<input name='radio_server'  value='" + i + "' onclick='search();' "
+                                                        +(server_id == i? "checked='checked'":' ')
+                                                        +"type='radio'/>" + server[i];
+                                                    
+                                                }
+                                                
+                                                $("#sServer").html(radios);
+                                            }
+
+                                        </script>
+
+                                        </html> 

@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.sys_notice_and_compens_config}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+body {font-size:14px; font-family:"Courier New", Courier, monospace; text-align:center; margin:auto;}
+#all {text-align:left;margin-left:4px;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+
+</head>
+<title>
+	<{$_lang.left.sys_notice_and_compens_config}>
+</title>
+<body>
+	<div id="position"><{$_lang.left.message_manage}>：<{$_lang.left.sys_notice_and_compens_config}></div>
+    
+<table width="1000"  border="0" cellpadding="4" cellspacing="1">
+<tr><td>
+    <form action="?action=bulletin" method="post">
+		<table width="500"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="2" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b><{$_lang.left.sys_note}></b></font>
+			</td>
+		</tr>
+         <tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.left.note_title}>：</td>
+           <td width="75%"><input type="text" size="45" name="title" value= <{$title}> ></td>
+         </tr>
+		 <tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.conmon.end_time}>：</td>
+           <td width="75%"><input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='notice_end_time' name='notice_end_time' size='23' value='<{$notice_end_time}>'/>
+		   </td>
+		</tr>
+		 <tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.left.note_content}>：</td>
+           <td>
+           <textarea rows="8" cols="30" name="text" value=<{$text}> > </textarea>
+           </td>
+         </tr>
+		 <tr bgcolor="#FFFFFF">
+           <td width="25%"></td>
+           <td width="75%">
+             <input type="submit" name="submit" value="<{$_lang.left.submit}>" />
+             <input type="reset" name="reset" value="<{$_lang.left.modify}>" />
+           </td>
+         </tr>
+         
+    </table>
+    </form>
+    </td>
+    <td>
+    <form action="?action=compensation_conf" method="post">
+    <table height="290" width="500"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3"  align="left"><font color="#666600" class="STYLE2"><b><{$_lang.new.config_sys_give}></b></font></td>
+		</tr>
+        <tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.left.level_limit}></td>
+           <td width="50%"><input type="text"  size='5.5' id="level_min" name="level_min" value= <{$level_min}> >&nbsp;<{$_lang.conmon.level}>&nbsp;~&nbsp;
+						   <input type="text"  size='5.5' id="level_max" name="level_max" value= <{$level_max}> >&nbsp;<{$_lang.conmon.level}></td><td "25%"><font color="#FF0000">**<{$_lang.left.limit_level}></font></td>
+		</tr>
+		<tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.conmon.start_time}></td>
+           <td width="50%"><input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='start_time' name='start_time' size='23' value='<{$start_time}>' /> </td><td "25%"><font color="#FF0000">**<{$_lang.conmon.start_time}></font></td>
+		</tr>
+		<tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.conmon.end_time}></td>
+           <td width="50%"><input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='end_time' name='end_time' size='23' value='<{$end_time}>' /></td><td "25%"><font color="#FF0000">**<{$_lang.conmon.end_time}></font>
+		   </td>
+		</tr>
+		<tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.new.goods_id}></td>
+           <td width="50%"><input type="text"  size='23' name="goods" value= <{$goods}> > </td><td "25%"><font color="#FF0000">**<{$_lang.new.goods_id}></font></td>
+		</tr>
+		<tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.left.goods_num}></td>
+           <td width="50%"><input type="text"  size='23' name="num" value= "1" ></td><td "25%"><font color="#FF0000">**<{$_lang.left.goods_num}>< 10</font></td>
+        </tr>
+		 <tr bgcolor="#FFFFFF">
+           <td width="25%"></td>
+           <td width="50%">
+             <input type="submit" name="submit" value="<{$_lang.left.submit}>" />
+             <input type="reset" name="reset" value="<{$_lang.left.modify}>" />
+           </td>
+           <td width="25%">
+           </td>
+         </tr>
+    </table>
+    </form>
+    </td>
+</tr>
+<tr>
+<td>
+ <tr>
+ 
+ 
+     <table width="1020"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+        <td colspan="8" background="/web/admin/static/images/wbg.gif" align="left"><font color="#666600" class="STYLE2"><b><{$_lang.left.sys_notice_and_compens_config}><{$_lang.left.list}>：</b></font></td>
+        </tr>
+        <tr bgcolor="#FFFFFF" align="center">
+        <td><{$_lang.left.config_time}></td>
+        <td><{$_lang.new.goods_id}></td>
+        <td><{$_lang.new.goods_name}></td>
+        <td><{$_lang.left.limit_level}></td>
+        <td><{$_lang.left.config_num}></td>
+       <!-- <td><{$_lang.new.get_bag_role}></td>
+        <td><{$_lang.conmon.operating}></td>-->
+       <td><{$_lang.left.admin}></td>
+        </tr>
+         <{foreach key=key item=item from=$config_goodslist}>
+         <tr bgcolor="#FFFFFF" align="center">
+        <td><{$item.start_time|date_format:'%Y/%m/%d %H:%M:%S'}> -<{$item.end_time|date_format:'%Y/%m/%d %H:%M:%S'}></td>
+        <td><{$item.goods_id}></td>
+        <td><{$item.name}></td>
+        <td><{$item.level_min}>~<{$item.level_max}></td>
+        <td><{$item.num}></td>
+        <td><{$item.operator}></td>
+        </tr>
+        <{/foreach}>
+     </table>
+
+    </td>
+    </tr>
+    </table>
+</body>
+</html>
+

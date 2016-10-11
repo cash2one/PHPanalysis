@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<title>
+	 <{$_lang.left.login_error_statistics}>
+</title>
+</head>
+
+<body>
+<div id="position"><{$_lang.left.loss_rate_analysis}>：<{$_lang.left.login_error_statistics}></div>
+
+<table width="800" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr class='table_list_head'>
+		<td colspan=3 align="center">
+	    <font color="red"><{$_lang.left.login_error_statistics}></font></td>
+	</tr>
+	
+	<tr class='table_list_head' align='center'>
+		<td><{$_lang.left.error_place}></td>
+		<td><{$_lang.left.error_type}></td>
+		<td><{$_lang.conmon.people_num}></td>
+	</tr>
+
+		<{section name=loop loop=$error_data}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+		<{/if}>
+			<{if $smarty.section.loop.rownum % 2 == 0}>
+			<tr class='trEven' align='center'>
+			<{else}>
+			<tr class='trOdd' align='center'>
+			<{/if}>
+				<td><{$error_data[loop].error_step}>---<{$error_data[loop].error_desc}></td>
+				<td><{$error_data[loop].error_id}></td>
+				<td><{$error_data[loop].error_cnt}></td>
+			</tr>
+		<{sectionelse}>
+        <{/section}>
+</table>
+
+</body>
+</html>

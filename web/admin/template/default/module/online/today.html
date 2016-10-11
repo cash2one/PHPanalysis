@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.today_online}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/highcharts.js"></script>
+
+<script type="text/javascript">
+		
+			var chart;
+			$(document).ready(function() {
+				chart = new Highcharts.Chart({
+					chart: {
+						renderTo: 'container',
+						defaultSeriesType: 'spline'
+					},
+					title: {
+						text: '<{$_lang.left.online_real_graph}>'
+					},
+				//	subtitle: {
+				//		text: 'October 6th and 7th 2009 at two locations in Vik i Sogn, Norway'
+				//	},
+					xAxis: {
+						type: 'datetime'
+					},
+					yAxis: {
+						title: {
+							text: '<{$_lang.left.online_num}>'
+						},
+						min: 0,
+						maxPadding: 0.02,
+						minorGridLineWidth: 0, 
+						gridLineWidth: 0,
+						alternateGridColor: null,
+						plotBands: [{ 
+							from: 0,
+							to: 500,
+							color: 'rgba(0, 0, 0, 0)',
+							label: {
+								//text: 'Light air',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 500,
+							to: 1000,
+							color: 'rgba(68, 170, 213, 0.1)',
+							label: {
+								//text: 'Light breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 1000,
+							to: 1500,
+							color: 'rgba(0, 0, 0, 0)',
+							label: {
+								//text: 'Gentle breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 1500,
+							to: 2000,
+							color: 'rgba(68, 170, 213, 0.1)',
+							label: {
+								//text: 'Moderate breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 2000,
+							to: 2500,
+							color: 'rgba(0, 0, 0, 0)',
+							label: {
+								//text: 'Fresh breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 2500,
+							to: 3000,
+							color: 'rgba(68, 170, 213, 0.1)',
+							label: {
+								//text: 'Strong breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 3000,
+							to: 3500,
+							color: 'rgba(0, 0, 0, 0)',
+							label: {
+								//text: 'High wind',
+								style: {
+									color: '#606060'
+								}
+							}
+						}]
+					},
+					tooltip: {
+						formatter: function() {
+				                return '<b>'+ '<{$_lang.left.online_num}>' +'</b><br/>'+ this.series.name +
+								Highcharts.dateFormat(' %H:%M:%S', this.x) +', '+ this.y +' 人';
+						}
+					},
+					plotOptions: {
+						spline: {
+							lineWidth: 1,
+							states: {
+								hover: {
+									lineWidth: 2
+								}
+							},
+							marker: {
+								enabled: false,
+								states: {
+									hover: {
+										enabled: true,
+										symbol: 'circle',
+										radius: 5,
+										lineWidth: 1
+									}
+								}	
+							},
+							pointInterval: 30, // one hour
+							//pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+						}
+					},
+					series: [{
+						name: '<{$_lang.conmon.today}><{$_lang.left.online_num}>:<{$today_str}>',
+						data: [<{$today_data}>],
+						color:'#0070dd',
+					}, {
+						name: '<{$_lang.conmon.yesterday}>:<{$yest_str}>',
+						data: [<{$yest_data}>],
+						visible:false,
+					}, {
+						name: '<{$_lang.conmon.before_yesterday}>:<{$be_yest_str}>',
+						data: [<{$be_yest_data}>],
+						visible:false,
+					}, {
+						name: '<{$_lang.conmon.last_week_new}>:<{$lw_str}>',
+						data: [<{$lw_data}>],
+						visible:false,
+					},
+					{
+						name: '<{$_lang.conmon.today}><{$_lang.left.online_ip_num}>:<{$today_str}>',
+						data: [<{$today_data_ip}>],
+						color: '#FF00FF'
+					}, {
+						name: '<{$_lang.conmon.yesterday}>:<{$yest_str}>',
+						data: [<{$yest_data_ip}>],
+						visible:false,
+					}, {
+						name: '<{$_lang.conmon.before_yesterday}>:<{$be_yest_str}>',
+						data: [<{$be_yest_data_ip}>],
+						visible:false,
+					}, 
+
+					],
+					navigation: {
+						menuItemStyle: {
+							fontSize: '10px'
+						}
+					}
+				});
+				
+				
+			});			
+		</script>
+
+</head>
+
+<body>
+	<div id="all">
+		<div id="position"><{$_lang.left.online_register}>：<{$_lang.left.today_online}></div>
+    	<div><{$errorMsg}></div>
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                	<table cellspacing="1" cellpadding="3" border="0" class='table_list'>
+                        <tr>	
+                            <td colspan=9><{$_lang.conmon.sys_time_now}>：<{$smarty.now|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                        </tr>
+						<tr bgcolor="#E5F9FF"> 
+                            <td colspan="3" background="/web/admin/static//images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b><{$_lang.left.today_online_info_Statistics}> <{$_lang.left.current_online}>:<{$now_online}> <{$_lang.left.highest_online}>:<{$max_online}> <{$_lang.left.lowest_online}>:<{$min_online}> <{$_lang.left.start_to_now}><{$_lang.left.highest_online}>:<{$all_max}></b></font>
+                            </td>
+                        </tr>
+                    </table>
+					<div id="container" style="width: 95%; height: 100%"></div>
+					<center><font color="red"><b><{$_lang.left.full_service_alert}></b></font></center><br>
+
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF"> 
+                            <td colspan="4" background="/web/admin/static//images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b><{$_lang.left.today_online_Statistics_30second_per}></b></font>
+                            </td>
+                        </tr>
+                        <tr class='table_list_head'> 
+                          <td width="25%"><{$_lang.left.statistical_time}></td>
+                          <td width="25%"><label style="color:red; font-weight:bold;"><{$_lang.new.current}></label><{$_lang.left.online_num}></td>
+                          <td width="25%"><{$_lang.conmon.ip_count}></td>
+                          <td width="50%"></td>
+                        </tr>
+                        <{foreach from=$onlines item=online key=key}>
+						<{if $key % 2 == 0}>
+						<tr class='trEven'>
+						<{else}>
+						<tr class='trOdd'>
+						<{/if}> 
+                          <td width="25%"><{$online.dateline|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                          <td width="25%"><{$online.online}></td>
+                          <td width="25%"><{$online.distinct_ip}></td>
+                          <td width="50%" align="left"><img src="/web/admin/static//images/green.gif" height="5" width="<{$online.weight}>" /></td>
+                        </tr>
+                        <{foreachelse}>
+                       	<tr bgcolor="#FFFFFF"> 
+                          <td colspan="3"><font color="#FF0000"><{$_lang.left.no_record}></font></td>
+                        </tr>
+                        <{/foreach}>
+                        
+                     </table>
+
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

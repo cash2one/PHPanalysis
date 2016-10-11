@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.register_statistics}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+
+<body>
+	<div id="all">
+		<div id="position"><{$_lang.left.loss_rate_analysis}>：<{$_lang.left.day_lose_rate}></div>
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                	<table width="6500"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                    	<tr class='table_list_head'>
+                    		<td width="100">注册日期</td>
+                            <td width="100">登陆请求</td>
+                            <td width="100">点击创建角色数</td>
+                            <td width="100">当天进入角色数</td>
+                            <td width="100">1天登陆</td>
+                            <td width="100">1天留存率</td>
+                            <td width="100">2天登陆</td>
+                            <td width="100">2天留存率</td>
+                            <td width="100">3天登陆</td>
+                            <td width="100">3天留存率</td>
+                            <td width="100">4天登陆</td>
+                            <td width="100">4天留存率</td>
+                            <td width="100">5天登陆</td>
+                            <td width="100">5天留存率</td>
+                            <td width="100">6天登陆</td>
+                            <td width="100">6天留存率</td>
+                            <td width="100">7天登陆</td>
+                            <td width="100">7天留存率</td>
+                            <td width="100">8天登陆</td>
+                            <td width="100">8天留存率</td>
+                            <td width="100">9天登陆</td>
+                            <td width="100">9天留存率</td>
+                            <td width="100">10天登陆</td>
+                            <td width="100">10天留存率</td>
+                            <td width="100">11天登陆</td>
+                            <td width="100">11天留存率</td>
+                            <td width="100">12天登陆</td>
+                            <td width="100">12天留存率</td>
+                            <td width="100">13天登陆</td>
+                            <td width="100">13天留存率</td>
+                            <td width="100">14天登陆</td>
+                            <td width="100">14天留存率</td>
+                            <td width="100">15天登陆</td>
+                            <td width="100">15天留存率</td>
+                            <td width="100">16天登陆</td>
+                            <td width="100">16天留存率</td>
+                            <td width="100">17天登陆</td>
+                            <td width="100">17天留存率</td>
+                            <td width="100">18天登陆</td>
+                            <td width="100">18天留存率</td>
+                            <td width="100">19天登陆</td>
+                            <td width="100">19天留存率</td>
+                            <td width="100">20天登陆</td>
+                            <td width="100">20天留存率</td>
+                            <td width="100">21天登陆</td>
+                            <td width="100">21天留存率</td>
+                            <td width="100">22天登陆</td>
+                            <td width="100">22天留存率</td>
+                            <td width="100">23天登陆</td>
+                            <td width="100">23天留存率</td>
+                            <td width="100">24天登陆</td>
+                            <td width="100">24天留存率</td>
+                            <td width="100">25天登陆</td>
+                            <td width="100">25天留存率</td>
+                            <td width="100">26天登陆</td>
+                            <td width="100">26天留存率</td>
+                            <td width="100">27天登陆</td>
+                            <td width="100">27天留存率</td>
+                            <td width="100">28天登陆</td>
+                            <td width="100">28天留存率</td>
+                            <td width="100">29天登陆</td>
+                            <td width="100">29天留存率</td>
+</tr>
+                    <{section name=loop loop=$zhuce_list}>
+						<tr bgcolor="#E5F9FF" align="center">
+                        	<td><{$zhuce_list[loop].zcrq}></td>
+                            <td><{$zhuce_list[loop].dlqq}></td>
+                            <td><{$zhuce_list[loop].cjjs}></td>
+                            <td><{$zhuce_list[loop].jrcj}></td>
+                        	<td><{$zhuce_list[loop].1day}></td>
+                            <td><{$zhuce_list[loop].1rate}></td>
+                            <td><{$zhuce_list[loop].2day}></td>
+                            <td><{$zhuce_list[loop].2rate}></td>
+                            <td><{$zhuce_list[loop].3day}></td>
+                            <td><{$zhuce_list[loop].3rate}></td>
+                            <td><{$zhuce_list[loop].4day}></td>
+                            <td><{$zhuce_list[loop].4rate}></td>
+                            <td><{$zhuce_list[loop].5day}></td>
+                            <td><{$zhuce_list[loop].5rate}></td>
+                            <td><{$zhuce_list[loop].6day}></td>
+                            <td><{$zhuce_list[loop].6rate}></td>
+                            <td><{$zhuce_list[loop].7day}></td>
+                            <td><{$zhuce_list[loop].7rate}></td>
+                            <td><{$zhuce_list[loop].8day}></td>
+                            <td><{$zhuce_list[loop].8rate}></td>
+                            <td><{$zhuce_list[loop].9day}></td>
+                            <td><{$zhuce_list[loop].9rate}></td>
+                            <td><{$zhuce_list[loop].10day}></td>
+                            <td><{$zhuce_list[loop].10rate}></td>
+                            <td><{$zhuce_list[loop].11day}></td>
+                            <td><{$zhuce_list[loop].11rate}></td>
+                            <td><{$zhuce_list[loop].12day}></td>
+                            <td><{$zhuce_list[loop].12rate}></td>
+                            <td><{$zhuce_list[loop].13day}></td>
+                            <td><{$zhuce_list[loop].13rate}></td>
+                            <td><{$zhuce_list[loop].14day}></td>
+                            <td><{$zhuce_list[loop].14rate}></td>
+                            <td><{$zhuce_list[loop].15day}></td>
+                            <td><{$zhuce_list[loop].15rate}></td>
+                            <td><{$zhuce_list[loop].16day}></td>
+                            <td><{$zhuce_list[loop].16rate}></td>
+                            <td><{$zhuce_list[loop].17day}></td>
+                            <td><{$zhuce_list[loop].17rate}></td>
+                            <td><{$zhuce_list[loop].18day}></td>
+                            <td><{$zhuce_list[loop].18rate}></td>
+                            <td><{$zhuce_list[loop].19day}></td>
+                            <td><{$zhuce_list[loop].19rate}></td>
+                            <td><{$zhuce_list[loop].20day}></td>
+                            <td><{$zhuce_list[loop].20rate}></td>
+                            <td><{$zhuce_list[loop].21day}></td>
+                            <td><{$zhuce_list[loop].21rate}></td>
+                            <td><{$zhuce_list[loop].22day}></td>
+                            <td><{$zhuce_list[loop].22rate}></td>
+                            <td><{$zhuce_list[loop].23day}></td>
+                            <td><{$zhuce_list[loop].23rate}></td>
+                            <td><{$zhuce_list[loop].24day}></td>
+                            <td><{$zhuce_list[loop].24rate}></td>
+                            <td><{$zhuce_list[loop].25day}></td>
+                            <td><{$zhuce_list[loop].25rate}></td>
+                            <td><{$zhuce_list[loop].26day}></td>
+                            <td><{$zhuce_list[loop].26rate}></td>
+                            <td><{$zhuce_list[loop].27day}></td>
+                            <td><{$zhuce_list[loop].27rate}></td>
+                            <td><{$zhuce_list[loop].28day}></td>
+                            <td><{$zhuce_list[loop].28rate}></td>
+                            <td><{$zhuce_list[loop].29day}></td>
+                            <td><{$zhuce_list[loop].29rate}></td>
+                        </tr>
+                    <{/section}>
+                    </table>
+                </div>
+            </div>
+        </div>
+	</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.log_statistics}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+
+<body>
+	<div id="all">
+	<div id="position"><{$_lang.left.online_register}>：<{$_lang.left.log_statistics}></div>
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                <form name="myform" method="post" >
+                <{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>:<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$dateStart}>'/>
+                <{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$dateEnd}>'/>
+                &nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+                </form>
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr class='table_list_head'>
+                            <td><{$_lang.conmon.date_time}></td><td><{$_lang.left.add_user}></td><td><{$_lang.left.day_add_user_rate}></td><td>
+<{$_lang.left.login_num}></td><td><{$_lang.new.distribution_photo}></td><td><{$_lang.left.login_times}></td>
+                            <td><{$_lang.new.distribution_photo}></td>
+                        </tr>
+
+                    <{section name=loop loop=$keywordlist}>
+
+                        <{if $smarty.section.loop.rownum % 2 == 0}>
+                        <tr class='trEven'>
+                        <{else}>
+                        <tr class='trOdd'>
+                        <{/if}>
+                            <td width="8%"><{$keywordlist[loop].date}></td>
+                            <td width="8%"><{$keywordlist[loop].new_count}></td>
+                            <td width="8%"><{$keywordlist[loop].lost}></td>
+                            <td width="8%"><{$keywordlist[loop].total_number}></td>
+                            <td width="30%" align="left"><img src="/web/admin/static/images/green.gif" height="5" width="<{$keywordlist[loop].total_number/$count[3]*100}>%" /></td>
+                            <td width="8%"><{$keywordlist[loop].once_number}></td>
+                            <td width="30%" align="left"><img src="/web/admin/static/images/green.gif" height="5" width="<{$keywordlist[loop].once_number/$count[4]*100}>%" /></td>
+                        </tr>
+                    <{sectionelse}>
+
+                    <{/section}>
+                    	<tr bgcolor="#E5F9FF">
+                            <td><{$_lang.conmon.all}></td>
+                            <td><{$_lang.conmon.all_volume}>：<{$count[5]}><br><{$_lang.conmon.maximum}>：<{$count[6]}></td><td></td>
+                            <td><{$_lang.conmon.all_volume}>：<{$count[1]}><br><{$_lang.conmon.maximum}>：<{$count[3]}></td><td></td>
+                            <td><{$_lang.conmon.all_volume}>：<{$count[2]}><br><{$_lang.conmon.maximum}>：<{$count[4]}></td><td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

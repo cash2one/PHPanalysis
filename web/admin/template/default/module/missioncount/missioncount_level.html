@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>任务分级统计</title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#mission_id").keydown(function(){
+			$("#mission_name").val('');
+		});
+		$("#mission_name").keydown(function(){
+			$("#mission_id").val('');
+		});
+	});
+</script>
+</head>
+<title>
+	<{$_lang.left.task_finish_info}>
+</title>
+<body>
+<div id="position"><{$_lang.left.data_analysis}>：<{$_lang.left.task_finish_info}></div>
+<div class='divOperation'>
+<form name="myform" method="post" action="<{$URL_SELF}>">
+&nbsp;<{$_lang.left.task_id}>：<input type='text' id="mission_id" name='mission_id' size='10' value='<{$mission_id}>'/>
+&nbsp;<{$_lang.left.task_name}>：<input type='text' id="mission_name" name='mission_name' size='10' value='<{$mission_name}>'/>
+&nbsp;<{$_lang.comon.view}><{$_lang.left.time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$search_keyword1}>'/>
+&nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+</div>
+</form>
+
+<table width="100%"  border="0" cellspacing="0" cellpadding="0" class='table_page_num'>
+  <tr>
+    <td height="30" class="even">
+		<form method="get" action="">
+			<{foreach key=key item=item from=$page_list}>
+				<a href="<{$URL_SELF}>?page=<{$item}>"><{$key}></a><span style="width:5px;"></span>
+			<{/foreach}>
+			<{if $page_count > 0}><{$_lang.comon.all_page}>(<{$page_count}>)
+				<{if $page_count > 5}>
+				<input type='hidden' name='mission_id' value='<{$mission_id}>'/>
+				<input type='hidden' name='mission_name' value='<{$mission_name}>'/>
+				<input name="page" type="text" class="text" size="3" maxlength="6">
+				&nbsp;<input type="submit" class="button" name="Submit" value="GO">
+				<{/if}>
+			[ <a href="<{$URL_SELF}>?excel=true"><{$_lang.comon.out_excel}></a> ]
+			<{/if}>
+		</form>
+    </td>
+ </tr>
+</table>
+
+<div id="all">
+		<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+			<tr class='table_list_head'>
+				<td colspan=7 >
+				<{$_lang.left.task_finish_info_statistics_by_day}>&nbsp;&nbsp;&nbsp;&nbsp;<{$_lang.left.time_statistics}>：<{$search_keyword1}> 0:0:0
+				~ <{$search_keyword1}> 23:59:59
+				</td>
+			</tr>
+            <{section name=loop loop=$mission}>
+			<{if $smarty.section.loop.rownum % 20 == 1}>
+			 <tr class='table_list_head'>
+                 <td><{$_lang.left.task_id}></td><td><{$_lang.left.task_name}></td><td><{$_lang.left.acceptable_level}></td><td><{$_lang.left.finish_num}></td>
+             </tr>
+			 <{/if}>
+                   <{if $smarty.section.loop.rownum % 2 == 0}>
+					<tr class='trEven'>
+					<{else}>
+					<tr class='trOdd'>
+					<{/if}>
+                            <td><{$mission[loop].mission_id }></td>
+                            <td><{$mission[loop].name}></td>
+							<td><{$mission[loop].level}></td>
+                        	<td><{$mission[loop].level_complete_num}></td> 
+                  </tr>
+             <{/section}>
+		</table>
+	</div>
+</body>
+</html>

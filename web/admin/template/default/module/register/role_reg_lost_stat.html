@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<title>
+	<{$_lang.left.create_page_lose_rate}>
+</title>
+</head>
+
+
+
+<body>
+<div id="position"><{$_lang.left.loss_rate_analysis}>：<{$_lang.left.create_page_lose_rate}></div>
+<div class='divOperation'>
+<form name="myform" method="post" action="<{$URL_SELF}>">
+<{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>：
+<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='datestart' name='datestart' size='23' value='<{$start|date_format:"%Y-%m-%d %H:%M:%S"}>'/>
+&nbsp;<{$_lang.conmon.end_time}>：
+<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='dateend' name='dateend' size='23' value='<{$end|date_format:"%Y-%m-%d %H:%M:%S"}>'/>
+&nbsp;<input type="image" name='search' src="/web/admin/static/images/search.gif" class="input2"/>
+</form>
+<br>
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+	<tr class='table_list_head'>
+		<td colspan=10 align="left" >
+	    <{$_lang.left.time_statistics}>：<{$start|date_format:"%Y-%m-%d %H:%M:%S"}> ~ <{$end|date_format:"%Y-%m-%d %H:%M:%S"}>
+		</td>
+	</tr>
+</table>
+<br>
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+	<tr class='table_list_head'>
+		<td><{$_lang.left.cross_num}></td>
+		<td><{$_lang.left.lose_rate}></td>
+		<td><{$_lang.left.flash_num}></td>
+		<td><{$_lang.left.lose_rate}></td>
+		<td><{$_lang.left.create_role_page_num}></td>
+		<td><{$_lang.left.lose_rate}></td>
+		<td><{$_lang.left.click_create_role_num}></td>
+		<td><{$_lang.left.lose_rate}></td>
+		<td><{$_lang.left.create_role_num}></td>
+	</tr>
+
+	<tr class='trOdd'>
+		<td><{$all.0}></td>
+		<td><{$event_data.page_load}>/<{$all.0}>=<{if $event_data.page_load_rate >= 25}><font color="red"><{/if}><b><{$event_data.page_load_rate}>%</b></td>
+
+		<td><{$all.1}></td>
+		<td><{$event_data.before_load_flash}>/<{$all.1}>=<{if $event_data.before_load_flash_rate >= 25}><font color="red"><{/if}><b><{$event_data.before_load_flash_rate}>%</b></td>
+
+		<td><{$all.2}></td>
+		<td><{$event_data.flash_loaded}>/<{$all.2}>=<{if $event_data.flash_loaded_rate >= 25}><font color="red"><{/if}><b><{$event_data.flash_loaded_rate}>%</b></td>
+
+		<td><{$all.3}></td>
+		<td><{$event_data.create_player}>/<{$all.3}>=<{if $event_data.create_player_rate >= 25}><font color="red"><{/if}><b><{$event_data.create_player_rate}>%</b></td>
+
+		<td><{$all.4}></td>
+	</tr>
+</table>
+<br><br>
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+	<tr class='table_list_head'>
+		<td><{$_lang.left.create_role_num}></td>
+		<td><{$_lang.left.lose_rate}></td>
+                                        <!-- 		<td><{$_lang.new.all_source_loaded}></td>
+                                                <td><{$_lang.left.lose_rate}></td> -->
+		<td><{$_lang.left.scene_num}></td>
+                        <!-- <td><{$_lang.left.lose_rate}></td>
+                        <td><{$_lang.left.take_task1}></td>
+                        <td><{$_lang.left.lose_rate}></td>
+                        <td><{$_lang.left.task1}></td> -->
+	</tr>
+
+	<tr class='trOdd'>
+		<td><{$all.4}></td>
+		<td><{$event_data.player_created}>/<{$all.4}>=<{if $event_data.player_created_rate >= 25}><font color="red"><{/if}><b><{$event_data.player_created_rate}>%</b></td>
+
+                            <!-- 		<td><{$event_data.load_complete}></td>
+                                    <td>(<{$event_data.load_complete}>-<{$event_data.enter_game}>)/<{$all.5}>=<{if $event_data.load_complete_rate >= 25}><font color="red"><{/if}><b><{$event_data.load_complete_rate}>%</b></td> -->
+
+		<td><{$all.5}></td>
+		<!-- <td><{$event_data.enter_game}>/<{$all.5}>=<{if $event_data.enter_game_rate >= 25}><font color="red"><{/if}><b><{$event_data.enter_game_rate}>%</b></td>
+
+		<td><{$all.6}></td>
+		<td><{$event_data.mission0}>/<{$all.6}>=<{if $event_data.mission0_rate >= 25}><font color="red"><{/if}><b><{$event_data.mission0_rate}>%</b></td>
+
+		<td><{$all.7}></td> -->
+	</tr>
+</table>
+<br><br>
+
+<!-- <table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+	<tr class='table_list_head'>
+		<td><{$_lang.left.task1}></td>
+		<td><{$_lang.left.lose_rate}></td>
+		<td><{$_lang.left.task2}></td>
+		<td><{$_lang.left.lose_rate}></td>
+		<td><{$_lang.left.task3}></td>
+		<td><{$_lang.left.lose_rate}></td>
+		<td><{$_lang.left.task4}></td>
+		<td><{$_lang.left.lose_rate}></td>
+		<td><{$_lang.left.task5}></td>
+	</tr>
+ 
+	<tr class='trOdd'>
+		<td><{$all.7}></td>
+		<td><{$event_data.mission1}>/<{$all.7}>=<{if $event_data.mission1_rate >= 25}><font color="red"><{/if}><b><{$event_data.mission1_rate}>%</b></td>
+
+		<td><{$all.8}></td>
+		<td><{$event_data.mission2}>/<{$all.8}>=<{if $event_data.mission2_rate >= 25}><font color="red"><{/if}><b><{$event_data.mission2_rate}>%</b></td>
+		
+		<td><{$all.9}></td>
+		<td><{$event_data.mission3}>/<{$all.9}>=<{if $event_data.mission3_rate >= 25}><font color="red"><{/if}><b><{$event_data.mission3_rate}>%</b></td>
+
+		<td><{$all.10}></td>
+		<td><{$event_data.mission4}>/<{$all.10}>=<{if $event_data.mission4_rate >= 25}><font color="red"><{/if}><b><{$event_data.mission4_rate}>%</b></td>
+		
+		<td><{$all.11}></td>
+	</tr>
+</table>
+<br> -->
+
+<!--
+<table width="400" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr class='table_list_head'>
+		<td colspan=2 align="left">
+	    <font color="red"><{$_lang.left.user_flash_version}></font>&nbsp;&nbsp;&nbsp;&nbsp;<br><{$_lang.left.time_statistics}>：<{$start|date_format:"%Y-%m-%d %H:%M:%S"}> ~ <{$end|date_format:"%Y-%m-%d %H:%M:%S"}>
+		</td>
+	</tr>
+	
+	<tr class='table_list_head'>
+		<td><{$_lang.new.flash_version}></td>
+		<td><{$_lang.left.user_num}></td>
+	</tr>
+
+		<{section name=loop loop=$version_data}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+		<{/if}>
+			<{if $smarty.section.loop.rownum % 2 == 0}>
+			<tr class='trEven'>
+			<{else}>
+			<tr class='trOdd'>
+			<{/if}>
+				<td width='60%'><{$version_data[loop].version}></td>
+				<td><{$version_data[loop].version_cnt}></td>
+			</tr>
+		<{sectionelse}>
+        <{/section}>
+</table> -->
+
+<br><br>
+</body>
+</html>

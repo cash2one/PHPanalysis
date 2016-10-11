@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<title>
+	剩余积分排行
+</title>
+</head>
+
+<body>
+<div id="position">充值与消费：剩余积分排行</div>
+
+<table width="100%"  border="0" cellspacing="0" cellpadding="0" class='table_page_num'>
+  <tr>
+    <td height="30" class="even">
+<form method="get" action="">
+ <{foreach key=key item=item from=$page_list}>
+ <a href="<{$URL_SELF}>?page=<{$item}>"><{$key}></a><span style="width:5px;"></span>
+ <{/foreach}>
+
+<{if $page_count > 0}>
+总页数(<{$page_count}>)
+
+<{if $page_count > 5}>
+  <input name="page" type="text" class="text" size="3" maxlength="6">
+  &nbsp;<input type="submit" class="button" name="Submit" value="GO">
+<{/if}>
+
+[ <a href="<{$URL_SELF}>?excel=true">导出Excel文件</a> ]
+<{/if}>
+<{if $record_count}>
+&nbsp;&nbsp;总共<{$record_count}>个记录
+<{/if}>
+</form>
+    </td>
+  </tr>
+</table>
+
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+<!-- SECTION  START -------------------------->
+<form id="form1" name="form1" method="post" action="">
+<{section name=loop loop=$keywordlist}>
+	<{if $smarty.section.loop.rownum % 20 == 1}>
+	<tr class='table_list_head'>
+		<td >排名</td>
+		<td>角色ID</td>
+		<td>角色名</td>
+		<td>账号</td>
+		<td>等级</td>
+		<td>剩余积分</td>
+		<td>离线时长</td>
+		<td>上次离线时间</td>
+	</tr>
+	<{/if}>
+
+	<{if $smarty.section.loop.rownum % 2 == 0}>
+	<tr class='trEven'>
+	<{else}>
+	<tr class='trOdd'>
+	<{/if}>
+		<td>
+		<{$keywordlist[loop].id}>
+		</td>
+		<td><{$keywordlist[loop].role_id}></td>
+		<td><{$keywordlist[loop].role_name}></td>
+		<td>
+		<{$keywordlist[loop].account_name}>
+		</td>
+		<td><{$keywordlist[loop].level}></td>
+		<td>
+		<{$keywordlist[loop].points}>
+		</td>
+		<td><{if $keywordlist[loop].is_online ==1}><font color="#0000FF">在线</font><{else}><{if $keywordlist[loop].left_day>=3}><font color="red"><{/if}><{$keywordlist[loop].left_day}>天<{$keywordlist[loop].left_h_m}><{/if}></td>
+		<td><{$keywordlist[loop].last_offline_time|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+	</tr>
+<{sectionelse}>
+
+<{/section}>
+<!-- SECTION  END -------------------------->
+
+</form>
+</table>
+
+</body>
+</html>

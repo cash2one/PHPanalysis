@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#role_id").keydown(function(){
+			$("#role_name").val('');
+			$("#account_name").val('');
+		});
+		$("#role_name").keydown(function(){
+			$("#role_id").val('');
+			$("#account_name").val('');
+		});
+		$("#account_name").keydown(function(){
+			$("#role_id").val('');
+			$("#role_name").val('');
+		});
+	});
+</script>
+
+<title>
+	<{$_lang.left.log_statistics}>
+</title>
+</head>
+
+
+<body>
+<div id="position"><{$_lang.left.online_register}>：<{$_lang.left.registration_information}></div>
+
+<div class='divOperation'>
+<form name="myform" method="post" action="<{$URL_SELF}>">
+<{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>：
+<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='datestart' name='datestart' size='12' value='<{$start|date_format:"%Y-%m-%d"}>'/>
+&nbsp;<{$_lang.conmon.end_time}>：
+<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateend' name='dateend' size='12' value='<{$end|date_format:"%Y-%m-%d"}>'/>
+&nbsp;<{$_lang.conmon.sort}>
+<select name="sort_1">
+	<{html_options options=$sortoption selected=$search_sort_1}>
+</select>
+
+<select name="sort_2">
+	<{html_options options=$sortoption selected=$search_sort_2}>
+</select>
+&nbsp;<{$_lang.conmon.user_id}>:<input type="text" id="role_id" name="role_id" size="10" value="<{$role.role_id}>" />
+&nbsp;<{$_lang.conmon.role_name}>:<input type="text" id="role_name" name="role_name" size="10" value="<{$role.role_name}>" />
+&nbsp;<{$_lang.conmon.user_account}>:<input type="text" id="account_name" name="account_name" size="10" value="<{$role.account_name}>" />
+<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+&nbsp;&nbsp;&nbsp;
+<{if $record_count}>
+<{$_lang.conmon.total}><{$record_count}><{$_lang.conmon.records}>
+<{/if}>
+</form>
+</div>
+
+<table width="100%"  border="0" cellspacing="0" cellpadding="0" class='table_page_num'>
+  <tr>
+    <td height="30" class="even">
+<form method="get" action="">
+ <{foreach key=key item=item from=$page_list}>
+ <a href="<{$URL_SELF}>?datestart=<{$start|date_format:"%Y-%m-%d"}>&amp;dateend=<{$end|date_format:"%Y-%m-%d"}>&amp;sort_1=<{$search_sort_1}>&amp;sort_2=<{$search_sort_2}>&amp;page=<{$item}>&amp;role_id=<{$role.role_id}>&amp;role_name=<{$role.role_name}>&amp;account_name=<{$role.account_name}>"><{$key}></a><span style="width:5px;"></span>
+ <{/foreach}>
+<{if $page_count > 0}>
+
+<{$_lang.conmon.all_page}>(<{$page_count}>)
+<{if $page_count > 5}>
+	<input name="datestart" type="hidden" value="<{$start|date_format:"%Y-%m-%d"}>">
+	<input name="dateend" type="hidden" value="<{$end|date_format:"%Y-%m-%d"}>">
+	<input name="sort_1" type="hidden" value="<{$search_sort_1}>">
+	<input name="role_id" type="hidden" size="10" value="<{$role.role_id}>" />
+	<input name="role_name" type="hidden" size="10" value="<{$role.role_name}>" />
+	<input name="account_name" type="hidden" size="10" value="<{$role.account_name}>" />
+    <input name="page" type="text" class="text" size="3" maxlength="6">&nbsp;<input type="submit" class="button" name="Submit" value="GO">
+<{/if}>
+
+[ <a href="<{$URL_SELF}>?excel=true&datestart=<{$start|date_format:"%Y-%m-%d"}>&amp;dateend=<{$end|date_format:"%Y-%m-%d"}>&amp;sort_1=<{$search_sort_1}>&amp;sort_2=<{$search_sort_2}>&amp;role_id=<{$role.role_id}>&amp;role_name=<{$role.role_name}>&amp;account_name=<{$role.account_name}>"><{$_lang.conmon.out_excel}></a> ]
+<{/if}>
+</form>
+    </td>
+  </tr>
+</table>
+
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+<!-- SECTION  START -------------------------->
+<form id="form1" name="form1" method="post" action="">
+<{section name=loop loop=$keywordlist}>
+	<{if $smarty.section.loop.rownum % 20 == 1}>
+	<tr class='table_list_head'>
+		<td ><{$_lang.conmon.user_id}></td>
+		<td ><{$_lang.conmon.role_name}></td>
+		<td ><{$_lang.conmon.user_account}></td>
+		<td><{$_lang.conmon.registered_time}></td>
+		<td><{$_lang.conmon.last_login_time}></td>
+		<td><{$_lang.conmon.last_login_ip}></td>
+		<td>转生</td>
+		<td ><{$_lang.conmon.role_level}></td>
+	</tr>
+	<{/if}>
+
+	<{if $smarty.section.loop.rownum % 2 == 0}>
+	<tr class='trEven'>
+	<{else}>
+	<tr class='trOdd'>
+	<{/if}>
+    <td><{$keywordlist[loop].role_id}></td>
+    <td><{$keywordlist[loop].role_name}></td>
+    <td><{$keywordlist[loop].account_name}></td>
+    <td><{$keywordlist[loop].create_time|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+    <td><{$keywordlist[loop].last_login_time|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+    <td><{$keywordlist[loop].last_login_ip}></td>
+    <td><{$keywordlist[loop].zhuanshen}></td>
+    <td><{$keywordlist[loop].level}></td>
+	</tr>
+<{sectionelse}>
+
+<{/section}>
+<!-- SECTION  END -------------------------->
+
+</form>
+</table>
+
+</body>
+</html>

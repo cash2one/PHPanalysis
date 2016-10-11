@@ -1,0 +1,679 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+<title>
+	<{$_lang.left.all_rank}>
+</title>
+</head>
+
+<body>
+
+<div id="position"><{$_lang.left.data_analysis}>：<{$_lang.left.all_rank}></div>
+
+<form action="?action=search" id="frm" method="POST" >
+	<table cellspacing="1" cellpadding="5" class="SumDataGrid" width="750">
+		<tr>
+			<td><{$_lang.new.rank_type}>：<select name="rank_type" id="rank_type"><{html_options options=$rank_type_option selected=$rank_type}></select></td>
+			<td><{$_lang.conmon.start_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='dateStart' name='dateStart' size='22' value='<{$search_keyword1}>'/></td>
+			<td><{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='dateEnd' name='dateEnd' size='22' value='<{$search_keyword2}>'/></td>
+			<td width="15%"><input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/></td>
+		</tr>
+	</table>
+	<br>
+</form>
+<!-- 等级排行榜 -->
+<{if $level_rank}>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.new.level_rank_list}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$level_rank}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.new.rank}></td>
+				<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.conmon.user_account}></td>
+				<td><{$_lang.left.gang}></td>
+				<td><{$_lang.left.martial_art}></td>
+				<td><{$_lang.left.sex}></td>
+				<td><{$_lang.left.offline_time}></td>
+				<td><{$_lang.left.last_offline_time}></td>
+                
+				<td><{$_lang.conmon.role_level}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$smarty.section.loop.rownum}></td>
+			<td><{$level_rank[loop].role_id}></td>
+			<td><{$level_rank[loop].role_name}></td>
+			<td><{$level_rank[loop].account_name}></td>
+			<td><{$level_rank[loop].family_name}></td>
+			<td>
+				<{if $level_rank[loop].category eq 1}><{$_lang.left.tiandao}>
+				<{elseif $level_rank[loop].category eq 2}><{$_lang.left.yijian}>
+				<{elseif $level_rank[loop].category eq 3}><{$_lang.left.yinkui}>
+				<{else}><{$_lang.left.cihang}>
+                <{/if}>
+			</td>
+			<td>
+				<{if $level_rank[loop].sex eq 1}><{$_lang.new.man}>
+				<{else}><{$_lang.new.woman}>
+				<{/if}>	
+			</td>
+			<td>
+				<{if $level_rank[loop].is_online ==1}><font color="#0000FF"><{$_lang.conmon.online}></font><{else}><{if $level_rank[loop].left_day>=3}><font color="red"><{/if}><{$level_rank[loop].left_day}>天<{$level_rank[loop].left_h_m}><{/if}>
+			</td>
+			<td><{$level_rank[loop].last_offline_time|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+			<td><{$level_rank[loop].level}></td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+<{/if}>
+
+<!-- 财富（银两）排行榜 -->
+<{if $wealth_rank}>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.left.rich_rank}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$wealth_rank}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.new.rank}></td>
+				<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.conmon.user_account}></td>
+				<td><{$_lang.left.gang}></td>
+				<td><{$_lang.left.martial_art}></td>
+				<td><{$_lang.left.sex}></td>
+				<td><{$_lang.left.offline_time}></td>
+				<td><{$_lang.left.last_offline_time}></td>
+                
+				<td><{$_lang.new.rich}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$smarty.section.loop.rownum}></td>
+			<td><{$wealth_rank[loop].role_id}></td>
+			<td><{$wealth_rank[loop].role_name}></td>
+			<td><{$wealth_rank[loop].account_name}></td>
+			<td><{$wealth_rank[loop].family_name}></td>
+			<td>
+				<{if $wealth_rank[loop].category eq 1}><{$_lang.left.tiandao}>
+				<{elseif $wealth_rank[loop].category eq 2}><{$_lang.left.yijian}>
+				<{elseif $wealth_rank[loop].category eq 3}><{$_lang.left.yinkui}>
+				<{else}><{$_lang.left.cihang}>
+                <{/if}>
+			</td>
+			<td>
+				<{if $wealth_rank[loop].sex eq 1}><{$_lang.new.man}>
+				<{else}><{$_lang.new.woman}>
+				<{/if}>	
+			</td>
+			<td>
+				<{if $wealth_rank[loop].is_online ==1}><font color="#0000FF"><{$_lang.conmon.online}></font><{else}><{if $wealth_rank[loop].left_day>=3}><font color="red"><{/if}><{$wealth_rank[loop].left_day}>天<{$wealth_rank[loop].left_h_m}><{/if}>
+			</td>
+			<td><{$wealth_rank[loop].last_offline_time|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+			<td><{$wealth_rank[loop].silver}></td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+<{/if}>
+
+<!-- 答题排行榜 -->
+<{if $answer_rank}>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.left.ask_rank}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$answer_rank}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.new.rank}></td>
+				<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.conmon.user_account}></td>
+				<td><{$_lang.left.gang}></td>
+				<td><{$_lang.left.martial_art}></td>
+				<td><{$_lang.left.sex}></td>
+				<td><{$_lang.left.offline_time}></td>
+				<td><{$_lang.left.last_offline_time}></td>
+                
+				<td><{$_lang.conmon.point}></td>
+				<td><{$_lang.new.ask_time}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$smarty.section.loop.rownum}></td>
+			<td><{$answer_rank[loop].role_id}></td>
+			<td><{$answer_rank[loop].role_name}></td>
+			<td><{$answer_rank[loop].account_name}></td>
+			<td><{$answer_rank[loop].family_name}></td>
+			<td>
+				<{if $answer_rank[loop].category eq 1}><{$_lang.left.tiandao}>
+				<{elseif $answer_rank[loop].category eq 2}><{$_lang.left.yijian}>
+				<{elseif $answer_rank[loop].category eq 3}><{$_lang.left.yinkui}>
+				<{else}><{$_lang.left.cihang}>
+                <{/if}>
+			</td>
+			<td>
+				<{if $answer_rank[loop].sex eq 1}><{$_lang.new.man}>
+				<{else}><{$_lang.new.woman}>
+				<{/if}>	
+			</td>
+			<td>
+				<{if $answer_rank[loop].is_online ==1}><font color="#0000FF"><{$_lang.conmon.online}></font><{else}><{if $answer_rank[loop].left_day>=3}><font color="red"><{/if}><{$answer_rank[loop].left_day}>天<{$answer_rank[loop].left_h_m}><{/if}>
+			</td>
+			<td><{$answer_rank[loop].last_offline_time|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+			<td><{$answer_rank[loop].score}></td>
+			<td><{$answer_rank[loop].answer_h_m}></td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+<{/if}>
+
+<!-- 坐骑排行榜 -->
+<{if $mount_rank}>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.new.mount_rank}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$mount_rank}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.new.rank}></td>
+				<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.conmon.role_level}></td>
+				<td><{$_lang.new.mount_name}></td>
+				<td><{$_lang.new.mount_quality}></td>
+				<td><{$_lang.new.equip_opiont}></td>
+				<td><{$_lang.new.faction}></td>
+				<td><{$_lang.new.vip_level}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$smarty.section.loop.rownum}></td>
+			<td><{$mount_rank[loop].role_id}></td>
+			<td><{$mount_rank[loop].role_name}></td>
+			<td><{$mount_rank[loop].role_level}></td>
+			<td><{$mount_rank[loop].mounts_name}></td>
+			<td><{$mount_rank[loop].quality}></td>
+			<td><{$mount_rank[loop].equips_score}></td>
+			<td>
+			<{if $mount_rank[loop].faction_id eq 1}><{$_lang.new.datang}>
+				<{else}><{$_lang.new.shuanglong}>
+            <{/if}>
+			</td>
+			<td><{$mount_rank[loop].vip_grade}></td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+<{/if}>
+
+<!-- 战斗力排行榜 -->
+<{if $fightpower_rank}>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.new.fightpower_rank}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$fightpower_rank}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.new.rank}></td>
+				<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.conmon.role_level}></td>
+				<td><{$_lang.left.sex}></td>
+				<td><{$_lang.new.fightpower}></td>
+				<td><{$_lang.new.attack}></td>
+				<td><{$_lang.new.defence}></td>
+				<td><{$_lang.left.gang}></td>
+				<td><{$_lang.left.martial_art}></td>
+				<td><{$_lang.new.faction}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$smarty.section.loop.rownum}></td>
+			<td><{$fightpower_rank[loop].role_id}></td>
+			<td><{$fightpower_rank[loop].role_name}></td>
+			<td><{$fightpower_rank[loop].level}></td>
+			<td>
+				<{if $fightpower_rank[loop].sex eq 1}><{$_lang.new.man}>
+				<{else}><{$_lang.new.woman}>
+				<{/if}>	
+			</td>
+			<td><{$fightpower_rank[loop].fighting_power}></td>
+			<td><{$fightpower_rank[loop].max_phy_attack}></td>
+			<td><{$fightpower_rank[loop].phy_defence}></td>
+			<td><{$fightpower_rank[loop].family_name}></td>
+			<td>
+			<{if $fightpower_rank[loop].category eq 1}><{$_lang.left.tiandao}>
+				<{elseif $fightpower_rank[loop].category eq 2}><{$_lang.left.yijian}>
+				<{elseif $fightpower_rank[loop].category eq 3}><{$_lang.left.yinkui}>
+				<{else}><{$_lang.left.cihang}>
+            <{/if}>
+			</td>
+			<td>
+			<{if $fightpower_rank[loop].faction_id eq 1}><{$_lang.new.datang}>
+				<{else}><{$_lang.new.shuanglong}>
+            <{/if}>
+			</td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+<{/if}>
+<!-- 宠物排行榜 -->
+<{if $jade_rank}>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.new.jade_rank}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$jade_rank}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.new.rank}></td>
+				<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.conmon.role_level}></td>
+				<td><{$_lang.left.sex}></td>
+				<td><{$_lang.new.jade_name}></td>
+				<td><{$_lang.new.jade_level}></td>
+				<td><{$_lang.new.jade_quality}></td>
+				<td><{$_lang.left.gang}></td>
+				<td><{$_lang.left.martial_art}></td>
+				<td><{$_lang.new.faction}></td>
+				<td>vip<{$_lang.new.level}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$smarty.section.loop.rownum}></td>
+			<td><{$jade_rank[loop].role_id}></td>
+			<td><{$jade_rank[loop].role_name}></td>
+			<td><{$jade_rank[loop].role_level}></td>
+			<td>
+				<{if $jade_rank[loop].sex eq 1}><{$_lang.new.man}>
+				<{else}><{$_lang.new.woman}>
+				<{/if}>	
+			</td>
+			<td><{$jade_rank[loop].jade_name}></td>
+			<td><{$jade_rank[loop].jade_level}></td>
+			<td><{$jade_rank[loop].jade_quality}></td>
+			<td><{$jade_rank[loop].family_name}></td>
+			<td>
+			<{if $jade_rank[loop].category eq 1}><{$_lang.left.tiandao}>
+				<{elseif $jade_rank[loop].category eq 2}><{$_lang.left.yijian}>
+				<{elseif $jade_rank[loop].category eq 3}><{$_lang.left.yinkui}>
+				<{else}><{$_lang.left.cihang}>
+            <{/if}>
+			</td>
+			<td>
+			<{if $jade_rank[loop].faction_id eq 1}><{$_lang.new.datang}>
+				<{else}><{$_lang.new.shuanglong}>
+            <{/if}>
+			</td>
+			<td><{$jade_rank[loop].vip_grade}></td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+<{/if}>
+
+
+<!-- 竞技场排行榜 -->
+<{if $ranking_athletics}>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.new.ranking_athletics}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$ranking_athletics}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.new.rank}></td>
+				<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.new.fight_score}></td>
+				<td><{$_lang.left.sex}></td>
+				<td><{$_lang.new.fightpower}></td>
+				<td><{$_lang.left.gang}></td>
+				<td><{$_lang.new.faction}></td>
+				<td><{$_lang.left.martial_art}></td>
+				<td><{$_lang.new.time}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$smarty.section.loop.rownum}></td>
+			<td><{$ranking_athletics[loop].role_id}></td>
+			<td><{$ranking_athletics[loop].role_name}></td>
+			<td><{$ranking_athletics[loop].role_score}></td>
+			<td>
+				<{if $ranking_athletics[loop].sex eq 1}><{$_lang.new.man}>
+				<{else}><{$_lang.new.woman}>
+				<{/if}>	
+			</td>
+			<td><{$ranking_athletics[loop].fighting_power}></td>
+			<td><{$ranking_athletics[loop].family_name}></td>
+			<td><{$ranking_athletics[loop].faction_id}></td>
+			<td>
+			<{if $ranking_athletics[loop].category eq 1}><{$_lang.left.tiandao}>
+				<{elseif $ranking_athletics[loop].category eq 2}><{$_lang.left.yijian}>
+				<{elseif $ranking_athletics[loop].category eq 3}><{$_lang.left.yinkui}>
+				<{else}><{$_lang.left.cihang}>
+            <{/if}>
+			</td>
+			<td><{$ranking_athletics[loop].date|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+<{/if}>
+
+<!-- 阵营战排行榜 -->
+<{if $camp_battle}>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.new.ranking_camp_battle}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$camp_battle}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.new.rank}></td>
+				<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.new.account_name}></td>
+				<td><{$_lang.left.sex}></td>
+				<td><{$_lang.new.add_honor}></td>
+				<td><{$_lang.new.faction}></td>
+				<td><{$_lang.left.gang}></td>
+				<td><{$_lang.new.faction_job}></td>
+				<td><{$_lang.left.martial_art}></td>
+				<td><{$_lang.new.time}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$smarty.section.loop.rownum}></td>
+			<td><{$camp_battle[loop].role_id}></td>
+			<td><{$camp_battle[loop].role_name}></td>
+			<td><{$camp_battle[loop].account_name}></td>
+			<td><{if $camp_battle[loop].sex eq 1}><{$_lang.new.man}>
+				<{else}><{$_lang.new.woman}>
+				<{/if}>	</td>
+			<td><{$camp_battle[loop].add_honor}></td>
+			<td>
+				<{if $camp_battle[loop].faction_id eq 1}><{$_lang.new.datang}>
+					<{else}><{$_lang.new.shuanglong}>
+				<{/if}>
+			</td>
+			<td><{$camp_battle[loop].family_name}></td>
+			<td><{$camp_battle[loop].camp_job}></td>
+			<td>
+			<{if $camp_battle[loop].category eq 1}><{$_lang.left.tiandao}>
+				<{elseif $camp_battle[loop].category eq 2}><{$_lang.left.yijian}>
+				<{elseif $camp_battle[loop].category eq 3}><{$_lang.left.yinkui}>
+				<{else}><{$_lang.left.cihang}>
+            <{/if}>
+			</td>
+			<td><{$camp_battle[loop].date|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+<{/if}>
+<!-- 遭遇战排行榜 -->
+<{if $meet_fight}>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.new.meet_fight_rank}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr>
+	<td>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$meet_fight.meet_fight11}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.new.rank}></td>				
+				<td><{$_lang.conmon.user_id}></td>					
+				<td><{$_lang.conmon.role_name}></td>				
+				<td><{$_lang.conmon.role_level}></td>
+				<td><{$_lang.left.gang}></td>
+				<td><{$_lang.new.kill_num}></td>
+				<td><{$_lang.new.killed_num}></td>
+				<td><{$_lang.new.faction}></td>
+				<td><{$_lang.new.time}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$smarty.section.loop.rownum}></td>
+			<td><{$meet_fight.meet_fight11[loop].role_id}></td>
+			<td><{$meet_fight.meet_fight11[loop].role_name}></td>
+			<td><{$meet_fight.meet_fight11[loop].role_level}></td>
+			<td><{$meet_fight.meet_fight11[loop].family_name}></td>
+			<td><{$meet_fight.meet_fight11[loop].kill}></td>
+			<td><{$meet_fight.meet_fight11[loop].killed}></td>
+			<td>
+				<{if $meet_fight.meet_fight11[loop].faction_id eq 1}><{$_lang.new.datang}>
+					<{else}><{$_lang.new.shuanglong}>
+				<{/if}>
+			</td>
+			<td><{$meet_fight.meet_fight11[loop].date|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+	</td>
+		
+	<td>	
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<{section name=loop loop=$meet_fight.meet_fight21}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.new.rank}></td>				
+				<td><{$_lang.conmon.user_id}></td>					
+				<td><{$_lang.conmon.role_name}></td>				
+				<td><{$_lang.conmon.role_level}></td>
+				<td><{$_lang.left.gang}></td>
+				<td><{$_lang.new.kill_num}></td>
+				<td><{$_lang.new.killed_num}></td>
+				<td><{$_lang.new.faction}></td>
+				<td><{$_lang.new.time}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$smarty.section.loop.rownum}></td>
+			<td><{$meet_fight.meet_fight21[loop].role_id}></td>
+			<td><{$meet_fight.meet_fight21[loop].role_name}></td>
+			<td><{$meet_fight.meet_fight21[loop].role_level}></td>
+			<td><{$meet_fight.meet_fight21[loop].family_name}></td>
+			<td><{$meet_fight.meet_fight21[loop].kill}></td>
+			<td><{$meet_fight.meet_fight21[loop].killed}></td>
+			<td>
+				<{if $meet_fight.meet_fight21[loop].faction_id eq 1}><{$_lang.new.datang}>
+					<{else}><{$_lang.new.shuanglong}>
+				<{/if}>
+			</td>
+			<td><{$meet_fight.meet_fight21[loop].date|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+	</td>
+	</table>
+<{/if}>
+
+<!-- 突厥攻城排行榜 -->
+<{if $monster_attack}>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.new.monsterattack_rank}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$monster_attack}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.new.rank}></td>
+				<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.new.kill_monster_num}></td>
+				<td><{$_lang.left.sex}></td>
+				<td><{$_lang.new.fightpower}></td>
+				<td><{$_lang.new.faction}></td>
+				<td><{$_lang.left.gang}></td>
+				<td><{$_lang.left.martial_art}></td>
+				<td><{$_lang.new.time}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+		
+			<td><{$smarty.section.loop.rownum}></td>
+			<td><{$monster_attack[loop].role_id}></td>
+			<td><{$monster_attack[loop].role_name}></td>
+			<td><{$monster_attack[loop].kill}></td>
+			<td><{if $monster_attack[loop].sex eq 1}><{$_lang.new.man}>
+				<{else}><{$_lang.new.woman}>
+				<{/if}>	</td>
+			<td><{$monster_attack[loop].fighting_power}></td>
+			<td>
+				<{if $monster_attack[loop].faction_id eq 1}><{$_lang.new.datang}>
+					<{else}><{$_lang.new.shuanglong}>
+				<{/if}>
+			</td>
+			<td><{$monster_attack[loop].family_name}></td>
+			<td>
+			<{if $monster_attack[loop].category eq 1}><{$_lang.left.tiandao}>
+				<{elseif $monster_attack[loop].category eq 2}><{$_lang.left.yijian}>
+				<{elseif $monster_attack[loop].category eq 3}><{$_lang.left.yinkui}>
+				<{else}><{$_lang.left.cihang}>
+            <{/if}>
+			</td>
+			<td><{$monster_attack[loop].date|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+<{/if}>
+<!-- 守关排行榜 -->
+<!-- 征战排行榜 -->
+<!-- 内功排行榜 -->
+<!-- 送花排行榜 -->
+<!-- 收花排行榜 -->
+
+
+</body>
+</html>

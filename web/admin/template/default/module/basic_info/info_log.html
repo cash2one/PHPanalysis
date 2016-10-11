@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>信息日志</title>
+<link rel="stylesheet" href="/web/admin/static/css/tags.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/js/date/daterangepicker.css" />
+<script src="/web/admin/static/js/date/jquery-1.11.2.min.js"></script>
+<script src="/web/admin/static/js/date/moment.min.js"></script>
+<script src="/web/admin/static/js/date/jquery.daterangepicker.js"></script>
+<script src="/web/admin/static/js/databackend.js"></script>
+
+</head>
+<body>
+
+<h3>信息日志</h3>
+<hr>
+<form name="condition" id="myform" action="<{$URL_SELF}>" method="post">
+    <input type="hidden" name="action" value="select_role_base" /> 
+   玩家ID：<input type="text" name="role_id" size="15" />&nbsp;
+   账号：<input type="text" name="account_id" size="15"  />&nbsp;
+   角色名：<input type="text" name="role_name" size="15"  />&nbsp;
+   服务器：<select name="server" style="width:100px;">
+                <option value="">选择服务器</option>
+            <{section name=server loop=$serverlist}>
+                <option value="<{$serverlist[server].svr_id}>"><{$serverlist[server].name}></option>
+            <{/section}>
+            </select> &nbsp;
+    <input type="submit" name="search" value="搜索"/>&nbsp;
+    </form>
+    <hr>
+    <div id="main_div">
+    <table id="main_table">
+        <tr style="background-color:#2e6fac; color:white;">
+            <td>玩家ID</td>
+            <td>玩家账号</td>
+            <td>角色名</td>
+            <td>角色等级</td>
+            <td>VIP等级</td>
+            <td>钻石数量</td>
+            <td>金币数量</td>
+            <td>角色注册时间</td>
+            <td>最近登录时间</td>
+            <td>最后退出时间</td>
+        </tr>
+        <{section name=loop loop=$dataList}>
+            <{if $smarty.section.loop.rownum % 2 == 0}>
+            <tr class='trEven'>
+            <{else}>
+                <tr class='trOdd'>
+            <{/if}>
+            <td> <{$dataList[loop].id}> </td>
+            <td> <{$dataList[loop].aid}> </td>
+            <td> <{$dataList[loop].nick}> </td>
+            <td> <{$dataList[loop].level}> </td>
+            <td> <{$dataList[loop].vip_level}> </td>
+            <td> <{$dataList[loop].ingot}></td>
+            <td> <{$dataList[loop].coin}></td>
+            <td> <{$dataList[loop].reg_time|date_format:"%Y-%m-%d %H:%M:%S"}> </td>
+            <td> <{$dataList[loop].last_login_time|date_format:"%Y-%m-%d %H:%M:%S"}> </td>
+            <td> <{$dataList[loop].logout_time|date_format:"%Y-%m-%d %H:%M:%S"}> </td>
+           </tr>
+        <{/section}>
+    </table>
+
+</div><br>
+
+</body>
+</html>
+
+
+

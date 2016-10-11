@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/FusionCharts.js"></script>
+        <!--  添加回到顶部      start        -->
+        <SCRIPT type=text/javascript >
+
+</SCRIPT>
+ <!--  添加回到顶部   end        -->
+        <style type="text/css">
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%;float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+            .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+
+        </style>
+        <title>服务器列表</title>
+    </head>
+    <body>
+        <div id="all">
+            <div id="position">服务器列表</div>
+            <div id="main"><form name="form" method="GET">
+                    <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+                        <tr><td>&nbsp;<{$_lang.left.select_agents}>：</td></tr>
+                        <tr>
+                            <td>
+                                <input type="radio" name="radio_agent" id="radio_agent" onclick="clkAgent(0)" value="0" <{if $agent==0}> checked <{/if}>  /><{$_lang.conmon.any}>
+                                <{foreach key=key item=item from=$allAgentName}>
+                                <input type="radio" name="radio_agent" id="radio_agent" onclick="clkAgent('<{$key}>')"  value="<{$key}>"  <{if $agent==$key}> checked <{/if}> /><{$item}>
+                                <{/foreach}>
+                            </td>
+                        </tr>
+                        <tr><td  bgcolor="#D7Eff5">
+                                <input type="hidden" name="whichpage" value="1"/>
+                              <!--  &nbsp;代理ID：<input type="text" name="agentID" id="agentID" value="" size="5">-->
+                                    &nbsp;服务器：S<input type="text" name="serverID" value="<{$server_id}>" size="5">
+                                &nbsp;域名：<input type="text" name="domainName" value="<{$domain_name}>">
+                                    &nbsp;IP：<input type="text" name="ip" value="<{$ip}>">
+                                        &nbsp;状态：<select name="serverStatus" id="serverStatus">
+                                            <option value="0">全部</option>
+                                            <option value="1" <{if $stat==1}> selected <{/if}> >开服</option>
+                                            <option value="2" <{if $stat==2}> selected <{/if}> >合服</option>
+                                            <option value="3" <{if $stat==3}> selected <{/if}> >停服</option>
+                                            <option value="4" <{if $stat==4}> selected <{/if}> >未开服</option>
+                                        </select>
+                                        &nbsp;类型：<select name="serverType" id="serverType">
+                                            <option value="0">全部</option>
+                                            <option value="1" <{if $type==1}> selected <{/if}>   >简体服</option>
+                                            <option value="2" <{if $type==2}> selected <{/if}> >繁体服</option>
+                                            <option value="3"  <{if $type==3}> selected <{/if}> >越南服</option>
+                                            <option value="4"  <{if $type==4}> selected <{/if}> >测试服</option>
+                                            <option value="5" <{if $type==5}> selected <{/if}> >其它用途</option>
+                                        </select>
+                               &nbsp; <input value="<{$_lang.conmon.view}>" type="submit" id="btnsubmit"/>
+                               &nbsp;<input type="button" name="addAgent" value="代理列表/添加"  onclick="window.location='agent_list.php?action=new'" />
+                                  &nbsp;<input type="button" name="addServer" value="添加服务器"  onclick="window.location='server_manage.php?action=new'"/>
+                            </td>
+                         </tr>
+                    </table>
+                </form>
+
+
+                <table width="100%"  border="0" cellpadding="4" cellspacing="1">
+                    <tr class='table_list_head' align='center'>
+                        <td >序号</td>
+                        <td >代理名</td>
+                        <td >服务器名</td>
+                        <td >域名</td>
+                        <td >IP</td>
+                        <td >类型</td>
+                        <td >状态</td>
+                        <td>备注</td>
+                        <td >操作时间</td>
+                        <td >操作</td>
+                    </tr>
+                    <tbody>
+                        <{$html}>
+                    </tbody>
+                </table>
+                <div ><center>
+                        <{$page}>
+                    </center>
+                </div>
+            </div>
+        </div>
+
+    </body>
+    <script type="text/javascript">
+        function clkAgent(key){
+            key==0?$("#agentID").val(''):$("#agentID").val(key);
+            
+        }
+    </script>
+</html>

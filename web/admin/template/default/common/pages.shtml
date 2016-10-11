@@ -1,0 +1,19 @@
+<table style="width:100%;">
+    <tr class='trOdd'>
+    <td height="30" class="even">
+    <{if $pageList}>
+        <{foreach key=key item=item from=$pageList}>
+            <a id="pageUrl" href="javascript:void(0);" onclick="changePage('<{$item}>');"> <{$key}> </a>
+            <span style="width:5px;"></span>
+        <{/foreach}>
+        &nbsp; &nbsp; &nbsp; 
+    <{/if}>
+    总共 <{$recordCnt}> 个记录 &nbsp; &nbsp; &nbsp; 
+	每页显示<input type="text" id="recordPerPage" name="recordPerPage" size="3" style="text-align:center;" value="<{$recordPerPage}>" />个记录
+    &nbsp; &nbsp; &nbsp; 总共 <{$pageCnt}> 页 &nbsp; &nbsp; &nbsp; 
+    跳至<input id="page" name="page" type="text" class="text" size="3" style="text-align:center;" maxlength="6" value="<{$pageNo}>" />页 &nbsp;
+    <input type="submit" class="button" name="Submit" value="GO">
+    </td>
+    </tr>
+</table>
+

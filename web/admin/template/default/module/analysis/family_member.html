@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(
+	function(){
+		$("#family_selected").change(
+			function(){	
+				obj = document.getElementById("family_fill");
+				obj.value="";
+			}
+		);
+
+		$("#family_fill").focus(
+			function(){
+				obj = document.getElementById("family_selected");
+				obj.options[0].selected = true;
+			}
+		);
+	}
+);
+</script>
+<title>
+	<{$_lang.left.gang_member_view}>
+</title>
+</head>
+
+<body>
+
+<div id="position"><{$_lang.left.data_analysis}>：<{$_lang.left.gang_member_view}></div>
+
+<form action="?action=search" id="frm" method="POST" >
+	<table cellspacing="1" cellpadding="5" class="SumDataGrid" width="800">
+		<tr>
+			<td><{$_lang.new.select_gang}>：<select name="family" id="family_selected"><{html_options options=$family_option selected=$family}></select></td>
+			<td>（<{$_lang.conmon.or}>）<{$_lang.left.input_gang_name}>：<input id="family_fill" type="text" name="family_fill" value="<{$family_fill_name}>" /></td>
+			<td width="30%"><input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/></td>
+		</tr>
+	</table>
+	<br>
+</form>
+
+<{if $keywordlist}>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.new.gang_user_list}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$keywordlist}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.conmon.user_account}></td>
+				<td><{$_lang.left.gang}></td>
+				<td><{$_lang.left.martial_art}></td>
+				<td><{$_lang.new.Office}></td>
+				<td><{$_lang.left.sex}></td>
+				<td><{$_lang.conmon.role_level}></td>
+				<td>转生</td>
+				<td><{$_lang.new.bind_gold}></td>
+				<td><{$_lang.new.unbind_gold}></td>
+				<td><{$_lang.conmon.silver}></td>
+				<td><{$_lang.conmon.registered_time}></td>
+				<td><{$_lang.left.offline_time}></td>
+				<td><{$_lang.left.last_offline_time}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$keywordlist[loop].role_id}></td>
+			<td><{$keywordlist[loop].role_name}></td>
+			<td><{$keywordlist[loop].account_name}></td>
+			<td><{$keywordlist[loop].family_name}></td>
+			<td>
+				<{if $keywordlist[loop].faction_id == 1}><{$_lang.left.tiandao}>
+				<{elseif $keywordlist[loop].faction_id == 2}><{$_lang.left.yijian}>
+				<{elseif $keywordlist[loop].faction_id == 3}><{$_lang.left.yinkui}>
+				<{else}><{$_lang.left.cihang}>
+                <{/if}>
+			</td>
+			<td><{$keywordlist[loop].type}></td>
+			<td>
+				<{if $keywordlist[loop].sex eq 1}><{$_lang.new.man}>
+				<{else}><{$_lang.new.woman}>
+				<{/if}>	
+			</td>
+			<td><{$keywordlist[loop].level}></td>
+			<td><{$keywordlist[loop].reincarnation}></td>
+			<td><{$keywordlist[loop].gold_bind}></td>
+			<td><{$keywordlist[loop].gold}></td>
+			<td><{$keywordlist[loop].silver}></td>
+			<td><{$keywordlist[loop].create_time|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+			<td>
+				<{if $keywordlist[loop].is_online ==1}><font color="#0000FF"><{$_lang.conmon.online}></font><{else}><{if $keywordlist[loop].left_day>=3}><font color="red"><{/if}><{$keywordlist[loop].left_day}><{$_lang.conmon.day}><{$keywordlist[loop].left_h_m}><{/if}></font>
+			</td>
+			<td><{$keywordlist[loop].last_offline_time|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+<{/if}>
+
+</body>
+</html>

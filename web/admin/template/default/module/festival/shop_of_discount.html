@@ -1,0 +1,190 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/FusionCharts.js"></script>
+
+
+
+        <script>
+
+	$(document).ready(function(){
+		$("#userid").keydown(function(){
+			$("#nickname").val('');
+			$("#acname").val('');
+		});
+		$("#nickname").keydown(function(){
+			$("#userid").val('');
+			$("#acname").val('');
+		});
+		$("#acname").keydown(function(){
+			$("#userid").val('');
+			$("#nickname").val('');
+		});
+	});
+
+
+        </script>
+        <!--  添加回到顶部   end        -->
+        <style type="text/css">
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%;float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+            .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+
+            BODY { position: relative;}
+
+
+
+        </style>
+        <title><{$_lang.new.shop_of_discount}> </title>
+    </head>
+    <body>
+        <div id="all">
+            <div id="position"><{$_lang.new.shop_of_discount}></div>
+            <div id="main">
+                <form name="form1" method="get">
+                    <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+                       
+                        <tr><td  bgcolor="#D7Eff5">
+                                &nbsp;<{$_lang.conmon.start_day_time}>：
+                                <input value="<{$time_start}>" class="Wdate" id="dStartDate" readonly="readonly" name="dStartDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                <{$_lang.conmon.end_day_time}>：
+                                <input value="<{$time_end}>" class="Wdate" id="dEndDate" readonly="readonly" name="dEndDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                &nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"  />
+                            </td>
+                        </tr>
+
+                    </table>
+                </form>
+                <table width="100%"  border="0" cellpadding="4" cellspacing="1">
+                    <tr class='table_list_head' align='center'>
+                        <td colspan="6"><{$_lang.new.shop_of_discount}>参与统计：<{$time_start}>——<{$time_end}></td>
+                    </tr>
+                    <tr class='table_list_head' align='center'>
+                        <td>折扣礼包类型</td><td>购买次数</td><td>购买人数</td><td>消耗元宝</td><td>当服元宝总消耗</td><td>所占比例</td>
+                    </tr>
+                    <{foreach key=key item=item from=$total}>
+                    <{if $key % 2 == 0}>
+                    <tr class='trEven' align='center'>
+                        <{else}>
+                        <tr class='trOdd' align='center'>
+                            <{/if}>
+                            <td><{$item.item_name}></td><td><{$item.operate_times}></td><td><{$item.role_times}></td><td><{$item.gold}></td><td><{$item.total}></td><td><{$item.percent}></td>
+                        </tr>
+                        <{/foreach}>
+                </table>
+                <br></br>
+                <p align="center" ><font size="3"><b><{$_lang.new.player_gift_receive}></b></font></p>
+                <div class='divOperation' align="center">
+<form name="myform" method="post" action="?action=getOne">
+<input type="hidden" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$time_start}>'/>
+<input type="hidden" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$time_end}>'/>
+&nbsp;<{$_lang.conmon.user_id}>：<input type='text' id="userid" name='userid' size='10' value='<{$search_keyword3}>'/>
+&nbsp;<{$_lang.conmon.role_name}>：<input type='text' id="nickname" name='nickname' size='10' value='<{$search_keyword2}>'/>
+&nbsp;<{$_lang.conmon.user_account}>：<input type='text' id="acname" name='acname' size='10' value='<{$search_keyword1}>'/>
+
+
+&nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"  />
+&nbsp;&nbsp;
+
+<{if $record_count}>
+<{$_lang.conmon.total}><{$record_count}><{$_lang.conmon.records}>
+<{/if}>
+
+</form>
+</div>
+
+<{if $keywordlist2}>
+<table width="100%"  border="0" cellspacing="0" cellpadding="0" class='table_page_num'>
+  <tr>
+      <td height="30" class="even" align="center">
+<form method="get" action="">
+ <{foreach key=key item=item from=$page_list}>
+ <a href="<{$URL_SELF}>?dateStart=<{$time_start|escape:"url"}>&amp;dateEnd=<{$time_end|escape:"url"}>&amp;acname=<{$search_keyword1|escape:"url"}>&amp;nickname=<{$search_keyword2|escape:"url"}>&amp;userid=<{$search_keyword3|escape:"url"}>&amp;page=<{$item}>>"><{$key}></a><span style="width:5px;"></span>
+ <{/foreach}>
+<{if $page_count > 0}><{$_lang.conmon.all_page}>(<{$page_count}>)
+
+<{if $page_count > 5}>
+	<input name="acname" type="hidden" value="<{$search_keyword1}>" >
+	<input name="nickname" type="hidden" value="<{$search_keyword2}>" >
+	<input name="userid" type="hidden" value="<{$search_keyword3}>" >
+    <input name="page" type="text" class="text" size="3" maxlength="6">
+	&nbsp;<input type="submit" class="button" name="Submit" value="GO">
+<{/if}>
+
+<!-- [<a href="<{$URL_SELF}>?excel=true&acname=<{$search_keyword1|escape:"url"}>&amp;nickname=<{$search_keyword2|escape:"url"}>&amp;userid=<{$search_keyword3|escape:"url"}>&amp;sort_1=<{$search_sort_1}>&amp;sort_2=<{$search_sort_2}>"><{$_lang.conmon.out_excel}></a>] -->
+<{/if}>
+</form>
+    </td>
+  </tr>
+</table>
+
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+<!-- SECTION  START -------------------------->
+<form id="form1" name="form1" method="post" action="">
+<{section name=loop loop=$keywordlist2}>
+	<{if $smarty.section.loop.rownum % 20 == 1}>
+	<tr class='table_list_head'>
+		<td>ID</td>
+		<td ><{$_lang.conmon.user_id}></td>
+		<td><{$_lang.conmon.role_name}></td>
+		<td><{$_lang.conmon.user_account}></td>
+		<td><{$_lang.new.type_of_bag}></td>
+		<td><{$_lang.new.get_bag_time}></td>
+		<td><{$_lang.new.bag_detail}></td>
+	</tr>
+	<{/if}>
+
+	<{if $smarty.section.loop.rownum % 2 == 0}>
+	<tr class='trEven'>
+	<{else}>
+	<tr class='trOdd'>
+	<{/if}>
+		<td>
+		<{$keywordlist2[loop].id}>
+		</td><td>
+		<{$keywordlist2[loop].user_id}>
+		</td><td>
+		<{$keywordlist2[loop].user_name}>
+		</td><td>
+		<{$keywordlist2[loop].account_name}>
+		</td>
+		<td>
+		<{$keywordlist2[loop].gold_unbind}>
+		</td>
+		<td>
+		<{$keywordlist2[loop].item_name}>
+		</td>
+        <td>
+		<{$keywordlist2[loop].mtime|date_format:"%Y-%m-%d %H:%M:%S"}>
+		</td>
+	</tr>
+<{sectionelse}>
+
+<{/section}>
+<!-- SECTION  END -------------------------->
+</form>
+</table>
+<{else}>
+<{$warning}>
+<{/if}>
+
+            </div>
+        </div>
+
+
+    </body>
+    <script type="text/javascript">
+
+
+
+    </script>
+
+</html> 

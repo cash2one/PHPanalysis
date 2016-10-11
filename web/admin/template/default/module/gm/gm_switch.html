@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.open_close}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script language="javascript">
+	//竞技场
+	function doOpenMatch(){
+		$("#frmMatch").attr("action","?action=do1&type=open");
+		$("#frmMatch").submit();
+	}
+	function doCloseMatch(){
+		$("#frmMatch").attr("action","?action=do2&type=close");
+		$("#frmMatch").submit();
+	}
+	function doForceStop(){
+		$("#frmMatch").attr("action","?action=do8&type=close");
+		$("#frmMatch").submit();
+	}
+	function doOpenMatchTime(){
+		$("#frmMatch").attr("action","?action=do3&type=open_time");
+		$("#frmMatch").submit();
+	}
+
+	//坐骑竞技
+	function doOpenMountMatch(){
+		$("#frmMatch").attr("action","?action=do5&type=open");
+		$("#frmMatch").submit();
+	}
+	function doCloseMountMatch(){
+		$("#frmMatch").attr("action","?action=do6&type=close");
+		$("#frmMatch").submit();
+	}
+	function doOpenMountMatchTime(){
+		$("#frmMatch").attr("action","?action=do7&type=open_time");
+		$("#frmMatch").submit();
+	}
+	//防沉迷系统
+	function doOpenFcm(){
+		$("#frmMatch").attr("action","?action=do9&type=open");
+		$("#frmMatch").submit();
+	}
+	function doCloseFcm(){
+		$("#frmMatch").attr("action","?action=do10&type=close");
+		$("#frmMatch").submit();
+	}
+</script>
+</head>
+
+ <body>
+ <div id="position"><{$_lang.left.gm_manage}>：<{$_lang.left.open_close}></div>
+ <div id="all">
+					<form action="?action=do0&type=title" id="frmMatch" method="post">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="3" background="/web/admin/static/images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.arena}></b></font>
+							</td>
+                        </tr>
+						<tr class='trEven'  align="center">
+							<td>
+								<input name="btnOpenMatch" value="<{$_lang.left.open_arena_sys}>" onclick="doOpenMatch();" type="button">
+							</td>
+							<td>
+								<input name="btnCloseMatch" value="<{$_lang.left.close_arena_sys}>" onclick="doCloseMatch();" type="button">
+							</td>
+							<td>
+								<input name="btnForceStop" value="<{$_lang.left.forced_end_game}>" onclick="doForceStop();" type="button">
+							</td>
+						</tr>
+						<tr class='trOdd'  align="center">
+							<td ><{$_lang.conmon.date_time}></td>
+							<td >
+								<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'HH:mm'})" id='match_start_time' name='match_start_time' size='12' value='<{$match_start_time}>'/>
+							</td>
+							<td>
+								<input name="btnOpenMatchTime" value="<{$_lang.left.set_arena_on_time}>" onclick="doOpenMatchTime();" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+
+					<br>
+
+					<form action="?action=do4&type=title" method="post">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="3" background="/web/admin/static/images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.horse_sports}></b></font>
+							</td>
+                        </tr>
+						<tr class='trEven'  align="center">
+							<td>
+								<input name="btnOpenMountMatch" value="<{$_lang.left.on_horse_sports}>" onclick="doOpenMountMatch();" type="button">
+							</td>
+							<td>
+								<input name="btnCloseMountMatch" value="<{$_lang.left.off_horse_sports}>" onclick="doCloseMountMatch();" type="button">
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr class='trOdd'  align="center">
+							<td ><{$_lang.conmon.date_time}></td>
+							<td >
+								<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'HH:mm'})" id='mount_match_start_time' name='mount_match_start_time' size='12' value='<{$mount_match_start_time}>'/>
+							</td>
+							<td>
+								<input name="btnOpenMountMatchTime" value="<{$_lang.left.set_horse_sports_on_time}>" onclick="doOpenMountMatchTime();" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+
+					<br>
+
+					<form action="?action=do&type=title" method="post">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="3" background="/web/admin/static/images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.fatigue_system}></b></font>
+							</td>
+                        </tr>
+						<tr class='trEven'  align="center">
+							<td>
+								<input name="btnOpenFcm" value="<{$_lang.left.on_fatigue_system}>" onclick="doOpenFcm();" type="button">
+							</td>
+							<td>
+								<input name="btnCloseFcm" value="<{$_lang.new.off_fatigue_system}>" onclick="doCloseFcm();" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+	</div>
+ 
+ </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>货币的获取和消耗</title>
+<link rel="stylesheet" href="/web/admin/static/css/tags.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/js/date/daterangepicker.css" />
+<script src="/web/admin/static/js/date/jquery-1.11.2.min.js"></script>
+<script src="/web/admin/static/js/date/moment.min.js"></script>
+<script src="/web/admin/static/js/date/jquery.daterangepicker.js"></script>
+<script src="/web/admin/static/js/databackend.js"></script>
+
+
+</head>
+<body>
+    <div class="explain">
+        <span>&diams;根据玩家角色名/id/账号名等条件，在一定时间段内，查询拥有的资源数量变化情况（发生时间，变更前，变更数，变更后，变化原因）</span><br>
+    </div><br>
+<h3>货币的获取和消耗</h3>
+<hr>
+<form name="condition" id="myform" action="<{$URL_SELF}>" method="post">
+    角色名：<input type="text" name="role_name" size="15" value="<{$role_name}>" />&nbsp;
+    玩家ID：<input type="text" name="role_id" size="15" value="<{$role_id}>" />&nbsp;
+    账号名：<input type="text" name="account_id" size="15" value="<{$account_id}>" />&nbsp;
+        <span>
+        <select name="server" id="serverlist" style="width:100px;" onchange="toajax(this.value)" >
+                <option value="<{$server}>">选择服务器</option>
+            <{section name=server loop=$serverlist}>
+                <option value="<{$serverlist[server].svr_id}>"><{$serverlist[server].name}></option>
+            <{/section}>
+        </select> 
+        </span>&nbsp;
+        统计开始时间：<input type="text" name="begin_time" id="begin_time" size="10" placeholder="年/月/日" value="<{$begin_time}>" />&nbsp;
+        结束时间：<input type="text" name="end_time" id="end_time" size="10" placeholder="年/月/日" value="<{$end_time}>" />&nbsp;
+    <input type="submit" name="search" value="搜索"/>
+
+    <hr>
+    <div id="main_div">
+    <table id="main_table">
+        <tr style="background-color:#2e6fac; color:white;">
+            <td>角色名</td>
+            <td>玩家ID</td>
+            <td>账号名</td>
+            <td>物品类型</td>
+            <td>物品ID</td>
+            <td>变化原因</td>
+            <td>发生时间</td>
+            <td>变更前数量</td>
+            <td>变更数量</td>
+            <td>变更后数量</td>
+            
+        </tr>
+        <{section name=loop loop=$dataList}>
+            <{if $smarty.section.loop.rownum % 2 == 0}>
+            <tr class='trEven'>
+            <{else}>
+                <tr class='trOdd'>
+            <{/if}>
+            <td> <{$dataList[loop].role_name}> </td>
+            <td> <{$dataList[loop].role_id}> </td>
+            <td> <{$dataList[loop].account_id}> </td>
+            <td> <{$dataList[loop].item_type}> </td>
+            <td> <{$dataList[loop].item_id}> </td>
+            <td> <{$dataList[loop].action}> </td>
+            <td> <{$dataList[loop].time|date_format:"%Y-%m-%d %H:%M:%S"}> </td>
+            <td> <{$dataList[loop].before_count}> </td>
+            <td> <{$dataList[loop].count}> </td>
+            <td> <{$dataList[loop].left_count}> </td>
+           </tr>
+        <{/section}>
+
+    </table>
+    <{include file="common/pages.shtml"}>
+</form>
+</div><br><br>
+
+</body>
+</html>

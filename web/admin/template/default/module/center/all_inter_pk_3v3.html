@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script> 
+        <style type="text/css">
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%;float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+            .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+
+            BODY { position: relative;}
+        </style>
+        <title>跨服战统计</title>
+    </head>
+    <body>
+        <div id="all">
+            <div id="position">跨服战统计</div>
+            <div id="main"><form name="form" method="GET">
+                    <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+                        <tr><td>&nbsp;<{$_lang.left.select_agents}>：</td></tr>
+                        <tr>
+                            <td>
+                                <input type="radio" name="radio_agent" id="radio_agent" onclick="GetPlatServer(this.value)" value="0" <{if $agent_id==0}> checked <{/if}>  /><{$_lang.conmon.any}>
+                                       <{foreach key=key item=item from=$allAgentName}>
+                                       <input type="radio" name="radio_agent" id="radio_agent" onclick="GetPlatServer(this.value)" value="<{$key}>"  <{if $agent_id==$key}> checked <{/if}> /><{$item}>
+                                       <{/foreach}>
+                                       </td>
+                                        </tr>
+                                        <tr id="sServerName_TD1" style="display:none"><td>&nbsp;<{$_lang.left.select_agents}>：</td></tr>
+                                        <tr id="sServerName_TD2" style="display:none"><td id="sServer"></td></tr>
+                                        <tr><td  bgcolor="#D7Eff5">
+                                                &nbsp;<{$_lang.conmon.start_day_time}>：
+                                                <input value="<{$dStartTime}>" class="Wdate" id="dStartDate" readonly="readonly" name="dStartDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                                <{$_lang.conmon.end_day_time}>：
+                                                <input value="<{$dEndTime}>" class="Wdate" id="dEndDate" readonly="readonly" name="dEndDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                                <input value="<{$_lang.conmon.view}>" type="submit" id="btnsubmit"/>
+                                                <font color="#FF0000">登陆达标数：当日参加跨服各平台、各服符合参赛条件的玩家登陆总数</font>
+                                            </td>
+                                        </tr>
+                                        </table>
+                                        </form>
+                                        <table width="100%"  border="0" cellpadding="4" cellspacing="1">
+                                            <tr class='table_list_head' align='center'>
+                                                <td rowspan="2"><{$_lang.conmon.date_time}></td><td colspan="5">玩家</td><td colspan="3">战队</td></tr>
+                                            <tr class='table_list_head' align='center'>
+                                                <td>登陆达标数</td><td>报名数</td><td>报名率</td><td>参与数</td><td>参与率</td>
+                                                <td>报名数</td><td>参与数</td> <td>参与率</td>
+                                            </tr>
+                                            <{foreach from=$data item=inter_pk key=key}>
+                                            <{if $key % 2 == 0}>
+                                            <tr class='trEven' align='center'>
+                                                <{else}>
+                                                <tr class='trOdd' align='center'>
+                                                    <{/if}>
+                                                    <td><{$inter_pk.date}></td></td><td><{$inter_pk.all_players}></td>
+                                                <td><{$inter_pk.accept_players}></td><td><{$inter_pk.ap_percent}><td><{$inter_pk.login_players}></td><td><{$inter_pk.lp_percent}></td>
+                                                    <td><{$inter_pk.accept_teams}></td> <td><{$inter_pk.login_teams}></td><td><{$inter_pk.lt_percent}></td>
+
+                                                </tr>
+                                                <{foreachelse}>
+                                                <tr bgcolor="#FFFFFF">
+                                                    <td colspan="3"><font color="#FF0000"><{$_lang.left.no_record}></font></td>
+                                                </tr>
+                                                <{/foreach}>
+
+            </div>
+        </div>
+
+    </body>
+    <script type="text/javascript">
+                                            var server_id ="<{$server_id}>",agent_id = "<{$agent_id}>";
+
+                                            function GetPlatServer(value) {
+                                                if (value == "0") {// hide servers if select all
+                                                    $("#sServerName_TD1").css("display", "none");
+                                                    $("#sServerName_TD2").css("display", "none");
+                                                } else {
+                                                    $("#sServerName_TD1").css("display", "block");
+                                                    $("#sServerName_TD2").css("display", "block");
+                                                }
+
+                                                    getServerRadios(agent_id,0);
+                                                    search();
+                                            }
+
+
+                                            $(function(){
+                                                if(agent_id > 0){
+                                                    $("#sServerName_TD1").css("display", "block");
+                                                    $("#sServerName_TD2").css("display", "block");
+                                                    getServerRadios(agent_id,server_id);
+                                                }
+                                            })
+
+                                            function getServerRadios(agent_id,server_id){
+                                                var servers=<{$servers}>;
+                                                var server = servers[agent_id];
+                                                var radios = "<input name='radio_server'  value='0' onclick='search();' "
+                                                    +(server_id == 0? "checked='checked'":' ')
+                                                    +"type='radio'/><{$_lang.conmon.any}> ";
+                                                for(var i in server){
+                                                    radios += "<input name='radio_server'  value='" + i + "' onclick='search();' "
+                                                        +(server_id == i? "checked='checked'":' ')
+                                                        +"type='radio'/>" + server[i];
+                                                }
+                                                $("#sServer").html(radios);
+                                            }
+
+
+                                            function search(){
+                                                $('#btnsubmit').click()
+                                            }
+
+
+                                        </script>
+</html>

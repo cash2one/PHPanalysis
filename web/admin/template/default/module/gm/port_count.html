@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<title>
+	<{$_lang.left.port_error_statistics}>
+</title>
+</head>
+
+<body>
+<div id="position"><{$_lang.left.gm_manage}>：<{$_lang.left.port_error_statistics}></div>
+<div class='divOperation'>
+<form name="myform" method="post" action="<{$URL_SELF}>">
+<{$_lang.left.port_view}>:
+<input type='text' id="port" name='port' size='10' value='<{$search1}>'/>
+&nbsp;
+<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+&nbsp;&nbsp;&nbsp;
+<{if $record_count}>
+<{$_lang.conmon.total}><{$record_count}><{$_lang.conmon.records}>
+<{/if}>
+</form>
+</div>
+
+<table width="100%"  border="0" cellspacing="0" cellpadding="0" class='table_page_num'>
+  <tr>
+    <td height="30" class="even">
+		<form method="get" action="">
+			<center><{foreach key=key item=item from=$page_list}>
+			<a href="<{$URL_SELF}>?acname=<{$search_keyword1|escape:"url"}>&amp;page=<{$item}>"><{$key}></a><span style="width:5px;"></span>
+			<{/foreach}>
+			<{if $page_count > 0}><{$_lang.conmon.all_page}>(<{$page_count}>)
+			<{/if}></center>
+		</form>
+    </td>
+  </tr>
+</table>
+
+<{if $keywordlist}>
+	<center><table cellspacing="1" cellpadding="3" border="0" class='paystat' >
+	<!-- SECTION  START -------------------------->
+	<form id="form1" name="form1" method="post" action="">
+	<{section name=loop loop=$keywordlist}>
+		
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+		<tr class='table_list_head'>
+			<td><{$_lang.left.port}></td>
+			<td><{$_lang.left.gm_to_user_name}></td>
+			<td><{$_lang.left.ip_addr}></td>
+			<td><{$_lang.left.user_local}></td>
+			<td><{$_lang.left.network_provider}></td>
+			<td><{$_lang.left.connect_server_addr}></td>
+			<td><{$_lang.left.node_type}></td>
+			<td><{$_lang.left.error_type}></td>
+		</tr>
+		<{/if}>
+
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'>
+		<{else}>
+		<tr class='trOdd'>
+		<{/if}>
+			<td><{$keywordlist[loop].port}></td>
+			<td><{$keywordlist[loop].account}></td>
+			<td><{$keywordlist[loop].ip_address}></td>
+			<td><{$keywordlist[loop].from}></td>
+			<td><{$keywordlist[loop].suppliers}></td>
+			<td><{$keywordlist[loop].serverhost}></td>
+			<td><{$keywordlist[loop].type}></td>
+			<td><{$keywordlist[loop].errortype}></td>
+		</tr>
+	<{sectionelse}>
+
+	<{/section}>
+	<!-- SECTION  END -------------------------->
+	</form>
+	</table></center>
+<{/if}>
+
+<br>
+
+<{if $record_count>0}>
+<div>
+<center>
+<table width="20%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+<tr bgcolor="#E5F9FF">
+    <td align="center"><{$_lang.left.port}></td>
+	<td align="center"><{$_lang.left.error_times}></td>
+</tr>
+<{section name=loop loop=$port_count}>
+<tr bgcolor="#E5F9FF">
+	<td align="center"><{$port_count[loop].port}></td>
+	<td align="center"><{$port_count[loop].port_count}></td>
+</tr>
+<{/section}>
+</table>
+</center>
+</div>
+<{else}>
+<{$_lang.left.port}><label style="color:red; font-weight:bold;">[<{$search1}>]</label><{$_lang.new.no_error_record}>
+<{/if}>
+
+
+</body>
+</html>

@@ -1,0 +1,155 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/highcharts.js"></script>
+
+
+
+        <script>
+  
+
+
+
+            // .td {white-space:nowrap;}
+        </script>
+        <!--  添加回到顶部   end        -->
+        <style type="text/css">
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%;float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+            .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+
+            BODY { position: relative;}
+
+
+
+        </style>
+        <title><{$_lang.left.day_gold_log}></title>
+    </head>
+    <body>
+        <div id="all">
+            <div id="position"><{$_lang.left.day_gold_log}></div>
+            <div id="main">
+                
+                <form name="form1" method="get">
+                    <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+
+                        <tr>
+                            <td  bgcolor="#D7Eff5">
+                                &nbsp;<{$_lang.conmon.start_day_time}>：
+                                <input value="<{$time_start}>" class="Wdate" id="dStartDate" readonly="readonly" name="dStartDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                <{$_lang.conmon.end_day_time}>：
+                                <input value="<{$time_end}>" class="Wdate" id="dEndDate" readonly="readonly" name="dEndDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                &nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"  />
+                            </td>
+
+                        </tr>
+                    </table>
+                </form>
+                <table width="100%"  border="0" cellpadding="4" cellspacing="1">
+                    <tr class='table_list_head' align='center' white-space="nowrap">
+                        <td rowspan="2" class="td"><{$_lang.conmon.date_time}></td><td colspan="2"><{$_lang.new.used_gold}></td><td colspan="2"><{$_lang.new.added_gold}></td><td colspan="2"><{$_lang.new.left_gold}></td><td colspan="2"><{$_lang.new.last_day_left}></td><td colspan="2"><{$_lang.new.gold_balance}></td>
+                        <td colspan="2"><{$_lang.new.used_gold_percent}></td><td rowspan="2" class="td"><{$_lang.new.avg_online}></td><td colspan="2"><{$_lang.new.person_added_gold}></td><td colspan="2" ><{$_lang.new.person_used_gold}></td><td colspan="2"><{$_lang.new.left_gold_percent}></td>
+                    </tr>
+                    <tr class='table_list_head' align='center'  white-space="nowrap">
+                        <td class="td"><{$_lang.conmon.ingot}></td><td class="td"><{$_lang.conmon.bind_ingot}></td><td class="td"><{$_lang.conmon.ingot}></td><td class="td"><{$_lang.conmon.bind_ingot}></td><td class="td"><{$_lang.conmon.ingot}></td><td class="td"><{$_lang.conmon.bind_ingot}></td><td class="td"><{$_lang.conmon.ingot}></td><td class="td"><{$_lang.conmon.bind_ingot}></td><td class="td"><{$_lang.conmon.ingot}></td><td class="td"><{$_lang.conmon.bind_ingot}></td>
+                        <td class="td"><{$_lang.conmon.ingot}></td><td class="td"><{$_lang.conmon.bind_ingot}></td><td class="td"><{$_lang.conmon.ingot}></td><td class="td"><{$_lang.conmon.bind_ingot}></td><td class="td"><{$_lang.conmon.ingot}></td><td class="td"><{$_lang.conmon.bind_ingot}></td><td class="td"><{$_lang.conmon.ingot}></td><td class="td"><{$_lang.conmon.bind_ingot}></td>
+                    </tr>
+                    <{foreach key=key item=item from=$data}>
+                    <{if $key % 2 == 0}>
+                    <tr class='trEven' align='center'>
+                        <{else}>
+                        <tr class='trOdd' align='center'>
+                            <{/if}>
+                            <td><{$item.date}></td><td><{$item.used_unbind}></td><td><{$item.used_bind}></td><td><{$item.add_unbind}></td><td><{$item.add_bind}></td>
+                            <td><{$item.left_unbind}></td><td><{$item.left_bind}></td><td><{$item.last_unbind}></td><td><{$item.last_bind}></td><td><{$item.send_unbind}></td><td><{$item.send_bind}></td>
+                            <td><{$item.used_unbind_percent}>%</td><td><{$item.used_bind_percent}>%</td> <td><{$item.avg_online}></td><td><{$item.p_add_unbind}></td><td><{$item.p_add_bind}></td><td><{$item.p_used_unbind}></td><td><{$item.p_used_bind}></td>
+                            <td><{$item.add_unbind_percent}>%</td><td><{$item.add_bind_percent}>%</td>
+                        </tr>
+                        <{/foreach}>
+                </table>
+<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                    <tr bgcolor="FFFFFF">
+                        <li><font color="#008000"><{$_lang.left.note}>：</font></li>
+                        <li><{$_lang.new.used_gold_percent}> = <{$_lang.new.used_gold}> /(<{$_lang.new.added_gold}> + <{$_lang.new.last_day_left}>) * 100%</li>
+                        <li><{$_lang.new.left_gold_percent}> =(<{$_lang.new.added_gold}> - <{$_lang.new.used_gold}>)/ <{$_lang.new.added_gold}> * 100%</li>
+                    </tr>
+                </table>
+                <div id="container" style="width: 960px; height: 400px; margin: 0 auto"></div>
+            </div>
+        </div>
+
+
+    </body>
+    <script type="text/javascript">
+        var chart;
+        $(function(){
+            build_charts();
+        })
+
+            
+            function build_charts(){
+                chart = new Highcharts.Chart({
+                    chart: {
+			renderTo: 'container',
+			type: 'line',
+			marginRight: 130,
+			marginBottom: 25
+                    },
+                    title: {
+			text: '<{$_lang.left.day_gold_log}>',
+			x: -20 //center
+                    },
+
+                    xAxis: {
+			categories: [<{$xAxis}>]
+                    },
+                    yAxis: {
+			title: {
+                            text: '<{$_lang.conmon.ingot}>'
+			},
+			plotLines: [{
+				value: 0,
+				width: 1,
+				color: '#808080'
+                            }]
+                    },
+                    tooltip: {
+			formatter: function() {
+                            return '<b>'+ this.series.name +'</b><br/>'+
+                                this.x +': '+ this.y +'(YB)';
+			}
+                    },
+                    legend: {
+			layout: 'vertical',
+			align: 'right',
+			verticalAlign: 'top',
+			x: -10,
+			y: 100,
+			borderWidth: 0
+                    },
+                    series: [
+                        <{foreach from=$charts item=data key=key}>
+					{
+						name: '<{$data.desc}>',
+						data: [<{$data.data}>]
+
+					},
+					<{/foreach}>
+
+                    ]
+                });
+            }
+
+
+
+    </script>
+
+</html>

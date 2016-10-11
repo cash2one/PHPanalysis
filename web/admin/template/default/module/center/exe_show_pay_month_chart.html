@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>[中心]全服充值分天</title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+.table_all_head {
+	color:#232323;
+	background-color:#99CC66;
+	font-weight:bold;
+}
+</style>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/highcharts.js"></script>
+<script type="text/javascript">
+var chart;
+			$(document).ready(function() {
+				chart = new Highcharts.Chart({
+					chart: {
+						renderTo: 'container',
+						defaultSeriesType: 'column'
+					},
+					title: {
+						text: '全服今天在线柱状图'
+					},
+					xAxis: {
+						categories: [<{$x_data}>]
+
+					},
+					yAxis: {
+						min: 0,
+						title: {
+							text: '在线人数'
+						}
+					},
+					tooltip: {
+						formatter: function() {
+							return ''+ this.x +'<br>' + this.series.name + ': '+ this.y +' 人';
+						}
+					},
+					plotOptions: {
+						column: {
+							pointPadding: 0.2,
+							borderWidth: 0
+						}
+					},
+				    series: [{
+						name: '当前在线',
+						data: [<{$now_data}>]				
+					}, {
+						name: '最高在线',
+						data: [<{$max_data}>]
+				
+					}, {
+						name: '最低在线',
+						data: [<{$min_data}>]
+				
+					}]
+				});
+				
+				
+			});
+				
+</script>
+</head>
+
+<body>
+	<div id="all">
+		<div id="position">在线与注册：[中心]全服充值分天</div>
+    	<div><{$errorMsg}></div>
+<form name="myform" method="post" action="<{$URL_SELF}>">
+统计日期：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$search_keyword1}>'/>
+<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"  /><br><br>
+                	<table cellspacing="1" cellpadding="3" border="0" class='table_list'>
+                        <tr>	
+                            <td colspan=1>当前系统时间：<{$smarty.now|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                        </tr>
+                    </table>
+<!-- 					<div id="container" style="width: 800px; height: 400px; margin: 0 auto"></div>
+					<center><b>注:点击曲线底部说明可显示或隐藏相应曲线</b></center><br> -->
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF"> 
+                            <td colspan="3" background="/web/admin/static//images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b>全服充值分天统计，每30分钟统计一次</b></font>
+                            </td>
+                        </tr>
+					</table>
+					<table width="100%"  border="0" cellpadding="4" cellspacing="1">
+                        <tr class='table_all_head' align='center'> 
+                          <td>运营商</td>
+						  <td>服务器</td>
+						  <td>日期</td>
+                          <td>金额（元）</td>
+						  <td>人次</td>
+						  <td>人数</td>
+						  <td>ARPU值</td>
+                        </tr>
+                        <{foreach from=$all_online_info item=online key=key}>
+						<{if $online.agent_id == null}>
+							<tr class='table_all_head' align='center'>
+						<{else}>
+						<{if $online.agent_id % 2 == 0}>
+							<{if $online.game_server_id==null}>
+								<tr class='table_list_head' align='center'>
+							<{else}>
+								<tr class='trEven' align='center'>
+							<{/if}>
+						<{else}>
+							<{if $online.game_server_id==null}>
+								<tr class='table_list_head' align='center'>
+							<{else}>
+								<tr class='trOdd' align='center'>
+							<{/if}>
+						<{/if}>
+						<{/if}> 
+                          <td>
+						  <{if $online.agent_id==null}>全部运营商总计
+                          <{else}><{$online.agent_name}><{/if}>
+						  </td>
+						  <td><{if $online.game_server_id==null && $online.agent_id != null}><{$online.agent_name}>总计
+                          <{else}><{$online.game_server_id}><{/if}>
+						  </td>
+						  <td><{$online.year}>-<{$online.month}>-<{$online.day}></td>
+                          <td><{$online.sum_pay_day}></td>
+						  <td><{$online.sum_times_cnt}></td>
+                          <td><{$online.sum_role_cnt}></td>
+						  <td><{$online.sum_arpu}></td>
+                        </tr>
+                        <{foreachelse}>
+                       	<tr bgcolor="#FFFFFF"> 
+                          <td colspan="3"><font color="#FF0000">暂无充值纪录(请检查期间游戏服是否正常开启了)</font></td>
+                        </tr>
+                        <{/foreach}>
+                        
+                     </table>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#role_id").keydown(function(){
+			$("#acname").val('');
+			$("#nickname").val('');
+		});
+		$("#nickname").keydown(function(){
+			$("#role_id").val('');
+			$("#acname").val('');
+		});
+		$("#acname").keydown(function(){
+			$("#role_id").val('');
+			$("#nickname").val('');
+		});
+	});
+</script>
+<title>
+	积分使用统计
+</title>
+</head>
+
+<body>
+<div id="position">数据分析：积分使用统计</div>
+<span style="color:red;font-weight: bold;">开服至今 【积分使用】共使用:-<{$points_all}>-分</span><br>
+
+<div class='divOperation'>
+<form name="myform" method="post" action="<{$URL_SELF}>">
+&nbsp;角色ID:<input type="text" id="role_id" name="role_id" size="10" value="<{$role_id}>" />
+&nbsp;角色名:<input type='text' id="nickname" name='nickname' size='10' value='<{$search1}>'/>
+&nbsp;帐号:<input type='text' id="acname" name='acname' size='10' value='<{$search2}>'/>
+&nbsp;统计起始时间：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$search_keyword1}>'/>
+&nbsp;终止时间：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$search_keyword2}>'/>
+&nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"  />
+&nbsp;
+<input type="button" class="button" name="datePrev" value="今天" onclick="javascript:location.href='<{$URL_SELF}>?order=<{$order}>&dateStart=<{$dateStrToday}>&dateEnd=<{$dateStrToday}>';">&nbsp
+&nbsp;
+<input type="button" class="button" name="datePrev" value="前一天" onclick="javascript:location.href='<{$URL_SELF}>?order=<{$order}>&dateStart=<{$dateStrPrev}>&dateEnd=<{$dateStrPrev}>';">
+&nbsp;
+<input type="button" class="button" name="dateNext" value="后一天" onclick="javascript:location.href='<{$URL_SELF}>?order=<{$order}>&dateStart=<{$dateStrNext}>&dateEnd=<{$dateStrNext}>';">
+&nbsp;
+<input type="button" class="button" name="dateAll" value="全部" onclick="javascript:location.href='<{$URL_SELF}>?order=<{$order}>&dateStart=ALL&dateEnd=ALL';">
+</form>
+
+
+
+</div>
+
+<{if $keywordlist}>
+	<div style='float:left;margin-right:5px;'>
+	<table cellspacing="1" cellpadding="3" border="0" class='paystat' >
+	<!-- SECTION  START -------------------------->
+
+	<tr class='table_list_head'>
+		<td colspan=7 >
+	    积分使用统计&nbsp;&nbsp;&nbsp;&nbsp;统计时间范围：<{$search_keyword1}> 0:0:0
+	    至 <{$search_keyword2}> 23:59:59</td>
+		<{if $type}><td></td><td></td><{/if}>
+	</tr>
+
+	<form id="form1" name="form1" method="post" action="">
+	<{section name=loop loop=$keywordlist}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+		<tr class='table_list_head'>
+			<td>类型</td>
+			<td>记录操作次数</td>
+			<td>记录操作人数</td>
+			<!-- <td>总银两</td> -->
+			<td>积分</td>
+			<td>百分比</td>
+			
+		</tr>
+		<{/if}>
+
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'>
+		<{else}>
+		<tr class='trOdd'>
+		<{/if}>
+			<td>
+			<{$keywordlist[loop].desc}>
+			</td>
+			<td>
+			<{$keywordlist[loop].c}>
+			</td>
+			<td>
+			<{$keywordlist[loop].role_num}>
+			</td>
+<!-- 			<td>
+			<{$keywordlist[loop].silver}>
+			</td> -->
+			<td>
+			<{$keywordlist[loop].points}>
+			</td>
+			<td>
+			<font color="red">
+				<{$keywordlist[loop].points_per}><{if $keywordlist[loop].points >= 0}>%<{/if}>
+			</font>
+			</td>
+		
+		</tr>
+	<{sectionelse}>
+
+	<{/section}>
+	<!-- SECTION  END -------------------------->
+
+	</form>
+	</table>
+	</div>
+<{/if}>
+<{if $buy_stat}>
+	<div style='float:left;'>
+	<table cellspacing="1" cellpadding="3" border="0" class='paystat' >
+		<tr class='table_list_head'>
+			<td colspan=10>
+				(积分购买的)道具统计&nbsp;&nbsp;&nbsp;&nbsp;统计时间范围：<{$search_keyword1}> 0:0:0 至 <{$search_keyword2}> 23:59:59
+			</td>
+		<tr>
+	<{foreach item=row from=$buy_stat key=key}>
+		<{if $key % 20==0}>
+		<tr class='table_list_head'>
+			<td>道具ID</a></td>
+			<td>道具名</td>
+			<td>总个数</a></td>
+			<td>积分</td>
+			<td>百分比</td>
+			<!-- <td>总积分</a></td> -->
+		</tr>
+		<{/if}>
+		<tr class="<{cycle values='trOdd, trEven'}>">
+			<td><{$row.itemid}></td>
+			<td><{$row.item_name}></td>
+			<td><{$row.amount}></td>
+			<td><{$row.points}></td>
+			<td>
+				<font color="red">
+					<{$row.points_per}><{if $row.points >= 0}>%<{/if}>
+				</font>
+			</td>
+			
+			<!-- <td><{$row.silver_unbind}></td> -->
+		</tr>
+	<{/foreach}>
+	</table>
+	</div>
+<{else}>
+<br><label style="color:red; font-weight:bold;">【<{$search2}>】</label>没有道具购买数据(积分购买的)
+<{/if}>
+
+</body>
+</html>

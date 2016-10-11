@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+
+    <link rel="stylesheet" href="/web/admin/static/css/jquery.ui.autocomplete.css"/>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/web/admin/static/ui/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="/web/admin/static/ui/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="/web/admin/static/ui/jquery.ui.position.js"></script>
+    <script type="text/javascript" src="/web/admin/static/ui/jquery.ui.autocomplete.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#role_id").keydown(function(){
+			$("#nickname").val('');
+			$("#acname").val('');
+            $('#goods_id').val('');
+		});
+		$("#nickname").keydown(function(){
+			$("#role_id").val('');
+			$("#acname").val('');
+            $('#goods_id').val('');
+		});
+		$("#acname").keydown(function(){
+			$("#role_id").val('');
+			$("#nickname").val('');
+            $('#goods_id').val('');
+		});
+        $('#goods_id').keydown(function(){
+            $("#role_id").val('');
+            $("#nickname").val('');
+            $("#acname").val('');
+        })
+	});
+</script>
+<script type="text/javascript">
+    $(function(){
+        $( "#goods_id" ).autocomplete({
+            source: "../pay/all_goods_name.php",
+            minLength: 2,
+            autoFocus: true
+        });
+    });
+</script>
+<title>
+	<{$_lang.left.user_props_record}>
+</title>
+<style>
+    .show_page{
+        margin:0 4px;
+    }
+    .me{
+        color:#ff0000;
+    }
+</style>
+</head>
+
+
+
+<body>
+<div id="position"><{$_lang.left.data_analysis}>：<{$_lang.left.user_props_record}></div>
+<div class='divOperation'>
+<form name="myform" method="get" action="<{$URL_SELF}>">
+    <input name="action" value="do" type="hidden">
+&nbsp;<{$_lang.conmon.user_id}>:<input type="text" id="role_id" name="role_id" size="10" value="<{$role_id}>" />
+&nbsp;<{$_lang.conmon.role_name}>：<input type='text' id="nickname" name='nickname' size='10' value='<{$role_name}>'/>
+&nbsp;<{$_lang.conmon.user_account}>：<input type='text' id="acname" name='acname' size='10' value='<{$account_name}>'/>
+
+&nbsp;<{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$time_start}>'/>
+&nbsp;<{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$time_end}>'/>
+
+<br>
+    &nbsp;<{$_lang.left.goods_id}>：<input type='text' id="goods_id" name='goods_id' size='15' value='<{$goods_id}>'/>
+    &nbsp;<{$_lang.new.type}>：
+    <select name="search_type">
+        <option value="0"><{$_lang.conmon.any}></option>
+        <{foreach key=key item=item from=$_lang.item_log_type}>
+        <option value="<{$key}>" <{if $search_type==$key}> selected <{/if}> ><{$item}></option>
+        <{/foreach}>
+    </select>
+    &nbsp;&nbsp;<{$_lang.conmon.sort}>
+<select name="sort_1">
+	<{html_options options=$sortoption selected=$search_sort_1}>
+</select>
+<select name="sort_2">
+	<{html_options options=$sortoption selected=$search_sort_2}>
+</select>
+
+
+&nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+
+&nbsp;&nbsp;
+<{if $record_count}>
+<{$_lang.conmon.total}><{$record_count}><{$_lang.conmon.records}>
+<{/if}>
+</form>
+
+</div>
+<!-- <{if $balance}>
+<span style="color:red;font-weight: bold;">银两流水统计：<{$balance}>银两</span>
+<span>这里的数值必须是负数或0。正数表明该玩家帐号有问题。如果为-100，则表示该玩家目前拥有100银两；0表示没有银两。</span>
+<{/if}> -->
+
+<{if $role_result|@count neq 0}>
+    <table class='paystat' style="width:100%">
+        <tr class='table_list_head'>
+            <td><{$_lang.conmon.user_id}></td>
+            <td><{$_lang.conmon.role_name}></td>
+            <td><{$_lang.conmon.user_account}></td>
+            <td><{$_lang.conmon.operating}></td>
+        </tr>
+        <{foreach item="roleData" from="$role_result"}>
+        <tr class="trOdd">
+            <td><{$roleData.role_id}></td>
+            <td><{$roleData.role_name}></td>
+            <td><{$roleData.account_name}></td>
+            <td><a href="?action=continue&role_id=<{$roleData.role_id}>&role_name=<{$roleData.role_name}>&account_name=<{$roleData.account_name}>&dateStart=<{$time_start}>&dateEnd=<{$time_end}>">查询</a></td>
+        </tr>
+        <{/foreach}>
+    </table>
+<{/if}>
+
+<table width="100%"  border="0" cellspacing="0" cellpadding="0" class='table_page_num' >
+    <tr align="center">
+    <td height="30" class="even">
+        <{$show}>
+
+    </td>
+  </tr>
+</table>
+
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+<!-- SECTION  START -------------------------->
+<form id="form1" name="form1" method="post" action="">
+<{section name=loop loop=$list}>
+	<{if $smarty.section.loop.rownum % 20 == 1}>
+	<tr class='table_list_head'>
+		<td>id</td>
+		<td><{$_lang.conmon.user_id}></td>
+		<td><{$_lang.conmon.role_name}></td>
+		<td><{$_lang.conmon.user_account}></td>
+		<td><{$_lang.conmon.date_time}></td>
+		<td><{$_lang.left.props_id}></td>
+		<td><{$_lang.left.props_name}></td>
+		<td><{$_lang.left.props_num}></td>
+		<td><{$_lang.left.operation_content}></td>
+	</tr>
+	<{/if}>
+
+	<{if $smarty.section.loop.rownum % 2 == 0}>
+	<tr class='trEven'>
+	<{else}>
+	<tr class='trOdd'>
+	<{/if}>
+		<td><{$list[loop].id}></td>
+		<td><{$list[loop].role_id}></td>
+		<td><{$list[loop].role_name}></td>
+		<td><{$list[loop].account_name}></td>
+		<td><{$list[loop].mtime|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+		<td><{$list[loop].item_id}></td>
+		<td><{$list[loop].item_name}></td>
+		<td><{$list[loop].item_num}></td>
+		<td><{$list[loop].mtype_name}></td>
+	</tr>
+<{sectionelse}>
+
+<{/section}>
+<!-- SECTION  END -------------------------->
+
+</form>
+</table>
+
+</body>
+</html>

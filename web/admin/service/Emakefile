@@ -1,0 +1,7 @@
+{ ["src/*", "src/**/*", "src/mod/**/*", "unittest/*" ]
+	, [	
+		{i, "include" },
+		{i, "../../../../../hrl/" },
+		{outdir, "/data/mccq/server/ebin/erlang_web/"}
+	  ]
+}.

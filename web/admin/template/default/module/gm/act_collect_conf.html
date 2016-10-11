@@ -1,0 +1,904 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.game_activity_config}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+	function doAddItem(){
+		$("#frmEvent").attr("action","?action=doAddItem");
+		$("#frmEvent").submit();
+	}
+
+	function doRemoveItem(item_id){
+		$("#frmEvent").attr("action","?action=doRemoveItem");
+		$("#remove_item_id").val(item_id);
+		$("#frmEvent").submit();
+	}
+
+	function doAddMonster(){
+		$("#frmEvent").attr("action","?action=doAddMonster");
+		$("#frmEvent").submit();
+	}
+
+	function doRemoveMonster(monster_key){
+		$("#frmEvent").attr("action","?action=doRemoveMonster");
+		$("#remove_monster_key").val(monster_key);
+		$("#frmEvent").submit();
+	}
+
+	function doAddGoods(){
+		$("#frmEvent").attr("action","?action=doAddGoods");
+		$("#frmEvent").submit();
+	}
+
+	function doRemoveGoods(goods_id){
+		$("#frmEvent").attr("action","?action=doRemoveGoods");
+		$("#remove_goods_id").val(goods_id);
+		$("#frmEvent").submit();
+	}
+
+	function doAddGrowInfo(){
+		$("#frmEvent").attr("action","?action=doAddGrowInfo");
+		$("#frmEvent").submit();
+	}
+
+	function doRemoveGrowInfo(grow_key){
+		$("#frmEvent").attr("action","?action=doRemoveGrowInfo");
+		$("#remove_grow_key").val(grow_key);
+		$("#frmEvent").submit();
+	}
+
+	function doAddGrowButton(){
+		$("#frmEvent").attr("action","?action=doAddGrowButton");
+		$("#frmEvent").submit();
+	}
+
+	function doRemoveGrowButton(grow_button_id){
+		$("#frmEvent").attr("action","?action=doRemoveGrowButton");
+		$("#remove_grow_button_id").val(grow_button_id);
+		$("#frmEvent").submit();
+	}
+
+	function doAddButton(){
+		$("#frmEvent").attr("action","?action=doAddButton");
+		$("#frmEvent").submit();
+	}
+
+	function doRemoveButton(button_id){
+		$("#frmEvent").attr("action","?action=doRemoveButton");
+		$("#remove_button_id").val(button_id);
+		$("#frmEvent").submit();
+	}
+
+	function doAddEvent(){
+		$("#frmEvent").attr("action","?action=doAddEvent");
+		$("#frmEvent").submit();
+	}
+
+	function doClear(){
+		$("#frmEvent").attr("action","?action=doClear");
+		$("#frmEvent").submit();
+	}
+
+	function doAddExchangeCase(){
+		$("#frmEvent").attr("action","?action=doAddExchangeCase");
+		$("#frmEvent").submit();
+	}
+
+	function doRemoveExchangeCase(exchange_csae_id){
+		$("#frmEvent").attr("action","?action=doRemoveExchangeCase");
+		$("#remove_exchange_case_id").val(exchange_csae_id);
+		$("#frmEvent").submit();
+	}
+
+	function doClearExchangeCase(){
+		$("#frmEvent").attr("action","?action=doClearExchangeCase");
+		$("#frmEvent").submit();
+	}
+
+	function doDelFestivalEvent(event_id){
+		$("#frmEvent").attr("action","?action=doDelFestivalEvent&festival_event_id="+event_id);
+		$("#frmEvent").submit();
+	}
+</script>
+<script type="text/javascript">
+$(document).ready(
+	function(){
+		$("#event_desc").append('<{$event_desc}>');
+		
+		$("#act_type").change(
+			function(){
+				$("#frmEvent").attr("action","?action=doClear");
+				$("#frmEvent").submit();
+			}
+		);
+	}
+);
+</script>
+<style type="text/css">
+#all {
+	text-align: left;
+	margin-left: 4px;
+	line-height: 1;
+}
+
+#nodes {
+	width: 100%;
+	float: left;
+	border: 1px #ccc solid;
+}
+
+#result {
+	width: 100%;
+	height: 100%;
+	clear: both;
+	border: 1px #ccc solid;
+}
+</style>
+</head>
+
+<body>
+<div id="all">
+<div id="position"><{$_lang.left.gm_manage}>：<{$_lang.left.game_activity_config}></div>
+<div id="main">
+<form action="?action=doEventConf" method="POST" id="frmEvent">
+
+<table border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#E5F9FF">
+		<td colspan="9" background="/web/admin/static/images/wbg.gif"><font
+			color="#666600" class="STYLE2"><b>::<{$_lang.left.current_activity_list}></b></font></td>
+	</tr>
+		<tr class='table_list_head'>
+			<td align="center"><{$_lang.left.activity_status}></td>
+			<td align="center"><{$_lang.left.activity_ID}></td>
+			<td align="center"><{$_lang.left.activity_type}></td>
+			<td align="center"><{$_lang.left.activity_name}></td>
+			<td align="center"><{$_lang.conmon.start_time}></td>
+			<td align="center"><{$_lang.left.activity_trigger_events_over}></td>
+			<td align="center"><{$_lang.left.exchange_over_time}></td>
+			<td align="center"><{$_lang.left.client_display}></td>
+			<td align="center"><{$_lang.left.delete_activity}></td>
+        </tr>
+			<{section name=loop loop=$festival_list}>
+				<{if $smarty.section.loop.rownum % 2 == 0}>
+				<tr class='trEven'>
+				<{else}>
+				<tr class='trOdd'>
+				<{/if}> 
+					<td align="center">
+						<input name="festival[<{$festival_list[loop].id}>][state]" value="<{$festival_list[loop].state}>" type="hidden">
+						<{if $festival_list[loop].state ==0}><{$_lang.new.no_start}><{else}><{$_lang.new.in_progress}><{/if}>
+					</td>
+					<td align="center">
+						<input name="festival[<{$festival_list[loop].id}>][id]" value="<{$festival_list[loop].id}>" type="hidden">
+						<{$festival_list[loop].id}>
+					</td>
+					<td align="center">
+						<input name="festival[<{$festival_list[loop].id}>][typeid]" value="<{$festival_list[loop].typeid}>" type="hidden">
+						<{if $festival_list[loop].typeid == 1}><{$_lang.new.festival_list1}>
+							<{elseif $festival_list[loop].typeid == 2}><{$_lang.new.festival_list2}>
+							<{elseif $festival_list[loop].typeid == 3}><{$_lang.new.festival_list3}>
+							<{elseif $festival_list[loop].typeid == 4}><{$_lang.new.festival_list4}>
+							<{elseif $festival_list[loop].typeid == 5}><{$_lang.new.festival_list5}>
+							<{elseif $festival_list[loop].typeid == 6}><{$_lang.new.festival_list6}>
+							<{elseif $festival_list[loop].typeid == 7}><{$_lang.new.festival_list7}>
+							<{elseif $festival_list[loop].typeid == 8}><{$_lang.new.festival_list8}>
+							<{elseif $festival_list[loop].typeid == 9}><{$_lang.new.festival_list9}>
+							<{elseif $festival_list[loop].typeid == 10}><{$_lang.new.festival_list10}>
+							<{elseif $festival_list[loop].typeid == 11}><{$_lang.new.festival_list11}>
+							<{else}><{$_lang.new.festival_list12}>
+						<{/if}>
+					</td>
+					<td align="center">
+						<input name="festival[<{$festival_list[loop].id}>][name]" value="<{$festival_list[loop].name}>" type="hidden">
+						<{$festival_list[loop].name}>
+					</td>
+					<td align="center">
+						<input name="festival[<{$festival_list[loop].id}>][stime]" value="<{$festival_list[loop].stime}>" type="hidden">
+						<{$festival_list[loop].stime|date_format:"%Y-%m-%d %H:%M:%S"}>
+					</td>
+					<td align="center">
+						<input name="festival[<{$festival_list[loop].id}>][etime]" value="<{$festival_list[loop].etime}>" type="hidden">
+						<{$festival_list[loop].etime|date_format:"%Y-%m-%d %H:%M:%S"}>
+					</td>
+                    <td align="center">
+						<input name="festival[<{$festival_list[loop].id}>][extime]" value="<{$festival_list[loop].extime}>" type="hidden">
+						<{$festival_list[loop].extime|date_format:"%Y-%m-%d %H:%M:%S"}>
+					</td>
+					<td align="center">
+						<input name="festival[<{$festival_list[loop].id}>][showtable]" value="<{$festival_list[loop].showtable}>" type="hidden">
+						<{if $festival_list[loop].showtable ==0}><{$_lang.new.undisplay}><{else}><{$_lang.new.display}><{/if}>
+					</td>
+					<td align="center"><input name="btnDelFestivalEvent" onclick="doDelFestivalEvent('<{$festival_list[loop].id}>');" value="<{$_lang.new.delete_the_activity}>" type="button"></td>
+                </tr>
+             <{/section}>
+</table>
+<table width="800" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#E5F9FF">
+		<td colspan="3" background="/web/admin/static/images/wbg.gif"><font
+			color="#666600" class="STYLE2"><b>::<{$_lang.left.activity_message}></b></font></td>
+	</tr>
+	<tr class='table_list_head'>
+		<td width="15%" align="left"><{$_lang.left.activity_type}>：</td>
+		<td width="35%">
+			<select name="act_type" id="act_type">
+				<{html_options options=$act_type_option selected=$type_id}>
+			</select>
+		</td>
+		<td width="50%">
+			<select name="show_type" id="show_type">
+				<{html_options options=$show_type_option selected=$show_id}>
+			</select>
+		</td>
+	</tr>
+</table>
+
+<table width="800" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#FFFFFF">
+		<td width="15%" align="left"><{$_lang.left.activity_ID}>：</td>
+		<td width="35%">
+			<{if $type_id !=4}>
+				<input type="text" name="event_id" id="event_id" value="<{$event_id}>"/>
+			<{else}>
+				<select name="open_server" id="open_server">
+					<{html_options options=$open_server_option selected=$open_server_id}>
+				</select>
+			<{/if}>
+		</td>
+		<{if $type_id !=4}>
+		<td width="15%" align="left"><{$_lang.left.activity_name}>：</td>
+		<td width="35%"><input type="text" name="event_name" id="event_name" value="<{$event_name}>"/></td>
+		<{/if}>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+           <td width="15%"><{$_lang.left.activity}><{$_lang.conmon.start_time}>：</td>
+           <td width="35%"><input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='event_start_time' name='event_start_time' size='23' value='<{$event_start_time}>'/></td>
+		   <td width="15%"><{$_lang.left.activity}><{$_lang.conmon.end_time}>：</td>
+           <td width="35%"><input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='event_end_time' name='event_end_time' size='23' value='<{$event_end_time}>'/>
+		   </td>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+           <td width="15%"><{$_lang.left.exchange_over_time}>：</td>
+           <td colspan="4" width="85%"><input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='exchange_end_time' name='exchange_end_time' size='23' value='<{$exchange_end_time}>'/>
+		   </td>
+	</tr>
+	<{if $type_id != 4}>
+	<tr bgcolor="#FFFFFF">
+		<td width="15%" align="left"><{$_lang.left.activity_description}>：</td>
+		<td colspan="3"><textarea rows="3" cols="78" id="event_desc" name="event_desc"></textarea></td>
+	</tr>
+	<{/if}>
+
+	<{if $type_id == 1 || $type_id == 3}>
+	<tr bgcolor="#E5F9FF">
+		<td colspan="4" background="/web/admin/static/images/wbg.gif"><font
+			color="#666600" class="STYLE2"><b>::<{$_lang.left.exchange_config}></b></font></td>
+	</tr>
+<!--  	<tr bgcolor="#FFFFFF">
+           <td width="15%">兑换结束时间：</td>
+           <td colspan="3" width="85%"><input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='exchange_end_time' name='exchange_end_time' size='23' value='<{$exchange_end_time}>'/>
+		   </td>
+	</tr> -->
+	<tr bgcolor="#FFFFFF">
+		<td width="15%" align="left"><{$_lang.left.min_level}>：</td>
+		<td width="35%"><input type="text" name="min_level" id="min_level" size="7" value="<{$min_level}>"/>&nbsp;<{$_lang.conmon.level}></td>
+		<td width="15%" align="left"><{$_lang.left.max_level}>：</td>
+		<td width="35%"><input type="text" name="max_level" id="max_level"  size="7" value="<{$max_level}>"/>&nbsp;<{$_lang.conmon.level}></td>
+	</tr>
+	<{/if}>
+
+</table>
+
+<{if $type_id == 1 || $type_id == 3}>
+
+<table width="800" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#FFFFFF">
+        <td width="12%" align="left"><{$_lang.left.exchange_button_position}>：</td>
+		<td width="10%" align="center"><input type="text" name="exchange_btn_pos_index" id="exchange_btn_pos_index" size="7" value="<{$exchange_btn_pos_index}>"/></td>
+		<td width="12%" align="left"><{$_lang.new.exchange_btn_name}>：</td>
+		<td width="20%" align="center"><input type="text" name="exchange_btn_name" id="exchange_btn_name" value="<{$exchange_btn_name}>"/></td>
+		<td width="12%" align="left"><{$_lang.new.exchange_button_key_value}>：</td>
+		<td width="10%" align="center"><input type="text" name="exchange_btn_key" id="exchange_btn_key" size="7" value="<{$exchange_btn_key}>"/></td>
+		<td width="15%" align="left"><{$_lang.new.exchange_button_cd}>：</td>
+		<td width="9%" align="center"><input type="text" name="exchange_btn_cd_time" id="exchange_btn_cd_time" size="5" value="<{$exchange_btn_cd_time}>"/>&nbsp;<{$_lang.conmon.second}></td>
+	</tr>
+</table>
+
+<table width="800" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+<!-- 	<tr bgcolor="#E5F9FF">
+		<td colspan="5" background="/web/admin/static/images/wbg.gif" align="left">
+			<font color="#666600" class="STYLE2"><b>::兑换需要的道具列表</b></font>
+        </td>
+    </tr> -->
+	<tr bgcolor="#FFFFFF">
+		<td width="15%" align="left"><{$_lang.left.exchange_need_item_ID}>：</td>
+		<td width="25%"><input type="text" name="item_id" id="item_id" value=""/></td>
+        <td width="15%" align="left"><{$_lang.left.exchange_need_item_amount}>：</td>
+		<td width="25%"><input type="text" name="item_num" id="item_num" value=""/></td>
+		<td width="20%" align="center"><input name="btnAddItem" onclick="doAddItem();" value="<{$_lang.left.add_item}>" type="button"></td>
+	</tr>
+</table>
+
+<{if $need_item}>
+<table width="800" cellspacing="1" cellpadding="5" border="0">
+	<!-- SECTION  START -------------------------->
+	<{section name=loop loop=$need_item}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class='table_list_head'  align="center">
+				<td><{$_lang.left.exchange_goods_id}>"</td>
+				<td><{$_lang.left.exchange_goods_num}>"</td>
+				<td><{$_lang.conmon.operating}>"</td>
+			</tr>
+		<{/if}>
+
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td>
+				<input name="item[<{$need_item[loop].item_id}>][item_id]" value="<{$need_item[loop].item_id}>" type="hidden">
+				<{$need_item[loop].item_id}>
+			</td>
+			<td>
+				<input name="item[<{$need_item[loop].item_id}>][item_num]" value="<{$need_item[loop].item_num}>" type="hidden">
+				<{$need_item[loop].item_num}>
+			</td>
+			<td>
+				<input name="btnRemoveItem" onclick="doRemoveItem('<{$need_item[loop].item_id}>');" value="<{$_lang.conmon.remove_props}>" type="button">
+			</td>
+		</tr>
+	<{sectionelse}>
+	<{/section}>
+	<!-- SECTION  END -------------------------->
+</table>
+<input name="remove_item_id" id="remove_item_id" value="" type="hidden">
+<{/if}>
+
+<table width="800" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+<!-- 	<tr bgcolor="#E5F9FF">
+		<td colspan="5" background="/web/admin/static/images/wbg.gif" align="left">
+			<font color="#666600" class="STYLE2"><b>::奖励物品列表</b></font>
+        </td>
+    </tr> -->
+	<tr bgcolor="#FFFFFF">
+		<td width="15%" align="left"><{$_lang.left.rewards_ID}>：</td>
+        
+		<td width="25%"><input type="text" name="goods_id" id="goods_id" value=""/></td>
+		<td width="15%" align="left"><{$_lang.left.rewards_amount}>：</td>
+		<td width="25%"><input type="text" name="goods_num" id="goods_num" value=""/></td>
+		<td width="20%" align="left"><{$_lang.left.item_type}>：
+			<select name="goods_type" id="goods_type">
+				<{html_options options=$goods_type_option}>
+			</select>
+		</td>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+		<td width="15%" align="left"><{$_lang.left.weight}>：</td>
+		<td width="25%"><input type="text" name="goods_weight" id="goods_weight" value=""/></td>
+		<td colspan="2" align="center">
+			<input type="checkbox" name="goods_bind" value="1" checked="checked" /><{$_lang.left.if_bind}>
+		</td>
+		<td colspan="1" width="20%" align="center"><input name="btnAddGoods" onclick="doAddGoods();" value="<{$_lang.left.add_rewards}>" type="button"></td>
+	</tr>
+</table>
+
+<{if $award_goods_data}>
+<table width="800" cellspacing="1" cellpadding="5" border="0">
+	<!-- SECTION  START -------------------------->
+	<{section name=loop loop=$award_goods_data}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class='table_list_head'  align="center">
+				<td><{$_lang.left.rewards_ID}></td>
+				<td><{$_lang.left.rewards_amount}></td>
+				<td><{$_lang.new.type}></td>
+				<td><{$_lang.left.weight}></td>
+				<td><{$_lang.left.is_band}></td>
+				<td><{$_lang.conmon.operating}></td>
+			</tr>
+		<{/if}>
+
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td>
+				<input name="goods[<{$award_goods_data[loop].goods_id}>][goods_id]" value="<{$award_goods_data[loop].goods_id}>" type="hidden">
+				<{$award_goods_data[loop].goods_id}>
+			</td>
+			<td>
+				<input name="goods[<{$award_goods_data[loop].goods_id}>][goods_num]" value="<{$award_goods_data[loop].goods_num}>" type="hidden">
+				<{$award_goods_data[loop].goods_num}>
+			</td>
+			<td>
+				<input name="goods[<{$award_goods_data[loop].goods_id}>][goods_type]" value="<{$award_goods_data[loop].goods_type}>" type="hidden">
+				<{if $award_goods_data[loop].goods_type == 1}><{$_lang.left.item}>
+				<{elseif $award_goods_data[loop].goods_type == 2}><{$_lang.new.gemstone}>
+				<{elseif $award_goods_data[loop].goods_type == 3}><{$_lang.new.equip}>
+				<{elseif $award_goods_data[loop].goods_type == 5}><{$_lang.left.ride}>
+				<{elseif $award_goods_data[loop].goods_type == 6}><{$_lang.left.ride_equip}>
+				<{/if}>
+			</td>
+			<td>
+				<input name="goods[<{$award_goods_data[loop].goods_id}>][goods_weight]" value="<{$award_goods_data[loop].goods_weight}>" type="hidden">
+				<{$award_goods_data[loop].goods_weight}>
+			</td>
+			<td>
+				<input name="goods[<{$award_goods_data[loop].goods_id}>][goods_bind]" value="<{$award_goods_data[loop].goods_bind}>" type="hidden">
+				<{if $award_goods_data[loop].goods_bind == "true"}><{$_lang.new.yes}>
+				<{elseif $award_goods_data[loop].goods_bind == "false"}><{$_lang.new.no}>
+				<{/if}>
+			</td>
+			<td>
+				<input name="btnRemoveGoods" onclick="doRemoveGoods('<{$award_goods_data[loop].goods_id}>');" value="<{$_lang.new.delete_goods}>" type="button">
+			</td>
+		</tr>
+	<{sectionelse}>
+	<{/section}>
+	<!-- SECTION  END -------------------------->
+</table>
+<input name="remove_goods_id" id="remove_goods_id" value="" type="hidden">
+<{/if}>
+
+<table width="800" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#336699">
+		<td width="50%" align="center"><input name="btnAddExchangeCase" onclick="doAddExchangeCase();" value="<{$_lang.left.add_activity_exchange_project}>" type="button"></td>
+		<td width="50%" align="center"><input name="btnClearExchangeCase" onclick="doClearExchangeCase();" value="<{$_lang.left.modify}>" type="button"></td>
+	</tr>
+</table>
+
+<{if $exchange_case_data}>
+<!-- SECTION  START -------------------------->
+	<{section name=loop loop=$exchange_case_data}>
+		<table width="800" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+			<!-- <tr bgcolor="#E5F9FF"> background="/web/admin/static/images/wbg.gif"-->
+			<tr bgcolor="#006600">
+				<td colspan="5"  align="left">
+					<font color="#FFFFFF" class="STYLE2"><b>::<{$_lang.left.exchange_award_program}><{$smarty.section.loop.rownum}></b></font>
+			    </td>
+				<td align="center">
+					<input name="btnRemoveExchangeCase" onclick="doRemoveExchangeCase('<{$exchange_case_data[loop].exchange_data_id}>');" value="<{$_lang.left.delete_exchange_award_program}>" type="button">
+				</td>
+			</tr>
+		</table>
+		<table width="800" cellspacing="1" cellpadding="5" border="0">
+			<tr class='table_list_head'  align="center">
+				<td><{$_lang.left.min_level}></td>
+				<td><{$_lang.left.max_level}></td>
+				<td><{$_lang.left.exchange_button_position}></td>
+				<td><{$_lang.new.exchange_btn_name}></td>
+				<td><{$_lang.left.exchange_button_key_value}></td>
+				<td><{$_lang.left.exchange_button_cd}></td>
+			</tr>
+			<tr class='trEven' align="center">
+				<td>
+					<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][exchange_data_id]" value="<{$exchange_case_data[loop].exchange_data_id}>" type="hidden">
+					<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][level][min_level]" value="<{$exchange_case_data[loop].level.min_level}>" type="hidden">
+					<{$exchange_case_data[loop].level.min_level}>
+				</td>
+				<td>
+					<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][level][max_level]" value="<{$exchange_case_data[loop].level.max_level}>" type="hidden">
+					<{$exchange_case_data[loop].level.max_level}>
+				</td>
+				<td>
+					<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][button][exchange_btn_pos_index]" value="<{$exchange_case_data[loop].button.exchange_btn_pos_index}>" type="hidden">
+					<{$exchange_case_data[loop].button.exchange_btn_pos_index}>
+				</td>
+				<td>
+					<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][button][exchange_btn_name]" value="<{$exchange_case_data[loop].button.exchange_btn_name}>" type="hidden">
+					<{$exchange_case_data[loop].button.exchange_btn_name}>
+				</td>
+				<td>
+					<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][button][exchange_btn_key]" value="<{$exchange_case_data[loop].button.exchange_btn_key}>" type="hidden">
+					<{$exchange_case_data[loop].button.exchange_btn_key}>
+				</td>
+				<td>
+					<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][button][exchange_btn_cd_time]" value="<{$exchange_case_data[loop].button.exchange_btn_cd_time}>" type="hidden">
+					<{$exchange_case_data[loop].button.exchange_btn_cd_time}>
+				</td>
+			</tr>
+		</table>
+		<table width="800" cellspacing="1" cellpadding="5" border="0">
+			<{if $exchange_case_data[loop].item}>
+			<tr class='table_list_head'  align="center">
+				<td><{$_lang.new.exchange_goods_idID}></td>
+				<td><{$_lang.new.exchange_goods_num}></td>
+			</tr>
+			<{foreach key=key item=item from=$exchange_case_data[loop].item}>
+				<tr class='trEven'  align="center">
+					<td>
+						<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][item][<{$item.item_id}>][item_id]" value="<{$item.item_id}>" type="hidden">
+						<{$item.item_id}>
+					</td>
+					<td>
+						<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][item][<{$item.item_id}>][item_num]" value="<{$item.item_num}>" type="hidden">
+						<{$item.item_num}>
+					</td>
+				</tr>
+			<{/foreach}>
+			<{/if}>
+		</table>
+		<table width="800" cellspacing="1" cellpadding="5" border="0">
+			<{if $exchange_case_data[loop].goods}>
+			<tr class='table_list_head'  align="center">
+				<td><{$_lang.left.rewards_ID}></td>
+				<td><{$_lang.left.rewards_amount}></td>
+				<td><{$_lang.new.type}></td>
+				<td><{$_lang.left.weight}></td>
+				<td><{$_lang.left.is_band}></td>
+			</tr>
+			<{foreach key=key item=item from=$exchange_case_data[loop].goods}>
+				<{if ($key+1) % 2 == 0}>
+				<tr class='trEven'  align="center">
+				<{else}>
+				<tr class='trOdd'  align="center">
+				<{/if}>
+					<td>
+						<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][goods][<{$item.goods_id}>][goods_id]" value="<{$item.goods_id}>" type="hidden">
+						<{$item.goods_id}>
+					</td>
+					<td>
+						<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][goods][<{$item.goods_id}>][goods_num]" value="<{$item.goods_num}>" type="hidden">
+						<{$item.goods_num}>
+					</td>
+					<td>
+						<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][goods][<{$item.goods_id}>][goods_type]" value="<{$item.goods_type}>" type="hidden">   
+						<{if $item.goods_type == 1}><{$_lang.left.item}>
+						<{elseif $item.goods_type == 2}><{$_lang.new.gemstone}>
+						<{elseif $item.goods_type == 3}><{$_lang.new.equip}>
+						<{elseif $item.goods_type == 5}><{$_lang.left.ride}>
+						<{elseif $item.goods_type == 6}><{$_lang.left.ride_equip}>
+						<{/if}>
+					</td>
+					<td>
+						<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][goods][<{$item.goods_id}>][goods_weight]" value="<{$item.goods_weight}>" type="hidden">
+						<{$item.goods_weight}>
+					</td>
+					<td>
+						<input name="exchange_case[<{$exchange_case_data[loop].exchange_data_id}>][goods][<{$item.goods_id}>][goods_bind]" value="<{$item.goods_bind}>" type="hidden">
+						<{if $item.goods_bind == "true"}><{$_lang.new.yes}>
+						<{elseif $item.goods_bind == "false"}><{$_lang.new.no}>
+						<{/if}>
+					</td>
+				</tr>
+
+			<{/foreach}>
+			<{/if}>
+		</table>
+		<{/section}>
+<!-- SECTION  END -------------------------->
+	<input name="remove_exchange_case_id" id="remove_exchange_case_id" value="" type="hidden">
+<{/if}>
+
+<{/if}>
+
+<{if $type_id == 1}>
+<table width="800" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#E5F9FF">
+		<td colspan="5" background="/web/admin/static/images/wbg.gif" align="left">
+			<font color="#666600" class="STYLE2"><b>::<{$_lang.left.monster_info_list}></b></font>
+        </td>
+    </tr>
+	<tr bgcolor="#FFFFFF">
+        <td width="15%" align="left"><{$_lang.left.monster_ID}>：</td>
+		<td width="25%"><input type="text" name="monster_id" id="monster_id" value=""/></td>
+		<td width="15%" align="left"><{$_lang.left.monster_in_map_ID}>：</td>
+		<td width="25%" colspan="1"><input type="text" name="map_id" id="map_id" value=""/></td>
+		<td width="20%"><{$_lang.left.monster_type}>：<input name="monster_type" id="monster_type" size="9" value="""></td>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+		<td width="15%" align="left"><{$_lang.left.monster_X}>：</td>
+		<td width="25%"><input type="text" name="monster_pos_x" id="monster_pos_x" value=""/></td>
+		<td width="15%" align="left"><{$_lang.left.monster_Y}>：</td>
+		<td width="25%"><input type="text" name="monster_pos_y" id="monster_pos_y" value=""/></td>
+		<td width="20%" align="center"><input name="btnAddMonster" onclick="doAddMonster();" value="添加怪物" type="button"></td>
+	</tr>
+</table>
+<{if $monster_data}>
+<table width="800" cellspacing="1" cellpadding="5" border="0">
+	<!-- SECTION  START -------------------------->
+	<{section name=loop loop=$monster_data}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class='table_list_head'  align="center">
+				<td><{$_lang.left.monster_ID}></td>
+				<td><{$_lang.left.monster_X}></td>
+				<td><{$_lang.left.monster_Y}></td>
+				<td><{$_lang.left.monster_in_map_ID}>/td>
+				<td><{$_lang.left.monster_type}></td>
+				<td><{$_lang.conmon.operating}></td>
+			</tr>
+		<{/if}>
+
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td>
+				<input name="monster[<{$monster_data[loop].monster_key}>][monster_key]" value="<{$monster_data[loop].monster_key}>" type="hidden">
+				<input name="monster[<{$monster_data[loop].monster_key}>][monster_id]" value="<{$monster_data[loop].monster_id}>" type="hidden">
+				<{$monster_data[loop].monster_id}>
+			</td>
+			<td>
+				<input name="monster[<{$monster_data[loop].monster_key}>][monster_pos_x]" value="<{$monster_data[loop].monster_pos_x}>" type="hidden">
+				<{$monster_data[loop].monster_pos_x}>
+			</td>
+			<td>
+				<input name="monster[<{$monster_data[loop].monster_key}>][monster_pos_y]" value="<{$monster_data[loop].monster_pos_y}>" type="hidden">
+				<{$monster_data[loop].monster_pos_y}>
+			</td>
+			<td>
+				<input name="monster[<{$monster_data[loop].monster_key}>][map_id]" value="<{$monster_data[loop].map_id}>" type="hidden">
+				<{$monster_data[loop].map_id}>
+			</td>
+			<td>
+				<input name="monster[<{$monster_data[loop].monster_key}>][monster_type]" value="<{$monster_data[loop].monster_type}>" type="hidden">
+				<{$monster_data[loop].monster_type}>
+			</td>
+			<td>
+				<input name="btnRemoveMonster" onclick="doRemoveMonster('<{$monster_data[loop].monster_key}>');" value="<{$_lang.new.delete_monster}>" type="button">
+			</td>
+		</tr>
+	<{sectionelse}>
+	<{/section}>
+	<!-- SECTION  END -------------------------->
+</table>
+<input name="remove_monster_key" id="remove_monster_key" value="" type="hidden">
+<{/if}>
+
+<{elseif $type_id == 2}>
+
+<table width="800" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#FFFFFF">
+        <td width="15%" align="left"><{$_lang.left.multiple}>：</td>
+		<td width="85%"><input type="text" name="exp_times" id="exp_times" size="7" value="<{$exp_times}>"/>&nbsp;<{$_lang.left.mom}></td>
+	</tr>
+</table>
+
+<!-- 离线回馈活动(好兄弟礼包) -->
+<{elseif $type_id == 13}>
+
+<table width="800" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#FFFFFF">
+        <td width="15%" align="left">离线天数：</td>
+		<td width="35%"><input type="text" name="offline_days" id="offline_days" size="7" value="<{$offline_days}>"/>&nbsp;天</td>
+		<td width="15%" align="left">最低等级：</td>
+		<td width="35%"><input type="text" name="offline_level" id="offline_level" size="7" value="<{$offline_level}>"/>&nbsp;级</td>
+	</tr>
+</table>
+
+<{elseif $type_id == 3}>
+
+<table width="800" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#E5F9FF">
+		<td colspan="5" background="/web/admin/static/images/wbg.gif" align="left">
+			<font color="#666600" class="STYLE2"><b>::<{$_lang.left.forming_info}></b></font>
+        </td>
+    </tr>
+	<tr bgcolor="#FFFFFF">
+        <td width="15%" align="left"><{$_lang.left.forming_item_ID}>：</td>
+		<td width="25%"><input type="text" name="grow_item_id" id="grow_item_id" value="<{$grow_item_id}>"/></td>
+		<td width="15%" align="left"><{$_lang.left.day_max_time}>：</td>
+		<td width="25%"><input type="text" name="day_times" id="day_times" value="<{$day_times}>"/></td>
+		<td width="20%" align="left"><{$_lang.left.item_type}>：
+			<select name="grow_goods_type" id="grow_goods_type">
+				<{html_options options=$goods_type_option}>
+			</select>
+		</td>
+	</tr>
+</table>
+
+<table width="800" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#E5F9FF">
+		<td colspan="5" align="left">
+			<font color="#666600" class="STYLE2"><b>::<{$_lang.left.forming_list}></b></font>
+        </td>
+    </tr>
+	<tr bgcolor="#FFFFFF">
+        <td width="15%" align="left"><{$_lang.left.current_item_ID}>：</td>
+		<td width="25%"><input type="text" name="now_grow_item_id" id="now_grow_item_id" value=""/></td>
+		<td width="15%" align="left"><{$_lang.left.needed_experience}>：</td>
+		<td width="25%" colspan="2"><input type="text" name="grow_exp" id="grow_exp" value=""/></td>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+		<td width="15%" align="left"><{$_lang.left.next_item_ID}>：</td>
+		<td width="25%"><input type="text" name="next_grow_item_id" id="next_grow_item_id" value=""/></td>
+		<td width="15%" align="left"><{$_lang.left.resource_link}>：</td>
+		<td width="25%"><input type="text" name="grow_link" id="grow_link" value=""/></td>
+		<td width="20%" align="center"><input name="btnAddGrowInfo" onclick="doAddGrowInfo();" value="<{$_lang.new.add_new}>" type="button"></td>
+	</tr>
+</table>
+
+<{if $grow_data}>
+<table width="800" cellspacing="1" cellpadding="5" border="0">
+	<!-- SECTION  START -------------------------->
+	<{section name=loop loop=$grow_data}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class='table_list_head'  align="center">
+				<td><{$_lang.left.current_item_ID}></td>
+				<td><{$_lang.left.needed_experience}></td>
+				<td><{$_lang.left.next_item_ID}></td>
+				<td><{$_lang.left.resource_link}></td>
+				<td><{$_lang.conmon.operating}></td>
+			</tr>
+		<{/if}>
+
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td>
+				<input name="grow[<{$grow_data[loop].grow_key}>][grow_key]" value="<{$grow_data[loop].grow_key}>" type="hidden">
+				<input name="grow[<{$grow_data[loop].grow_key}>][now_grow_item_id]" value="<{$grow_data[loop].now_grow_item_id}>" type="hidden">
+				<{$grow_data[loop].now_grow_item_id}>
+			</td>
+			<td>
+				<input name="grow[<{$grow_data[loop].grow_key}>][grow_exp]" value="<{$grow_data[loop].grow_exp}>" type="hidden">
+				<{$grow_data[loop].grow_exp}>
+			</td>
+			<td>
+				<input name="grow[<{$grow_data[loop].grow_key}>][next_grow_item_id]" value="<{$grow_data[loop].next_grow_item_id}>" type="hidden">
+				<{$grow_data[loop].next_grow_item_id}>
+			</td>
+			<td>
+				<input name="grow[<{$grow_data[loop].grow_key}>][grow_link]" value="<{$grow_data[loop].grow_link}>" type="hidden">
+				<{$grow_data[loop].grow_link}>
+			</td>
+			<td>
+				<input name="btnRemoveGrowInfo" onclick="doRemoveGrowInfo('<{$grow_data[loop].grow_key}>');" value="<{$_lang.conmon.operating}>" type="button">
+			</td>
+		</tr>
+	<{sectionelse}>
+	<{/section}>
+	<!-- SECTION  END -------------------------->
+</table>
+<input name="remove_grow_key" id="remove_grow_key" value="" type="hidden">
+<{/if}>
+
+<table width="800" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#E5F9FF">
+		<td colspan="9" background="/web/admin/static/images/wbg.gif" align="left">
+			<font color="#666600" class="STYLE2"><b>::forming_button_list</b></font>
+        </td>
+    </tr>
+	<tr bgcolor="#FFFFFF">
+        <td width="7%" align="left"><{$_lang.left.localtion}>：</td>
+		<td width="10%" align="center"><input type="text" name="grow_btn_pos_index" id="grow_btn_pos_index" size="7" value=""/></td>
+		<td width="7%" align="left"><{$_lang.conmon.name}>：</td>
+		<td width="20%" align="center"><input type="text" name="grow_btn_name" id="grow_btn_name" value=""/></td>
+		<td width="7%" align="left"><{$_lang.left.key_value}>：</td>
+		<td width="10%" align="center"><input type="text" name="grow_btn_key" id="grow_btn_key" size="7" value=""/></td>
+		<td width="9%" align="left"><{$_lang.left.cd}>：</td>
+		<td  align="center"><input type="text" name="grow_btn_cd_time" id="grow_btn_cd_time" size="5" value=""/>&nbsp;<{$_lang.conmon.second}></td>
+		<td width="20%" align="center"><input name="btnAddGrowButton" onclick="doAddGrowButton();" value="<{$_lang.left.add_button}>" type="button"></td>
+	</tr>
+</table>
+
+<{if $grow_button_data}>
+<table width="800" cellspacing="1" cellpadding="5" border="0">
+	<!-- SECTION  START -------------------------->
+	<{section name=loop loop=$grow_button_data}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class='table_list_head'  align="center">
+				<td><{$_lang.left.localtion}></td>
+				<td><{$_lang.conmon.name}></td>
+				<td><{$_lang.left.key_value}></td>
+				<td><{$_lang.left.cd}></td>
+				<td><{$_lang.conmon.operating}></td>
+			</tr>
+		<{/if}>
+
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td>
+				<input name="grow_button[<{$grow_button_data[loop].grow_button_id}>][grow_button_id]" value="<{$grow_button_data[loop].grow_button_id}>" type="hidden">
+				<input name="grow_button[<{$grow_button_data[loop].grow_button_id}>][grow_btn_cd_time]" value="<{$grow_button_data[loop].grow_btn_cd_time}>" type="hidden">
+				<input name="grow_button[<{$grow_button_data[loop].grow_button_id}>][grow_btn_pos_index]" value="<{$grow_button_data[loop].grow_btn_pos_index}>" type="hidden">
+				<{$grow_button_data[loop].grow_btn_pos_index}>
+			</td>
+			<td>
+				<input name="grow_button[<{$grow_button_data[loop].grow_button_id}>][grow_btn_name]" value="<{$grow_button_data[loop].grow_btn_name}>" type="hidden">
+				<{$grow_button_data[loop].grow_btn_name}>
+			</td>
+			<td>
+				<input name="grow_button[<{$grow_button_data[loop].grow_button_id}>][grow_btn_key]" value="<{$grow_button_data[loop].grow_btn_key}>" type="hidden">
+				<{$grow_button_data[loop].grow_btn_key}>
+			</td>
+			<td>
+				<{$grow_button_data[loop].grow_btn_cd_time}>
+			</td>
+			<td>
+				<input name="btnRemoveGrowButton" onclick="doRemoveGrowButton('<{$grow_button_data[loop].grow_button_id}>');" value="<{$_lang.new.remove_btn}>" type="button">
+			</td>
+		</tr>
+	<{sectionelse}>
+	<{/section}>
+	<!-- SECTION  END -------------------------->
+</table>
+<input name="remove_grow_button_id" id="remove_grow_button_id" value="" type="hidden">
+<{/if}>
+
+
+<{/if}>
+
+<{if $type_id !=4}>
+<table width="800" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#E5F9FF">
+		<td colspan="7" background="/web/admin/static/images/wbg.gif" align="left">
+			<font color="#666600" class="STYLE2"><b>::<{$_lang.left.activity_button_list}></b></font>
+        </td>
+    </tr>
+	<tr bgcolor="#FFFFFF">
+        <td width="7%" align="left"><{$_lang.left.localtion}>：</td>
+		<td width="16%" align="center"><input type="text" name="btn_pos_index" id="btn_pos_index" size="15" value=""/></td>
+		<td width="7%" align="left"><{$_lang.conmon.name}>：</td>
+		<td width="27%" align="center"><input type="text" name="btn_name" id="btn_name" size="32" value=""/></td>
+		<td width="7%" align="left"><{$_lang.left.key_value}>：</td>
+		<td width="16%" align="center"><input type="text" name="btn_key" id="btn_key" size="15" value=""/></td>
+		<td width="20%" align="center"><input name="btnAddButton" onclick="doAddButton();" value="<{$_lang.left.add_button}>" type="button"></td>
+	</tr>
+</table>
+<{/if}>
+
+<{if $button_data}>
+<table width="800" cellspacing="1" cellpadding="5" border="0">
+	<!-- SECTION  START -------------------------->
+	<{section name=loop loop=$button_data}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class='table_list_head'  align="center">
+				<td><{$_lang.left.localtion}></td>
+				<td><{$_lang.conmon.name}></td>
+				<td><{$_lang.left.key_value}></td>
+				<td><{$_lang.conmon.operating}></td>
+			</tr>
+		<{/if}>
+
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td>
+				<input name="button[<{$button_data[loop].button_id}>][button_id]" value="<{$button_data[loop].button_id}>" type="hidden">
+				<input name="button[<{$button_data[loop].button_id}>][btn_cd_time]" value="<{$button_data[loop].btn_cd_time}>" type="hidden">
+				<input name="button[<{$button_data[loop].button_id}>][btn_pos_index]" value="<{$button_data[loop].btn_pos_index}>" type="hidden">
+				<{$button_data[loop].btn_pos_index}>
+			</td>
+			<td>
+				<input name="button[<{$button_data[loop].button_id}>][btn_name]" value="<{$button_data[loop].btn_name}>" type="hidden">
+				<{$button_data[loop].btn_name}>
+			</td>
+			<td>
+				<input name="button[<{$button_data[loop].button_id}>][btn_key]" value="<{$button_data[loop].btn_key}>" type="hidden">
+				<{$button_data[loop].btn_key}>
+			</td>
+			<td>
+				<input name="btnRemoveButton" onclick="doRemoveButton('<{$button_data[loop].button_id}>');" value="<{$_lang.new.remove_btn}>" type="button">
+			</td>
+		</tr>
+	<{sectionelse}>
+	<{/section}>
+	<!-- SECTION  END -------------------------->
+</table>
+<input name="remove_button_id" id="remove_button_id" value="" type="hidden">
+<{/if}>
+
+<table width="800" cellpadding="4" cellspacing="1" bgcolor="#666699">
+	<tr>
+		<td width="50%" align="center"><input name="btnAddEvent" onclick="doAddEvent();" value="<{$_lang.new.confirm_to_add_activity}>" type="button"></td>
+		<td width="50%" align="center"><input name="btnClear" onclick="doClear();" value="<{$_lang.left.modify}>" type="button"></td>
+	</tr>
+</table>
+
+</form>
+</body>
+</html>

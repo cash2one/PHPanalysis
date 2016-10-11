@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title><{$server_type_list[$server_type].name}>公告列表</title>
+<link rel="stylesheet" href="../../../public/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="../../../public/static/css/style.css" type="text/css">
+<script type="text/javascript" src="../../../public/static/js/jquery.min.js"></script>
+<script >
+	$(document).ready(function(){
+	});
+</script>
+
+<style type="text/css">
+    #paging
+	{
+		margin:10px auto;
+		text-align:center;
+	}
+	.post_email_btn
+	{
+		width: 100px;
+		height: 50px;
+		margin-bottom: 10px;
+		background-color: #55AA00;
+	}
+	.paging_btn_class :hover
+	{
+		cursor: pointer;
+	}
+</style>
+
+</head>
+
+<body style="margin:10px">
+<div id="position">
+    <b>公告管理：<{$server_type_list[$server_type].name}>公告列表</b>
+</div>
+<div class='divOperation'>
+	&nbsp; <input type='button' class='button' value='发送公告' onclick="javascript:location.href='<{$URL_SELF}>?action=post_notice';" /> 
+</div>
+
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+	<tr class='table_list_head'>
+		<{foreach from=$field key=key item=item name=for1}>
+			<td align="center"><{$item}></td>
+		<{/foreach}>
+		<td align="center">操作</td>
+	</tr>
+	<{if $noticeList}>
+		<{foreach from=$noticeList item=noticeItem name=for2}>
+			<{if $smarty.foreach.for2.index % 2 == 0}>
+			    <tr style="background-color:#AAAA55">
+			<{else}>
+			    <tr style="background-color:#55AAAA">
+			<{/if}>
+			
+			<{foreach from=$field key=key item=item name=for3}>
+				<{if $key == 'platform'}>
+					<td align="center">
+					<{foreach from=$noticeItem[$key] key=pkey item=pitem name=for4}>
+						<div style="margin:3px 5px;"><{$platform_list[$pitem].name}></div>
+					<{/foreach}>
+					</td>
+				<{else}>
+					<td align="center"><{$noticeItem[$key]}></td>
+				<{/if}>
+			<{/foreach}>
+			
+			<td align="center">
+				<a href="<{$URL_SELF}>?action=delete&notice_id=<{$noticeItem.id}>" onclick='return confirm("确定删除此公告?")'><button type="button">删除</button></a>
+				<a href="<{$URL_SELF}>?action=modify_notice&notice_id=<{$noticeItem.id}>"><button type="button">修改</button></a>
+			</td>
+			</tr>
+		<{/foreach}>
+	<{/if}>
+</table>
+
+<div id="paging">
+	<{foreach from=$paging item=item key=key name=forPage}>
+		<span class="paging_btn_class">
+		<a href="<{$URL_SELF}>?page=<{$item}>"><button><{$key}></button></a>
+		</span>
+	<{/foreach}>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#role_id").keydown(function(){
+			$("#account_name").val('');
+			$("#role_name").val('');
+		});
+		$("#role_name").keydown(function(){
+			$("#role_id").val('');
+			$("#account_name").val('');
+		});
+		$("#account_name").keydown(function(){
+			$("#role_id").val('');
+			$("#role_name").val('');
+		});
+	});
+</script>
+<title>
+	<{$_lang.left.transaction_records_view}>
+</title>
+</head>
+
+
+
+<body>
+<div id="position"><{$_lang.left.data_analysis}>：<{$_lang.new.boss_refresh}></div>
+<div class='divOperation'>
+<form name="myform" method="post" action="<{$URL_SELF}>">
+&nbsp;<{$_lang.new.map_id}>:<input type="text" id="role_id" name="map_id" size="10" value="<{$post1.map_id}>" />
+&nbsp;<{$_lang.left.map_name}>：<input type='text' id="role_name" name='map_name' size='10' value='<{$post1.map_name}>'/> 
+&nbsp;<{$_lang.new.boss_name}>：<input type='text' id="account_name" name='boss_name' size='10' value='<{$post1.boss_name}>'/>
+&nbsp;<{$_lang.new.type}>id：<input type='text' id="type_id" name='type_id' size='10' value='<{$post1.type_id}>'/>
+
+&nbsp;<{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='datestart' name='dateStart' size='12' value='<{$start}>'/>
+&nbsp;<{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateend' name='dateEnd' size='12' value='<{$end}>'/>
+&nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+<{if $record_count}>
+&nbsp;&nbsp;<{$_lang.conmon.total}><{$record_count}><{$_lang.conmon.records}>
+<{else}>
+&nbsp;&nbsp;<font color="red"><{$_lang.conmon.user_in_limittime_no_exc_record}></font>
+<{/if}>
+</form>
+</div>
+
+
+
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+<!-- SECTION  START -------------------------->
+<form id="form1" name="form1" method="post" action="">
+<{section name=loop loop=$keywordlist}>
+	<{if $smarty.section.loop.rownum % 20 == 1}>
+	<tr class='table_list_head'>
+    	<td>id</td>
+		<td><{$_lang.new.time}></td>
+		<td><{$_lang.new.boss_name}></td>
+		<td><{$_lang.new.type}>id</td>
+		<td><{$_lang.left.map_name}></td>
+		<td><{$_lang.new.map_id}></td>
+		
+	</tr>
+	<{/if}>
+
+	<{if $smarty.section.loop.rownum % 2 == 0}>
+	<tr class='trEven'>
+	<{else}>
+	<tr class='trOdd'>
+	<{/if}>
+		<td>
+		<{$keywordlist[loop].id}>
+		</td><td>
+		<{$keywordlist[loop].mtime|date_format:"%Y-%m-%d %H:%M:%S"}>
+		</td><td>
+		<{$keywordlist[loop].boss_name}>
+		</td><td>
+		<{$keywordlist[loop].type_id}>
+		</td><td>
+		<{$keywordlist[loop].map_name}>
+		</td><td>
+		<{$keywordlist[loop].map_id}>
+		</td>
+	</tr>
+<{sectionelse}>
+
+<{/section}>
+<!-- SECTION  END -------------------------->
+
+</form>
+</table>
+<div id='1'><center>
+                        <{$page}>
+                    </center>
+                </div>
+</body>
+</html>

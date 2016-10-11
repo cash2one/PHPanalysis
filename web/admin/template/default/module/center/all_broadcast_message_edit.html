@@ -1,0 +1,684 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.message_manage}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+body {font-size:14px; font-family:"Courier New", Courier, monospace; text-align:center; margin:auto;}
+#all {text-align:left;margin-left:4px;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+
+</head>
+
+<body>
+	<div id="all">
+		<div id="position"><{$_lang.left.message_manage}>：<{$_lang.left.message_broadcast}></div>
+    	<div><{$errorMsg}></div>
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                    <{ if $action=='add'}>
+                	  <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+
+                            <tr align="left"><td>&nbsp;<{$_lang.left.select_agents}>：</td></tr>
+                        <tr>
+                            <td>
+                                <input type="radio" name="radio_agent" id="radio_agent"  onclick="GetPlatServer(this.value)" value="0" <{if $agent_id==0}> checked <{/if}>  /><{$_lang.conmon.any}> </input>
+                                <{foreach key=key item=item from=$allAgentName}>
+                                <input type="radio" name="radio_agent" id="radio_agent" onclick="GetPlatServer(this.value)" value="<{$key}>"  <{if $agent_id==$key}> checked <{/if}> /><{$item}> </input>
+                                <{/foreach}>
+                            </td>
+                        </tr>
+                        <tr id="sServerName_TD1" style="display:none"><td>&nbsp;<{$_lang.left.select_agents}>：</td></tr>
+                        <tr id="sServerName_TD2" style="display:none"><td id="sServer"></td></tr>
+                       
+                          </table>
+                    <{/if}>
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="FFFFFF">
+                       		<td width="15%">
+                       		<{$_lang.new.message_type_title}>：
+                       		</td>
+                       		<td>
+<{$_lang.new.message_type_desc}>
+                       		</td>
+                        </tr>
+                        <tr bgcolor="FFFFFF">
+                            <td width="15%">
+                            <{$_lang.new.send_type_title}>：
+                            </td>
+                            <td>
+<li><{$_lang.new.send_type_desc1}></li>
+<li><{$_lang.new.send_type_desc2}></li>
+                            </td>
+                        </tr>
+                            <tr>
+                            <td colspan="2" background="/web/admin/static/images/wbg.gif">
+                            	<font color="#666600" class="STYLE2">
+                            		<b>
+                            			◆<{$_lang.left.message_broadcast}>-<{if $action eq "add"}><{$_lang.conmon.add}><{elseif $action eq "edit"}><{$_lang.left.update}><{else}><{$_lang.new.look}><{/if}>
+                            		</b>
+                            	</font>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#E5F9FF">
+                          <td width="15%"><{$_lang.left.message_type}></td>
+                          <td >
+                          	<select id="type" name="type" >
+                          		<option value=""><{$_lang.new.please_select}></option>
+                          		<option value="2906"><{$_lang.new.sys_message}></option>
+                          		<option value="2908"><{$_lang.new.bugle_message}></option>
+                          		<option value="2909"><{$_lang.new.central_broadcast_message}></option>
+                          		<option value="2920"><{$_lang.new.scrolling_message_central}></option>
+                          		<option value="2910"><{$_lang.new.chat_channel_messages}></option>
+                          		<!--<option value="2911">弹窗消息</option>	-->
+                          	</select>
+                          	<input type="hidden" id="id" name="id" value="<{$broadcastVo.id|trim}>" />
+                          	<input type="hidden" id="foreign_id" name="foreign_id" value="<{$broadcastVo.foreign_id|trim}>" />
+                                <input type="hidden" id="mid" name="mid" value="<{$broadcastVo.mid|trim}>" />
+                                <input type="hidden" id="agent_id" name="agent_id" value="<{$broadcastVo.agent_id|trim}>" />
+                                <input type="hidden" id="server_id" name="server_id" value="<{$broadcastVo.server_id|trim}>" />
+                          </td>
+                        </tr>
+                        <tr bgcolor="#E5F9FF">
+                          <td width="15%"><{$_lang.conmon.send_type}></td>
+                          <td >
+                          	<select id="send_strategy" name="send_strategy" onchange="selectSendStrategy();">
+                          		<option value=""><{$_lang.new.please_select}></option>
+                          		<option value="0"><{$_lang.new.right_now}></option>
+                          		<option value="1"><{$_lang.new.date_time1}></option>
+                          		<option value="2"><{$_lang.new.week}></option>
+                          		<option value="3"><{$_lang.new.opening}></option>
+                          		<option value="4"><{$_lang.new.later}></option>
+                          	</select>
+                          </td>
+                        </tr>
+                        <tr bgcolor="#E5F9FF">
+                          <td width="15%"><span id="start_date_label"><{$_lang.conmon.start_day_time}></span>:</td>
+                          <td >
+                          	<div ></div>
+                          	<input type="text" id="start_date_date" name="start_date_date"
+                          	value="<{$broadcastVo.start_date|trim}>"
+                          	class="Wdate"
+                          	readonly
+                          	onfocus="WdatePicker({dateFmt:'yyyy/MM/dd'});" />
+                          	<input type="text" id="start_date_text" name="start_date_text" value="<{$broadcastVo.start_date|trim}>" />
+                          	<input type="hidden" id="start_date" name="start_date" value="<{$broadcastVo.start_date|trim}>" />
+                          </td>
+                        </tr>
+                        <tr bgcolor="#E5F9FF">
+                          <td width="15%"><span id="end_date_label"><{$_lang.conmon.end_day_time}></span>:</td>
+                          <td >
+                          	<input type="text" id="end_date_date" name="end_date_date"
+                          	value="<{$broadcastVo.end_date|trim}>"
+                          	class="Wdate"
+                          	readonly
+                          	onfocus="WdatePicker({dateFmt:'yyyy/MM/dd'});" />
+                          	<input type="text" id="end_date_text" name="end_date_text" value="<{$broadcastVo.end_date|trim}>" />
+                          	<input type="hidden" id="end_date" name="end_date" value="<{$broadcastVo.end_date|trim}>" />
+                          </td>
+                        </tr>
+                        <tr bgcolor="#E5F9FF">
+                          <td width="15%"><{$_lang.conmon.start_time}>:</td>
+                          <td >
+                          	<input type="text" id="start_time" name="start_time"
+                          	class="Wdate"
+                          	value="<{$broadcastVo.start_time|trim}>"
+                          	readonly
+                          	onfocus="WdatePicker({dateFmt:'HH:mm:ss'});" />
+                          </td>
+                        </tr>
+                        <tr bgcolor="#E5F9FF">
+                          <td width="15%"><{$_lang.conmon.end_time}>:</td>
+                          <td >
+                          	<input type="text" id="end_time" name="end_time"
+                          	class="Wdate"
+                          	value="<{$broadcastVo.end_time|trim}>"
+                          	readonly
+                          	onfocus="WdatePicker({dateFmt:'HH:mm:ss'});" />
+                          </td>
+                        </tr>
+                        <tr bgcolor="#E5F9FF">
+                          <td width="15%"><{$_lang.new.time_between_second}>:</td>
+                          <td >
+                          	<input type="text" id="interval" name="interval"
+                          	value="<{$broadcastVo.interval|trim}>" />
+                          </td>
+                        </tr>
+                        <{ if $action != 'add'}>
+                        <tr bgcolor="#E5F9FF">
+                          <td width="15%"><{$_lang.new.agents}>:</td>
+                          <td >
+                              <input type="text" id="agent" readonly name="interval"
+                          	value="<{$broadcastVo.agent_name|trim}>" />
+                          </td>
+                        </tr>
+                        <tr bgcolor="#E5F9FF">
+                          <td width="15%"><{$_lang.new.server_name}>:</td>
+                          <td >
+                              <input type="text" id="servers" readonly name="interval"
+                          	value="<{$broadcastVo.server_id|trim}>" />
+                          </td>
+                        </tr>
+                        <{/if}>
+                        <tr bgcolor="#E5F9FF">
+                          <td width="15%"><{$_lang.left.message_content}>:</td>
+                          <td >
+                          		<textarea rows="5" cols="60" id="content" name="content"><{$broadcastVo.content|escape}></textarea>
+                          </td>
+                        </tr>
+                     </table>
+                    
+                     <table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="2" >
+                            	<{if $action eq "add" || $action eq "edit"}>
+                            		<input type="button" name ="save" id="save" value="<{$_lang.left.save}>" onclick="save();"/>
+                            	<{/if}>
+                            	<input type="button" name ="back" id="back" value="<{$_lang.conmon.retreat}>" onclick="back();"/>
+                            	<input type="button" name ="back" id="tips" value="<{$_lang.new.tips}>" onclick="tips();"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br />
+<div id="tipsDiv" style="display:none">
+<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr align="left" valign="top" bgcolor="FFFFFF">
+		<td>
+【小提示】：
+<br />
+超级链接：&lt;a href=&quot;这里写网址&quot; target=&quot;_blank&quot;&gt;这里写链接描述&lt;/a&gt;<br>
+文字颜色：&lt;font color=&quot;#FF0000&quot;&gt;这里写文字&lt;/font&gt;<br>
+文字粗体：&lt;strong&gt;文字是粗体&lt;/strong&gt;<br>
+换行标签：&lt;br&gt;<br>
+<font color="#FF0000">红色：</font>#FF0000 &nbsp;&nbsp;&nbsp;&nbsp;
+<font color="#0000FF">蓝色：</font>#0000FF &nbsp;&nbsp;&nbsp;&nbsp;
+<font color="#00FF00">绿色：</font>#00FF00 &nbsp;&nbsp;&nbsp;&nbsp;
+<font color="#FF00FF">紫色：</font>#FF00FF &nbsp;&nbsp;&nbsp;&nbsp;
+<font color="#000000">黑色：</font>#000000 &nbsp;&nbsp;&nbsp;&nbsp;
+<font color="#FFFF00" style="background-color:black">黄色：</font>&nbsp; #FFFF00 &nbsp;&nbsp;&nbsp;&nbsp;
+<font color="#FFFFFF" style="background-color:black">白色：</font>&nbsp; #FFFFFF &nbsp;&nbsp;&nbsp;&nbsp;
+		</td>
+	</tr>
+</table>
+</div>
+	</div>
+
+
+<script language="JavaScript" type="text/JavaScript">
+var tipsFlag = 1;
+function tips(){
+	if (tipsFlag == 1){
+	    $("#tipsDiv").show();
+		tipsFlag = 0;
+	}else{
+		$("#tipsDiv").hide();
+	    tipsFlag = 1;
+	}
+}
+
+initpage();
+//selectSendStrategy();
+function initpage(){
+	var action = "<{$action|trim}>";
+	if(action == "add" || action == "edit"){
+		var send_strategy = "<{$broadcastVo.send_strategy|trim}>";
+		var type = "<{$broadcastVo.type|trim}>";
+		$("#type").val(type);
+		$("#send_strategy").val(send_strategy);
+		if(send_strategy == 0){
+			$("#start_date_date").hide();
+			$("#end_date_date").hide();
+			$("#start_date_text").val("0").show().attr("disabled","true");
+			$("#end_date_text").val("0").show().attr("disabled","true");
+			$("#start_time").val("0").attr("disabled","true");
+			$("#end_time").val("0").attr("disabled","true");
+			$("#interval").val("0").attr("disabled","true");
+			$("#start_date_label").text("<{$_lang.conmon.start_day_time}>");
+			$("#end_date_label").text("<{$_lang.conmon.end_day_time}>");
+		}else if(send_strategy == 1 || send_strategy == 4){
+			$("#start_date_date").show();
+			$("#end_date_date").show();
+			$("#start_date_text").hide();
+			$("#end_date_text").hide();
+			$("#start_time").attr("disabled","");
+			$("#end_time").attr("disabled","");
+			$("#interval").attr("disabled","");
+			$("#start_date_label").text("<{$_lang.conmon.start_day_time}>");
+			$("#end_date_label").text("<{$_lang.conmon.end_day_time}>");
+		}else if(send_strategy == 2 || send_strategy == 3){
+			$("#start_date_date").hide();
+			$("#end_date_date").hide();
+			$("#start_date_text").show().attr("disabled","");
+			$("#end_date_text").show().attr("disabled","");
+			$("#start_time").attr("disabled","");
+			$("#end_time").attr("disabled","");
+			$("#interval").attr("disabled","");
+			if(send_strategy == 2){
+				$("#start_date_label").text("<{$_lang.new.start_of_week}>");
+				$("#end_date_label").text("<{$_lang.new.end_of_week}>");
+			}else{
+				$("#start_date_label").text("<{$_lang.new.start_of_day_cnt}>");
+				$("#end_date_label").text("<{$_lang.new.end_of_day_cnt}>");
+			}
+		}else{
+			$("#start_date_date").hide();
+			$("#end_date_date").hide();
+			$("#start_date_text").show().attr("disabled","true");
+			$("#end_date_text").show().attr("disabled","true");
+			$("#start_time").attr("disabled","true");
+			$("#end_time").attr("disabled","true");
+			$("#interval").attr("disabled","true");
+			$("#start_date_label").text("<{$_lang.conmon.start_day_time}>");
+			$("#end_date_label").text("<{$_lang.conmon.end_day_time}>");
+		}
+	}else{
+		var send_strategy = "<{$broadcastVo.send_strategy|trim}>";
+		var type = "<{$broadcastVo.type|trim}>";
+		$("#type").val(type);
+		$("#send_strategy").val(send_strategy);
+		$("input:text").each(function(){
+				var textId = $(this).attr("id");
+				if (!(textId == "start_date_date" || textId == "end_date_date")){
+					$(this).replaceWith($(this).val());
+				}else{
+					$(this).replaceWith("");
+				}
+				});
+		$("select").each(function(){
+					//var str = "";
+					//str +=$(this).find("option:selected").val();
+					//str +=":";
+					var str = $(this).find("option:selected").text();
+					$(this).replaceWith(str);
+				});
+		$("textarea").each(function(){
+				//alert($(this).val());
+				//$(this).replaceWith($(this).val());
+				$(this).attr("disabled","true");
+				});
+
+	}
+}
+
+function selectSendStrategy(){
+	var send_strategy = $("#send_strategy").val();
+	if (send_strategy == ""){
+		$("#start_date_date").val("").hide();
+		$("#end_date_date").val("").hide();
+		$("#start_date_text").val("").show().attr("disabled","true");
+		$("#end_date_text").val("").show().attr("disabled","true");
+		$("#start_time").val("").attr("disabled","true");
+		$("#end_time").val("").attr("disabled","true");
+		$("#interval").val("").attr("disabled","true");
+		$("#start_date_label").text("<{$_lang.conmon.start_day_time}>");
+		$("#end_date_label").text("<{$_lang.conmon.end_day_time}>");
+	}else if(send_strategy == 0){
+		$("#start_date_date").val("").hide();
+		$("#end_date_date").val("").hide();
+		$("#start_date_text").val("0").show().attr("disabled","true");
+		$("#end_date_text").val("0").show().attr("disabled","true");
+		$("#start_time").val("0").attr("disabled","true");
+		$("#end_time").val("0").attr("disabled","true");
+		$("#interval").val("0").attr("disabled","true");
+		$("#start_date_label").text("<{$_lang.conmon.start_day_time}>");
+		$("#end_date_label").text("<{$_lang.conmon.end_day_time}>");
+	}else if(send_strategy == 2 || send_strategy == 3 ){
+		$("#start_date_date").val("").hide();
+		$("#end_date_date").val("").hide();
+		$("#start_date_text").val("").show().attr("disabled","");
+		$("#end_date_text").val("").show().attr("disabled","");
+		$("#start_time").val("").attr("disabled","");
+		$("#end_time").val("").attr("disabled","");
+		$("#interval").val("").attr("disabled","");
+		if(send_strategy == 2){
+			$("#start_date_label").text("<{$_lang.new.start_of_week}>");
+			$("#end_date_label").text("<{$_lang.new.end_of_week}>");
+		}else{
+			$("#start_date_label").text("<{$_lang.new.start_of_day_cnt}>");
+			$("#end_date_label").text("<{$_lang.new.end_of_day_cnt}>");
+		}
+	}else{
+	    $("#start_date_date").val("").show();
+		$("#end_date_date").val("").show();
+		$("#start_date_text").val("").hide();
+		$("#end_date_text").val("").hide();
+		$("#start_time").val("").attr("disabled","");
+		$("#end_time").val("").attr("disabled","");
+		$("#interval").val("").attr("disabled","");
+		$("#start_date_label").text("<{$_lang.conmon.start_day_time}>");
+		$("#end_date_label").text("<{$_lang.conmon.end_day_time}>");
+	}
+}
+
+function back(){
+	window.location.href = "?action=list"
+}
+
+function getNowDate(){
+	var d = new Date();
+	var s = "";
+	s += d.getFullYear() + "/";
+	s += (d.getMonth() + 1) + "/";
+	s += d.getDate();
+	return s;
+}
+
+
+function save(){
+	//$("#BroadcastForm").action = "?action=save";
+	//$("#BroadcastForm").submit();
+	var action = "<{$action|trim}>";
+	var id = $("#id").val();
+        var mid = $("#mid").val();
+	var foreign_id = $("#foreign_id").val();
+	var interval = $("#interval").val();
+	var type = $("#type").val();
+	var send_strategy = $("#send_strategy").val();
+	var start_date = $("#start_date").val();
+	var end_date = $("#end_date").val();
+	var start_time = $("#start_time").val();
+	var end_time = $("#end_time").val();
+	var content = $.trim($("#content").val());
+	if(type == ""){
+		alert("请选择消息类型！");
+		$("#type").focus();
+		return;
+	}
+	if(send_strategy == ""){
+		alert("请选择发送类型！");
+		$("#send_strategy").focus();
+		return;
+	}
+	if(content == ""){
+		alert("请输入消息内容！");
+		$("#content").focus();
+		return;
+	}
+	var NowDate = getNowDate();
+	if(send_strategy == 0){
+		start_date = "0";
+		end_date = "0";
+		start_time = "0";
+		end_time = "0";
+		interval = 0;
+	}else if(send_strategy == 1 || send_strategy == 4) {
+		start_date = $("#start_date_date").val();
+		end_date = $("#end_date_date").val();
+		if(isNaN(Date.parse(start_date))){
+			alert("请输入合法的开始日期");
+			$("#start_date").focus();
+			return;
+		}
+		if(isNaN(Date.parse(end_date))){
+			alert("请输入合法的结束日期");
+			$("#end_date").focus();
+			return;
+		}
+
+		if(start_time == "" || isNaN(Date.parse(NowDate + " " + start_time))){
+			alert("请输入合法的开始时间");
+			$("#start_time").focus();
+			return;
+		}
+
+		if(end_time == "" || isNaN(Date.parse(NowDate + " " + end_time))){
+			alert("请输入合法的结束时间");
+			$("#end_time").focus();
+			return;
+		}
+		if(send_strategy == 1){
+			if (!(Date.parse(end_date) >= Date.parse(start_date)
+				&& Date.parse(end_date) >= Date.parse(NowDate)
+				&& Date.parse(NowDate + " " + end_time) >= Date.parse(NowDate + " " + start_time))){
+					alert("请输入的合法的时间段");
+					return;
+				}
+		}
+		if(send_strategy == 4){
+			var d1 = Date.parse(start_date + " " + start_time);
+			var d2 = Date.parse(end_date + " " + end_time);
+			if (!(d2 >= d1 && Date.parse(end_date) >= Date.parse(NowDate))){
+				alert("请输入的合法的时间段");
+				return;
+			}
+		}
+		if(isNaN(parseInt(interval))){
+			alert("此发送时间间隔必须为数字");
+			$("#interval").focus();
+			return;
+		}
+		if(parseInt(interval) <= 0){
+			alert("此发送时间间隔必须大于0");
+			$("#interval").focus();
+			return;
+		}
+	}else if(send_strategy == 2){
+		start_date = $("#start_date_text").val();
+		end_date = $("#end_date_text").val();
+		if(isNaN(parseInt(start_date))){
+			alert("此发送类型开始星期必须为数字");
+			$("#start_date").focus();
+			return;
+		}
+		if(isNaN(parseInt(end_date))){
+			alert("此发送类型结束星期必须为数字");
+			$("#end_date").focus();
+			return;
+		}
+		if(!(parseInt(start_date) > 0 && parseInt(start_date) < 8)){
+			alert("此发送类型开始星期必须是1到7整数");
+			$("#start_date").focus();
+			return;
+		}
+		if(!(parseInt(end_date) > 0 && parseInt(end_date) < 8)){
+			alert("此发送类型结束星期必须是1到7整数");
+			$("#end_date").focus();
+			return;
+		}
+		if(!(parseInt(end_date) >= parseInt(start_date))){
+			alert("此发送类型结束星期必须大于结束星期");
+			return;
+		}
+		if(start_time == "" || isNaN(Date.parse(NowDate + " " + start_time))){
+			alert("请输入合法的开始时间");
+			$("#start_time").focus();
+			return;
+		}
+		if(end_time == "" || isNaN(Date.parse(NowDate + " " + end_time))){
+			alert("请输入合法的结束时间");
+			$("#end_time").focus();
+			return;
+		}
+		var d1 = Date.parse(NowDate + " " + start_time );
+	    var d2 = Date.parse(NowDate + " " + end_time );
+	    if(d2 < d1){
+	    	alert("开始时间必须大于结束时间");
+	    	$("#start_time").focus();
+			return;
+	    }
+		if(isNaN(parseInt(interval))){
+			alert("此发送时间间隔必须为数字");
+			$("#interval").focus();
+			return;
+		}
+		if(parseInt(interval) <= 0){
+			alert("此发送时间间隔必须大于0");
+			$("#interval").focus();
+			return;
+		}
+	}else if(send_strategy == 3){
+		start_date = $("#start_date_text").val();
+		end_date = $("#end_date_text").val();
+		if(isNaN(parseInt(start_date))){
+			alert("此发送类型开始天数必须为数字");
+			$("#start_date").focus();
+			return;
+		}
+		if(isNaN(parseInt(end_date))){
+			alert("此发送类型结束天数必须为数字");
+			$("#end_date").focus();
+			return;
+		}
+		if(parseInt(start_date) <= 0 ){
+			alert("此发送类型开始天数必须大于0整数");
+			$("#start_date").focus();
+			return;
+		}
+		if(!(parseInt(end_date) > parseInt(start_date))){
+			alert("此发送类型结束天数必须大于结束天数");
+			return;
+		}
+		if(start_time == "" || isNaN(Date.parse(NowDate + " " + start_time))){
+			alert("请输入合法的开始时间");
+			$("#start_time").focus();
+			return;
+		}
+		if(end_time == "" || isNaN(Date.parse(NowDate + " " + end_time))){
+			alert("请输入合法的结束时间");
+			$("#end_time").focus();
+			return;
+		}
+		var d1 = Date.parse(NowDate + " " + start_time);
+	    var d2 = Date.parse(NowDate + " " + end_time);
+	    if(d2 < d1){
+	    	alert("开始时间必须大于结束时间");
+	    	$("#start_time").focus();
+			return;
+	    }
+	    if(isNaN(parseInt(interval))){
+			alert("此发送时间间隔必须为数字");
+			$("#interval").focus();
+			return;
+		}
+		if(parseInt(interval) <= 0){
+			alert("此发送时间间隔必须大于0");
+			$("#interval").focus();
+			return;
+		}
+	}else{
+			alert("请输入合法的发送类型");
+			$("#send_strategy").focus();
+			return;
+	}
+	if(action == "add"){
+		id = 0;
+	}else if(action == "edit"){
+		if(id == 0 || id == ""){
+			alert("此记录修改操作出错，请返回列表重新操作");
+			return;
+		}
+	}
+
+
+
+
+	var HrefUrl = "?action=save" + "&id=" + id;
+        HrefUrl = HrefUrl + "&mid=" + mid;
+	HrefUrl = HrefUrl + "&foreign_id=" + foreign_id;
+	HrefUrl = HrefUrl + "&type=" + type;
+	HrefUrl = HrefUrl + "&send_strategy=" + send_strategy;
+	HrefUrl = HrefUrl + "&start_date=" + start_date;;
+	HrefUrl = HrefUrl + "&end_date=" + end_date;
+	HrefUrl = HrefUrl + "&start_time=" + start_time;
+	HrefUrl = HrefUrl + "&end_time=" + end_time;
+	HrefUrl = HrefUrl + "&interval=" + interval
+	HrefUrl = HrefUrl + "&content=" + encodeURIComponent(content);
+        var servers=0,agent;
+        if(action == 'add'){
+            
+            var arrChk=$("input[name='server_ids']:checked");
+            $(arrChk).each(function(){
+                servers +=','+ this.value;
+            });
+            var arrRadio=$("input[name='radio_agent']:checked");
+            $(arrRadio).each(function(){
+                agent = this.value;
+            });
+        } else {
+            agent = $("#agent_id").val();
+            servers = $("#server_id").val();
+        }
+        HrefUrl = HrefUrl + "&agent=" + agent;
+        HrefUrl = HrefUrl + "&servers=" + servers;
+
+
+    //alert(HrefUrl);
+	window.location.href = HrefUrl;
+}
+
+
+
+
+ var server_id =<{$server_id}>,agent_id = "<{$agent_id}>";
+        $(function(){
+            if(agent_id > 0){
+                $("#sServerName_TD1").css("display", "block");
+                $("#sServerName_TD2").css("display", "block");
+                getServerRadios(agent_id,server_id,0);
+            }
+           
+        })
+
+        function GetPlatServer(value) {
+            if (value == "0") {// hide servers if select all
+                $("#sServerName_TD1").css("display", "none");
+                $("#sServerName_TD2").css("display", "none");
+            } else {
+                $("#sServerName_TD1").css("display", "block");
+                $("#sServerName_TD2").css("display", "block");
+            }
+            getServerRadios(value,0,0);
+
+        }
+        function getServerRadios(agent_id,server_id,flag){
+            var servers=<{$servers}>;
+            var server = servers[agent_id];
+
+           // if(server_id==0) continue;
+           if(server_id !=null && (flag==1||server_id[0] == 1 ) )
+               checked = "checked='checked'";
+           else
+               checked = '';
+
+            var radios = "<input name='server_ids[0]' id='server_all' class='server_id'  value='0' onclick='checkboxAll();' "
+                + checked
+                +"type='checkbox'/><{$_lang.conmon.any}> ";
+
+            for(var i in server){
+
+                if(server_id !=null && (server_id[i] >0 || flag==1) )
+                    checked = "checked='checked'";
+                else checked = '';
+
+                radios += "<input name='server_ids' class='server_id'  value='"+i+"' onclick='checkboxOne();' "
+                    + checked
+                    +"type='checkbox'/>" + server[i];
+            }
+            $("#sServer").html(radios);
+        }
+
+            function checkboxAll(){
+                if($("#server_all").attr("checked"))
+                    $(".server_id").attr("checked",true);
+                else
+                    $(".server_id").removeAttr("checked");
+            }
+
+            function checkboxOne(){
+                $("#server_all").removeAttr("checked");
+            }
+</script>
+
+</body>
+</html>

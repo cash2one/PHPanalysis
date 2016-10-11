@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.user_upgrade_record}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#role_id").keydown(function(){
+			$("#role_name").val('');
+			$("#account_name").val('');
+		});
+		$("#role_name").keydown(function(){
+			$("#role_id").val('');
+			$("#account_name").val('');
+		});
+		$("#account_name").keydown(function(){
+			$("#role_id").val('');
+			$("#role_name").val('');
+		});
+	});
+</script>
+</head>
+
+<body>
+	<div id="position"><{$_lang.left.data_analysis}>：<{$_lang.left.user_upgrade_record}></div>
+
+	<form action="?action=search" id="frm" method="POST" >
+	<table cellspacing="1" cellpadding="5" class="SumDataGrid" width="800">
+		<tr>
+			<td align="right"><{$_lang.conmon.user_id}>：</td>
+			<td><input type="text" name="role_id" id="role_id" value="<{$role.role_id}>" /></td>
+			<td align="right"><{$_lang.conmon.role_name}>：</td>
+			<td><input type="text" name="role_name" id="role_name" value="<{$role.role_name}>" /></td>
+			<td align="right"><{$_lang.conmon.user_account}>：</td>
+			<td><input type="text" name="account_name" id="account_name" value="<{$role.account_name}>" /></td>
+			<td><input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/></td>
+		</tr>
+	</table>
+	<br>
+	</form>
+	<{if $role}>
+		<table class='paystat' style="width:57%">
+			<tr class='table_list_head'>
+				<td>角色ID</td>
+				<td>角色名</td>
+				<td>用户名</td>
+				<td>操作</td>
+			</tr>
+			<{foreach item="val" from="$role"}>
+			<tr class="trOdd">
+				<td><{$val.role_id}></td>
+				<td><{$val.role_name}></td>
+				<td><{$val.account_name}></td>
+				<td><a href="<{$URL_SELF}>?action=search&type=continue&role_id=<{$val.role_id}>&role_name=<{$val.role_id}>&account_name=<{$val.account_name}>">查询</a></td>
+			</tr>
+			<{/foreach}>
+		</table>
+	<{/if}>
+	<br>
+	<table width="800"  border="0" cellpadding="4" cellspacing="1">
+		<tr bgcolor="#E9EEF2">
+			<td colspan="3" align="left">
+				<font color="#006600"><b><{$_lang.left.user_upgrade_record_alert}></b></font>
+			</td>
+        </tr>
+	</table>
+	<br>
+	<!-- 具体一个玩家的升级记录 -->
+	<{if $level_data}>
+	<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.left.user_upgrade_record}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START ------------------------ -->
+		<{section name=loop loop=$level_data}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.conmon.user_account}></td>
+				<td><{$_lang.left.riginal_level}></td>
+				<td><{$_lang.left.now_level}></td>
+                <td>转生等级</td>
+				<td><{$_lang.left.user_upgrade_time}></td>
+				<td><{$_lang.left.user_upgrade_place}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$level_data[loop].role_id}></td>
+			<td><{$level_data[loop].role_name}></td>
+			<td><{$level_data[loop].account_name}></td>
+			<td><{$level_data[loop].old_level}></td>
+			<td>
+				<{if $level_data[loop].new_level-$level_data[loop].old_level >1}><font color="red"><{/if}><{$level_data[loop].new_level}>
+			</td>
+            <td><{$level_data[loop].reincarnation}></td>
+			<td><{$level_data[loop].mtime|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+			<td><{$level_data[loop].map_id}></td>
+
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+	<br>
+	<{/if}>
+    
+
+	<!-- 升级有问题的玩家 -->
+	<{if $wrong_level}>
+	<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.left.upgrade_exception_record}></b></font><font color="#000000"><b><{$_lang.left.user_upgrade_record_note}></b></font>
+			</td>
+        </tr>
+	</table>
+	<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<!-- SECTION  START -------------------------->
+		<{section name=loop loop=$wrong_level}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class="table_list_head" align="center">
+				<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.conmon.user_account}></td>
+				<td><{$_lang.left.riginal_level}></td>
+				<td><{$_lang.left.now_level}></td>
+				<td><{$_lang.left.user_upgrade_time}></td>
+				<td><{$_lang.left.user_upgrade_place}></td>
+			</tr>
+		<{/if}>
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td><{$wrong_level[loop].role_id}></td>
+			<td><{$wrong_level[loop].role_name}></td>
+			<td><{$wrong_level[loop].account_name}></td>
+			<td><{$wrong_level[loop].old_level}></td>
+			<td><{$wrong_level[loop].new_level}></td>
+			<td><{$wrong_level[loop].mtime|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+			<td><{$wrong_level[loop].map_id}></td>
+
+		</tr>
+		<{sectionelse}>
+		<{/section}>
+		<!-- SECTION  END -------------------------->
+	</table>
+	<{/if}>
+
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title><{$server_type_list[$server_type].name}>公告编辑</title>
+<link rel="stylesheet" href="../../../public/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="../../../public/static/css/style.css" type="text/css">
+<script type="text/javascript" src="../../../public/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../../public/static/js/My97DatePicker/WdatePicker.js"></script>
+<script>
+
+var gPlatformList = [];
+var gVersionCount = 0;
+
+function clickSelectedPlatform()
+{
+	$("#platform_list_main").show();
+}
+
+function selectedPlatform()
+{
+	$("#platform_list_main").hide();
+}
+
+function clickPlatformItem( pid )
+{
+	var obj = $("#platform_"+pid);
+	var id = obj.attr("platform_id");
+	var name = obj.attr("platform_name");
+	
+	if( gPlatformList[id] == null )
+	{
+		gPlatformList[id] = name;
+		obj.addClass("platform_item_selected_class");
+	}
+	else
+	{
+		gPlatformList[id] = null;
+		obj.removeClass("platform_item_selected_class");
+	}
+	var platform_name_str = "";
+	for( x in gPlatformList )
+	{
+		if( gPlatformList[x] != null )
+		{
+			platform_name_str += "<div class='platform_name_str'>"+gPlatformList[x]+"</div>";
+		}
+	}
+	$("#selected_platform_name").html(platform_name_str);
+}
+
+function initPlatformItem()
+{
+	var pitemStr = "[<{$notice.platform}>]"
+	var pitemObj = eval('(' + pitemStr + ')');
+	
+	for( x in pitemObj )
+	{
+		clickPlatformItem(pitemObj[x]);
+	}
+}
+
+function structFormData( isAdd )
+{
+	var count = 0;
+	var platform_info = "";
+	for( x in gPlatformList )
+	{
+		var tmps = "";
+		if(count > 0)
+		{
+			tmps += ",";
+		}
+		if( gPlatformList[x] != null )
+		{
+			platform_info += tmps+x;
+			count++;
+		}
+	}
+	$("#notice_platform").val( platform_info );
+	
+	if( isAdd )
+	{
+		return confirm( "添加<{$server_type_list[$server_type].name}>公告:\n\n确认添加此公告？" );
+	}
+	else
+	{
+		return confirm( "修改<{$server_type_list[$server_type].name}>公告:\n\n确认修改此公告？" );
+	}
+}
+</script>
+
+<style type="text/css">
+#platform_list_main
+{
+	display: none;
+	position:fixed;
+	text-align: cneter;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	left: 0px;
+	top: 0px;
+}
+#platform_list_panel
+{
+	background-color: #CCCCCC;
+	width: 640px;
+	height: 480px;
+	margin: 30px auto;
+	margin-bottom: 0px;
+	overflow-y: scroll;
+	border: 5px solid #AAAAAA;
+	border-bottom: 0px;
+}
+#platform_list_panel_ctrl
+{
+	background-color: #CCCCCC;
+	width: 640px;
+	margin: 0px auto;
+	border: 5px solid #AAAAAA;
+	text-align: center;
+}
+.platform_item_class
+{
+	width: 180px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #AAAAAA;
+	margin: 5px 8px;
+	text-align: center;
+	display: inline-block;
+	border: 3px solid #AAAAAA;
+}
+.platform_item_selected_class
+{
+	background-color: #55AA55;
+}
+.platform_item_class:hover
+{
+	border: 3px solid #55FF55;
+	cursor: pointer;
+}
+
+#selected_platform_name
+{
+	width: 800px;
+}
+.platform_name_str
+{
+	display: inline-block;
+	background-color: #55FF55;
+	margin: 3px 5px;
+	font-size: 12px;
+}
+</style>
+</head>
+
+<body style="margin:10px">
+
+<div id="platform_list_main">
+
+<div id="platform_list_panel">
+<{foreach from=$platform_list key=key item=item name=platformFor1}>
+	<div id="platform_<{$item.platform_id}>" class="platform_item_class" title="<{$item.name}>" platform_id='<{$item.platform_id}>' platform_name='<{$item.name}>' onclick="clickPlatformItem(<{$item.platform_id}>)">
+		<span style="float: left;margin-left: 3px;"><{$key+1}>:</span><{$item.name}>
+	</div>
+<{/foreach}>
+</div>
+
+<div id="platform_list_panel_ctrl">
+	<button width="50px" height="30px" onclick="selectedPlatform()">确认</button>
+</div>
+
+</div>
+
+<div style='color:#AA5555;font-size:16px;font-weight:bold;text-align:center;'>
+<{$server_type_list[$server_type].name}>公告
+</div>
+
+<form id="myform" name="myform" method="post" action="<{$URL_SELF}>">
+	<input type='hidden' name='action' value='<{$action}>_submit' />
+    <table cellspacing="1" cellpadding="3" border="0" class='table_list' width="60%" >
+    	<{foreach from=$field item=item key=key name=for1}>
+    		<tr class='table_list_head'>
+    			<td align="right" style="min-width:180px;"><{$item}>: &nbsp; </td>
+    			<td>
+					<{if $key == 'platform'}>
+						<button type="button" onclick="clickSelectedPlatform()">选择平台</button>
+						<input id="notice_<{$key}>" type="hidden" name="notice[<{$key}>]" />
+						已选择:<div id="selected_platform_name"></div>
+						
+						<script>
+						initPlatformItem();
+						</script>
+						
+					<{elseif $key == 'time'}>
+						<input id="notice_<{$key}>" type='text' size='30' name='notice[<{$key}>]' value='<{$notice[$key]}>' />
+	                    <img onclick="WdatePicker({el:'notice_time', dateFmt:'yyyy-MM-dd HH:mm:ss'})" src="../../../public/static/js/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+					
+					<{elseif $key == 'content'}>
+						<textarea id="notice_<{$key}>" name='notice[<{$key}>]' rows='20' cols='100' value='<{$notice[$key]}>'><{$notice[$key]}></textarea>
+					
+					<{else}>
+						<input id="notice_<{$key}>" type='text' size='30' name='notice[<{$key}>]' value='<{$notice[$key]}>' />
+					<{/if}>
+    			</td>
+    		</tr>
+    	<{/foreach}>
+		
+		<tr class='table_list_head'>
+		<td colspan=2 align="center"><span style="color:red;font-size:14px;"><{$error.tip}></span></td>
+		</tr>
+		
+    	<tr class='table_list_head'>
+    		<td colspan=2 align=center>
+    			<input type='button' name='return _list' onclick="javascript:location.href='<{$URL_SELF}>?action=list'" value='返回列表' /> &nbsp; 
+				<{if $action == 'modify_notice'}>
+					<input type='submit' onclick="return structFormData(false)" value='修改' />
+				<{else}>
+					<input type='submit' onclick="return structFormData(true)" value='保存' />
+				<{/if}>
+    		</td>
+    	</tr>
+    </table>
+</form>
+
+</body>
+</html>

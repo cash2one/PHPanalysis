@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><{$_lang.left.limit_buy}></title>
+    <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+    <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+    <style type="text/css">
+        #all {
+            text-align: left;
+            margin-left: 4px;
+            line-height: 1;
+        }
+
+        #nodes {
+            width: 100%;
+            float: left;
+            border: 1px #ccc solid;
+        }
+
+        #result {
+            width: 100%;
+            height: 100%;
+            clear: both;
+            border: 1px #ccc solid;
+        }
+    </style>
+    <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+        function doAddItem(){
+            $("#frmShop").attr("action","?action=doAddItem");
+            $("#frmShop").submit();
+        }
+        function doRemoveItem(item_id){
+            $("#frmShop").attr("action","?action=doRemoveItem");
+            $("#remove_item_id").val(item_id);
+            $("#frmShop").submit();
+        }
+
+
+        function doOpenLimitShop(){
+            $("#frmShop").attr("action","?action=doOpenLimitShop");
+            $("#frmShop").submit();
+        }
+        function doCloseLimitShop(){
+            $("#frmShop").attr("action","?action=doCloseLimitShop");
+            $("#frmShop").submit();
+        }
+        function doClearLimitShop(){
+            $("#frmShop").attr("action","?action=doClearLimitShop");
+            $("#frmShop").submit();
+        }
+        function doAddGoods(){
+            $("#frmShop").attr("action","?action=doAddGoods");
+            $("#frmShop").submit();
+        }
+        function doDeleteGoods(){
+            $("#frmShop").attr("action","?action=doDeleteGoods");
+            $("#frmShop").submit();      
+        }
+        <!-- debug -->
+        function doQueryGoods(){
+            $("#frmShop").attr("action","?action=doQueryGoods");
+            $("#frmShop").submit();
+        } 
+    </script>
+</head>
+
+<body>
+<div id="all">
+<div id="position"><{$_lang.left.gm_manage}>：<{$_lang.left.limit_buy}></div>
+<form action="?action=doLimitShop" method="POST" id="frmShop">
+<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+    <tr bgcolor="#E5F9FF">
+        <td colspan="5" background="/web/admin/static/images/wbg.gif" align="left"><font color="#666600" class="STYLE2"><b><{$_lang.left.limit_shopping_markey}></b></font></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+        <td width="10%"><{$_lang.conmon.start_time}>：</td>
+        <td width="30%"><input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='start_time' name='start_time' size='23' value='<{$start_time}>'/></td>
+        <td width="10%"><{$_lang.conmon.end_time}>：</td>
+        <td width="30%"><input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='end_time' name='end_time' size='23' value='<{$end_time}>'/></td>
+        <td align="center"><input name="btnOpenLimitShop" onclick="doOpenLimitShop();" value="<{$_lang.left.turn_on_markey}>" type="button"></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+        <td width="80%" colspan="4" align="center">
+            <input name="btnClearLimitShop" onclick="doClearLimitShop();" value="<{$_lang.left.clear_goods}>" type="button">
+        </td>
+        <td align="center">
+            <input name="btnCloseLimitShop" onclick="doCloseLimitShop();" value="<{$_lang.left.turn_off_markey}>" type="button">
+        </td>
+    </tr>
+    <!-- debug    
+    <tr bgcolor="#FFFFFF">
+    <td width="30%">
+    <input name="btnDebugGetShopGoods" onclick="doQueryGoods();" value="测:查询抢购商城" type="button">
+    </td>   -->   
+</table>
+
+<br><br>
+
+<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+    <tr bgcolor="#E5F9FF">
+        <td colspan="5" background="/web/admin/static/images/wbg.gif" align="left"><font color="#666600" class="STYLE2"><b><{$_lang.left.markey_manage}></b></font></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+        <td width="15%" align="left"><{$_lang.left.props_id}>：</td>
+        <td width="25%"><input type="text" name="item_id" id="item_id" value=""/></td>
+        <td width="15%" align="left"><{$_lang.left.props_num}>：</td>
+        <td width="25%"><input type="text" name="item_num" id="item_num" value=""/></td>
+        <td width="20%" align="center"><input name="btnAddItem" onclick="doAddItem();" value="<{$_lang.left.add_item}>" type="button"></td>
+    </tr>
+    </table>
+
+	<{if $need_item}>
+		<table width="800" cellspacing="1" cellpadding="5" border="0">
+			<!-- SECTION  START -------------------------->
+			<{section name=loop loop=$need_item}>
+				<{if $smarty.section.loop.rownum % 20 == 1}>
+					<tr class='table_list_head'  align="center">
+						<td><{$_lang.left.props_id}></td>
+						<td><{$_lang.conmon.num}></td>
+						<td><{$_lang.conmon.operating}></td>
+					</tr>
+				<{/if}>
+
+				<{if $smarty.section.loop.rownum % 2 == 0}>
+				<tr class='trEven'  align="center">
+				<{else}>
+				<tr class='trOdd'  align="center">
+				<{/if}>
+					<td>
+						<input name="item[<{$need_item[loop].item_id}>][item_id]" value="<{$need_item[loop].item_id}>" type="hidden">
+						<{$need_item[loop].item_id}>
+					</td>
+					<td>
+						<input name="item[<{$need_item[loop].item_id}>][item_num]" value="<{$need_item[loop].item_num}>" type="hidden">
+						<{$need_item[loop].item_num}>
+					</td>
+					<td>
+						<input name="btnRemoveItem" onclick="doRemoveItem('<{$need_item[loop].item_id}>');" value="<{$_lang.new.remove_props}>" type="button">
+					</td>
+				</tr>
+			<{sectionelse}>
+			<{/section}>
+			<!-- SECTION  END -------------------------->
+		</table>
+		<input name="remove_item_id" id="remove_item_id" value="" type="hidden">
+		<{/if}>
+		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+			<tr class='table_list_head'>
+				<td align="center"><input name="btnAddGoods" onclick="doAddGoods();" value="<{$_lang.left.add_goods}>" type="button"></td>
+				<td align="center"><input name="btnDeleteGoods" onclick="doDeleteGoods();" value="<{$_lang.left.delete_goods}>" type="button"></td>
+			</tr>
+		</table>
+
+
+    
+	</form>
+
+  <br><br><br>        
+
+<table  width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1" >
+        <tr bgcolor="#E5F9FF" style="background-image:url('/web/admin/static/images/wbg.gif')">
+            <td colspan="5"  align="left"><font color="#666600" class="STYLE2"><b><{$_lang.left.goods_list}></b></font> <{$shop_left_time}>&nbsp;<{$_lang.conmon.end_time}>[<{$limit_end_time}>]</td>
+          <!--  <td width="80%"><{$shop_left_time}></td>   --> 
+        </tr>
+<!-- SECTION  START ------------------------ -->
+<form id="frmShop">         
+<{section name=loop loop=$cur_sell_items}>
+    <{if $smarty.section.loop.rownum % 20 == 1}>
+    <tr class='table_list_head'>
+        <td ><{$_lang.left.props_id}></td>
+        <td > <{$_lang.conmon.name}></td>
+        <td > <{$_lang.new.sell_num}></td>
+        <td > <{$_lang.left.goods_balance}></td>
+    </tr>
+    <{/if}>
+
+    <{if $smarty.section.loop.rownum % 2 == 0}>
+    <tr class='trEven'>
+    <{else}>
+    <tr class='trOdd'>
+    <{/if}>
+        <td ><{$cur_sell_items[loop].goods_id}></td>
+        <td ><{$cur_sell_items[loop].gname}></td>
+        <td ><{$cur_sell_items[loop].sell_num}></td>
+        <td ><{$cur_sell_items[loop].remain_num}></td>  
+    </tr>
+<{sectionelse}>
+
+<{/section}>
+<!-- SECTION  END -------------------------->
+</form >         
+</table>
+
+</div>  
+
+</body>
+</html>

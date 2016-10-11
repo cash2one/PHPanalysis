@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+
+<SCRIPT LANGUAGE="JavaScript">
+function checkAll(checkBoxName)
+{
+var checkBox = document.getElementsByName(checkBoxName);
+for (var i = 0; i < checkBox.length; i++)
+{
+var temp = checkBox[i];
+temp.checked = true;
+}
+}
+
+function checkNone(checkBoxName)
+{
+var checkBox = document.getElementsByName(checkBoxName);
+for (var i = 0; i < checkBox.length; i++)
+{
+var temp = checkBox[i];
+temp.checked = false;
+}
+}
+
+
+function checkReverse(checkBoxName)
+{
+var checkBox = document.getElementsByName(checkBoxName);
+for (var i = 0; i < checkBox.length; i++)
+{
+var temp = checkBox[i];
+temp.checked = !temp.checked;
+}
+}
+
+
+
+function checkcy(checkBoxName)
+{
+var checkBox = document.getElementsByName(checkBoxName);
+for (var i = 2; i < 10; i++)
+{
+var temp = checkBox[i];
+temp.checked = !temp.checked;
+}
+}
+
+</script>
+
+
+</head>
+
+<body>
+	<div id="all">
+	<div id="position">后台管理：修改管理员权限</div>
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                	<form  name=checkboxform action="" method="post">
+					<input type='hidden' name='dopost' value='add'>
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#FFFFFF">
+                        <tr bgcolor="#D2E9FF">
+							<td width="15%">用户名：</td>
+							<td width="85%"><{$username}></td>
+						</tr>
+						<tr bgcolor="#D2E9FF">
+							<td colspan='1' width="15%">运营商权限：</td>
+							<td width="85%">
+								<table>
+									<tr>
+										<{foreach key=key item=item from=$agent_name}>
+											<td><input type="checkbox" id="1" name="agent_check_box[]" value=<{$item.id}> <{if $item.check_flag == 1 }>checked<{/if}> /><{$item.desc}></td>
+										<{/foreach}>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr bgcolor="#D2E9FF">
+							<td width="15%">描述说明：</td>
+							<td width="35%"><input type="text" name="admin_desc" value="<{$admin_desc}>" size=100 /></td>
+						</tr>
+						<tr bgcolor="#D2E9FF">
+							<td colspan='1' width="15%">用户权限：</td>
+							<td colspan='1' width="85%"><{$data}></td>
+						</tr>
+						<tr bgcolor="#D2E9FF">
+                          <td colspan='1' width="15%">设置功能操作：</td> 
+						  <td colspan='1' width="85%">
+						  <input type=button value="全部选中" onclick="checkAll('checkbox[]')">
+                          <input type=button value="全部不选" onClick="checkNone('checkbox[]')">
+						  <input type=button value="反选" onClick="checkReverse('checkbox[]')">
+						  <input type=button value="常用对外权限" onClick="checkcy('checkbox[]')"/>
+						  </td>
+                        </tr>
+                        <tr bgcolor="#E0EEEE" height="50">
+                          <td width="15%">服务器信息</td>
+                          <td width="85%">
+						    <table>
+                                <tr>
+                                	<{$i = 1}>
+									<{section name=loop loop=$user_power}>
+										<{if $user_power[loop].man_type == "SERVER_INFO"}>
+										<td width="150"><input type="checkbox" id="1" name="checkbox[]" value=<{$user_power[loop].man_id}> <{if $user_power[loop].check_flag == 1 }>checked<{/if}>/><{$user_power[loop].desc}></td>
+                                        <{if $i%10 == 0}><br /><{/if}>
+                                        <{$i++}>
+										<{/if}>
+									<{/section}>
+								</tr>
+							</table>
+                          </td>
+                        </tr>
+						<tr bgcolor="#F7F7F7" height="50">
+                          <td width="15%">在线与注册</td>
+                          <td width="85%">
+						    <table>
+                          	    <tr>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "ONLINE_REG"}>
+			<td width="150"><input type="checkbox" id="1" name="checkbox[]" value=<{$user_power[loop].man_id}> <{if $user_power[loop].check_flag == 1 }>checked<{/if}> /><{$user_power[loop].desc}></td>
+			<{/if}>
+		<{/section}>
+								</tr>
+						    </table>
+                          </td>
+                        </tr>
+						<tr bgcolor="#F7F7F7" height="50">
+                          <td width="15%">流失率分析</td>
+                          <td width="85%">
+						    <table>
+                          	    <tr>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "LOST_RATE"}>
+			<td width="150"><input type="checkbox" id="1" name="checkbox[]" value=<{$user_power[loop].man_id}> <{if $user_power[loop].check_flag == 1 }>checked<{/if}> /><{$user_power[loop].desc}></td>
+			<{/if}>
+		<{/section}>
+								</tr>
+						    </table>
+                          </td>
+                        </tr>
+						<tr bgcolor="#E0EEEE" height="50">
+                          <td width="15%">充值与消费</td>
+                          <td width="85%">
+						    <table>
+                             	<tr>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "CONSUME_LOG"}>
+			<td width="150"><input type="checkbox" id="1" name="checkbox[]" value=<{$user_power[loop].man_id}> <{if $user_power[loop].check_flag == 1 }>checked<{/if}>/><{$user_power[loop].desc}></td>
+			<{/if}>
+		<{/section}>							
+							    </tr>
+							</table>
+                          </td>
+                        </tr>
+						<tr bgcolor="#F7F7F7" height="50">
+                          <td width="15%">数据分析</td>
+                          <td width="85%">
+						    <table >
+                          	     <tr>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "DATA_ANL"}>
+			<td width="150"><input type="checkbox" id="1" name="checkbox[]" value=<{$user_power[loop].man_id}> <{if $user_power[loop].check_flag == 1 }>checked<{/if}>/><{$user_power[loop].desc}></td>
+			<{/if}>
+		<{/section}>
+								 <tr>
+						   </table>
+                          </td>
+                        </tr>
+						<tr bgcolor="#E0EEEE" height="50">
+                          <td width="15%">消息管理</td>
+                          <td width="85%">
+						    <table>
+                          	    <tr>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "MSG_MAN"}>
+			<td width="150"><input type="checkbox" id="1" name="checkbox[]" value=<{$user_power[loop].man_id}> <{if $user_power[loop].check_flag == 1 }>checked<{/if}>/><{$user_power[loop].desc}></td>
+			<{/if}>
+		<{/section}>
+							    </tr>
+							</table>
+                          </td>
+                        </tr>
+						<tr bgcolor="#F7F7F7" height="50">
+                          <td width="15%">GM管理</td>
+                          <td width="85%">
+						    <table>
+                             	<tr>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "GM_MAN"}>
+			<td width="150"><input type="checkbox" id="1" name="checkbox[]" value=<{$user_power[loop].man_id}> <{if $user_power[loop].check_flag == 1 }>checked<{/if}>/><{$user_power[loop].desc}></td>
+			<{/if}>
+		<{/section}>
+								</tr>
+							</table>
+                          </td>
+                        </tr>
+                        <tr bgcolor="#E0EEEE" height="50">
+                          <td width="15%">后台管理</td>
+                          <td width="85%">
+						    <table>
+                             	<tr>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "BACK_MAN"}>
+			<td width="150"><input type="checkbox" id="1" name="checkbox[]" value=<{$user_power[loop].man_id}> <{if $user_power[loop].check_flag == 1 }>checked<{/if}>/><{$user_power[loop].desc}></td>
+			<{/if}>
+		<{/section}>	
+								</tr>
+							</table>
+                          </td>
+                        </tr>
+                        <tr bgcolor="#F7F7F7" height="50">
+                          <td width="15%">系统管理</td>
+                          <td width="85%">
+						    <table>
+                             	<tr>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "SYSTEM"}>
+			<td width="150"><input type="checkbox" id="1" name="checkbox[]" value=<{$user_power[loop].man_id}> <{if $user_power[loop].check_flag == 1 }>checked<{/if}>/><{$user_power[loop].desc}></td>
+			<{/if}>
+		<{/section}>
+								</tr>
+							</table>
+                          </td>
+                        </tr>
+						<tr><td colspan="2"><div align="center"><input type="submit" name="submit" value="保存" />
+                                            <input type="reset" name="reset" value="重置" /></div></td>
+						</tr>
+                     </table>
+
+                     </form>
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

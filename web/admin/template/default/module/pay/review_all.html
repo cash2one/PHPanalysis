@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.approval_all}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+</script>
+
+<body>
+<div id="position"><{$_lang.left.recharge_consumption}>：<{$_lang.left.approval_all}></div>
+	<div id="all">
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#FFFFFF">
+                        <tr>
+							<td colspan="8">
+							  <form  name=form action="?action=do3&type=search" method="post">
+                              <input type='hidden' name='dopost' value='submit'>
+							  <{$_lang.left.applicant}>：<input type="text" name="apply_admin_name" value="<{$apply_admin_name}>" />&nbsp;&nbsp;
+							  <{$_lang.left.reviewer}>：<input type="text" name="review_admin_name" value="<{$review_admin_name}>" />&nbsp;&nbsp;
+							  <{$_lang.conmon.statistics}><{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$search_keyword1}>'/>
+							  <{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$search_keyword2}>'/>&nbsp;&nbsp;
+			                  <select name=op_id>
+				              <{foreach key=key item=item from=$op_name}>
+					          <{if $key == $op_id}>
+							  <option value="<{$key}>" selected="selected"><{$item}></option>
+						      <{else}>
+							  <option value="<{$key}>"><{$item}></option>
+						      <{/if}>
+				              <{/foreach}>
+			                  </select>
+		                      <input type="submit" name="submit" value="search" />
+		                      </form>
+                            </td>
+						</tr>
+                        </tr>
+						<tr class='table_list_head'>
+							<td colspan="8"><{$_lang.left.time_statistics}>：<{$search_keyword1}>&nbsp;00:00:00&nbsp;~&nbsp;<{$search_keyword2}>&nbsp;23：59：59</td>
+						</tr>
+					</table>
+
+					<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#FFFFFF"
+					style="table-layout:fixed;word-break:break-all;word-wrap:break-word;">
+						<{section name=loop loop=$keywordlist}>
+	                    <{if $smarty.section.loop.rownum % 20 == 1}>
+						<tr class='table_list_head' align="center">
+							<td >id</td>
+							<td ><{$_lang.new.app_time}></td>
+							<td><{$_lang.left.applicant}></td>
+							<!-- <td width="8%">申请人IP</td> -->
+							<td ><{$_lang.conmon.operating}></td>
+							<td ><{$_lang.left.gm_to_role_name}></td>
+							<td ><{$_lang.new.user_role_id}></td>
+							<td ><{$_lang.new.type}></td>
+							<td ><{$_lang.new.goods_id}></td>
+							<td ><{$_lang.conmon.name}></td>
+							<td ><{$_lang.left.bind_qk}></td>
+							<td ><{$_lang.conmon.num}></td>
+							<td ><{$_lang.new.reason}></td>
+							<td><{$_lang.new.review_time}></td>
+							<td><{$_lang.left.reviewer}></td>
+							<!-- <td width="8%">审核者IP</td> -->
+							<td ><{$_lang.left.statu}></td>
+							<td><{$_lang.new.agree}></td>
+							<td ><{$_lang.new.refuse}></td>
+						</tr>
+                        <{/if}>
+	                    <{if $smarty.section.loop.rownum % 2 == 0}>
+	                    <tr class='trEven' align="center">
+	                    <{else}>
+	                    <tr class='trOdd'  align="center">
+	                    <{/if}>
+						   <td><{$keywordlist[loop].id}></td>
+		                   <td><{$keywordlist[loop].mtime|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+	                 	   <td><{$keywordlist[loop].admin_name}></td>
+		                   <!-- <td><{$keywordlist[loop].admin_ip}> </td> -->
+		                   <td><{$keywordlist[loop].desc}></td>
+		                   <td><{$keywordlist[loop].user_name}></td>
+						   <td><{if $keywordlist[loop].user_id != '0'}><{$keywordlist[loop].user_id}><{/if}></td>
+						   <td><{$keywordlist[loop].item_name}></td>
+						   <td><{if $keywordlist[loop].item_id != '0'}><{$keywordlist[loop].item_id}><{/if}></td>
+						   <td><{$keywordlist[loop].goods_name}></td>
+						   <td><{$keywordlist[loop].bind_cn}></td>
+						   <td><{$keywordlist[loop].number}></td>
+						   <td><{$keywordlist[loop].reason}></td>
+						   <td><{if $keywordlist[loop].review_mtime != '0'}><{$keywordlist[loop].review_mtime|date_format:"%Y-%m-%d %H:%M:%S"}><{/if}></td>
+						   <td><{$keywordlist[loop].review_admin_name}></td>
+						   <!-- <td><{$keywordlist[loop].review_admin_ip}></td> -->
+						   <td><{if $keywordlist[loop].status != '4'}><FONT color=red><{/if}><{$keywordlist[loop].status_desc}></td>
+
+							<form action="?action=do1&type=agree" method="post">
+							<td><input type="hidden" name="id" value="<{$keywordlist[loop].id}>" />
+								<input type="hidden" name="role_id" value="<{$keywordlist[loop].user_id}>" />
+								<input type="hidden" name="role_name" value="<{$keywordlist[loop].user_name}>" />
+								<input type="hidden" name="item_type" value="<{$keywordlist[loop].item_name}>" />
+								<input type="hidden" name="item_id" value="<{$keywordlist[loop].item_id}>" />
+								<input type="hidden" name="bind" value="<{$keywordlist[loop].bind}>" />
+								<input type="hidden" name="number" value="<{$keywordlist[loop].number}>" />
+								<input type="hidden" name="reason" value="<{$keywordlist[loop].reason}>" />								
+								<input type="submit" name="submit" value=" <{$_lang.new.agree}> "/></td>
+							</form>
+						   
+							<form action="?action=do2&type=deny" method="post">
+							<td><input type="hidden" name="id" value="<{$keywordlist[loop].id}>" />
+								<input type="hidden" name="role_id" value="<{$keywordlist[loop].user_id}>" />
+								<input type="hidden" name="role_name" value="<{$keywordlist[loop].user_name}>" />
+								<input type="hidden" name="item_type" value="<{$keywordlist[loop].item_name}>" />
+								<input type="hidden" name="item_id" value="<{$keywordlist[loop].item_id}>" />
+								<input type="hidden" name="bind" value="<{$keywordlist[loop].bind}>" />
+								<input type="hidden" name="number" value="<{$keywordlist[loop].number}>" />
+								<input type="hidden" name="reason" value="<{$keywordlist[loop].reason}>" />	
+								<input type="submit" name="submit" value=" <{$_lang.new.refuse}> "/></td>
+							</form>
+	                    </tr>
+                    <{/section}>
+                  </table>
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

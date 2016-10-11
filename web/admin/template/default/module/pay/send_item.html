@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.apply_props}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/jquery.ui.autocomplete.css"/>
+<style type="text/css">
+#all {
+	text-align: left;
+	margin-left: 4px;
+	line-height: 1;
+}
+
+#nodes {
+	width: 100%;
+	float: left;
+	border: 1px #ccc solid;
+}
+
+#result {
+	width: 100%;
+	height: 100%;
+	clear: both;
+	border: 1px #ccc solid;
+}
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/ui/jquery.ui.core.js"></script> 
+<script type="text/javascript" src="/web/admin/static/ui/jquery.ui.widget.js"></script> 
+<script type="text/javascript" src="/web/admin/static/ui/jquery.ui.position.js"></script> 
+<script type="text/javascript" src="/web/admin/static/ui/jquery.ui.autocomplete.js"></script>
+
+<script type="text/javascript">
+	function doAddGoods(){
+		$("#frmEvent").attr("action","?action=doAddGoods");
+		$("#frmEvent").submit();
+	}
+
+	function doRemoveGoods(goods_id){
+		$("#frmEvent").attr("action","?action=doRemoveGoods");
+		$("#remove_goods_id").val(goods_id);
+		$("#frmEvent").submit();
+	}
+	function doSendGoods(){
+		$("#frmEvent").attr("action","?action=doSendGoods");
+		$("#frmEvent").submit();
+	}
+
+	function doClear(){
+		$("#frmEvent").attr("action","?action=doClear");
+		$("#frmEvent").submit();
+	}
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$( "#goods_name" ).autocomplete({
+		source: "all_goods_name.php",
+		minLength: 2,
+		autoFocus: true
+	});
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(
+	function(){
+		$("#role_name_list").append('<{$role_name_list}>');
+		$("#role_id").keydown(function(){
+			$("#role_name").val('');
+			$("#account_name").val('');
+		});
+		$("#role_name").keydown(function(){
+			$("#role_id").val('');
+			$("#account_name").val('');
+		});
+		$("#account_name").keydown(function(){
+			$("#role_id").val('');
+			$("#role_name").val('');
+		});
+		$("#item_selected").change(
+			function(){	
+				obj = document.getElementById("item_fill");
+				obj.value="";
+			}
+		);
+		$("#item_fill").focus(
+			function(){
+				obj = document.getElementById("item_selected");
+				obj.options[0].selected = true;
+			}
+		);
+		$("#goods_id").keydown(function(){
+			$("#goods_type").val('');
+		});
+		$("#goods_name").keydown(function(){
+			$("#goods_id").val('');
+		});
+	}
+);
+</script>
+
+<style type="text/css">
+	#ulSendGoldReason{
+		width:300px;
+		margin:0px;
+		padding:0px;
+		list-style:none;
+		background-color:#D9D9D9;
+		border:2px solid blue;
+		position:absolute;
+		display:none;
+	}
+	#ulSendGoldReason li{
+		height:20px;
+		border:1px solid #CCC;
+	}
+	#closeReason{
+		text-align:right;
+		text-decoration:underline;
+	}
+	.reasonItem{
+		text-align:left;
+	}
+</style>
+
+<ul id="ulSendGoldReason">
+		<li id="closeReason"><a href="javascript:void(0);"><{$_lang.new.close}></a></li>
+
+		<li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.apply_item_note1}></a></li>
+		<li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.apply_item_note2}></a></li>
+		<li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.apply_item_note3}></a></li>
+		<li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.apply_item_note4}></a></li>
+		<li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.apply_item_note5}></a></li>
+		<li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.apply_item_note6}></a></li>
+		<li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.apply_item_note7}></a></li>
+		<li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.apply_item_note8}></a></li>
+</ul>
+
+<script language="javascript">
+	$(document).ready(function(){
+		window.fromInput = null;
+		$("#gold_reason").click(function(){
+			var offset = $(this).offset();
+			window.fromInput = $(this);
+			$("#ulSendGoldReason").css("top",offset.top+20).css("left",offset.left);
+			$("#ulSendGoldReason").show();
+		});
+		$("#closeReason").click(function(){
+			$("#ulSendGoldReason").hide();
+		});
+		$(".reasonItem").click(function(){
+			window.fromInput.val($(this).find("a").text());
+			$("#ulSendGoldReason").hide();
+			return false;
+		});
+		$("#gold_reason").keydown(function(){
+			$("#ulSendGoldReason").hide();
+		});
+	});
+</script>
+</head>
+
+<body>
+<div id="position"><{$_lang.left.recharge_consumption}>：<{$_lang.left.apply_props}></div>
+<form action="?action=search&role_name_list=<{$role_name_list}>" id="frm" method="POST" >
+	<table cellspacing="1" cellpadding="5" class="SumDataGrid" width="800">
+		<tr>
+			<td align="right"><{$_lang.conmon.user_id}>：</td>
+			<td><input type="text" name="role_id" id="role_id" value="<{$role.role_id}>" /></td>
+			<td align="right"><{$_lang.conmon.role_name}>：</td>
+			<td><input type="text" name="role_name" id="role_name" value="<{$role.role_name}>" /></td>
+			<td align="right"><{$_lang.conmon.user_account}>：</td>
+			<input type="hidden" name="role_name_list" value="<{$role_name_list}>" id="roleNameList">
+			<td><input type="text" name="account_name" id="account_name" value="<{$role.account_name}>" /></td>
+			<td><input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/></td>
+		</tr>
+	</table>
+	<br>
+</form>
+
+	<{if $role|@count neq 0}>
+	<table class='paystat' style="width:57%">
+		<tr class='table_list_head'>
+			<td>角色Id</td>
+			<td>角色名</td>
+			<td>用户名</td>
+			<td>操作</td>
+		</tr>
+		<{foreach item=item from=$role}>
+		<tr class="trOdd">
+			<td><{$item.role_id}></td>
+			<td><{$item.role_name}></td>
+			<td><{$item.account_name}></td>
+			<td><a class="touch" href="#" type ="<{$item.role_name}>" >添加</a></td>
+		</tr>
+		<{/foreach}>
+	</table>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".touch").click(function(event){
+				var roleName = event.srcElement['type'];
+				var listName = $("#roleNameList").attr("value");
+				if(listName== ""){
+					var roleListName = roleName;
+				}else{
+					var roleListName = listName + ',' + roleName;
+				}
+				
+				$("#roleNameList").attr('value',roleListName);
+				$("#role_name_list").val(roleListName);
+			});
+			$("#role_name_list").change(function(event){
+				var str = event.srcElement['value'];
+				$("#roleNameList").attr('value',str);
+			});
+		});
+	</script>
+	<{/if}>
+
+<form action="<{$URL_SELF}>?action=send_item&role_id=<{$role.role_id}>&role_name=<{$role.role_name}>&account_name=<{$role.account_name}>&role_name_list=<{$role_name_list}>" method="post" id="frmEvent">
+<table width="800" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="2" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b>::<{$_lang.left.user_role_list}></b></font>&nbsp;&nbsp;&nbsp;&nbsp;<font color="red"><b><{$_lang.left.user_num}>：<{$role_count}></b></font>
+			</td>
+		</tr>
+		<tr bgcolor="#E5F9FF">
+			<td align="left">
+				<font color="red"><b><{$_lang.left.note}>1:</b></font>
+				<font class="STYLE2"><b><{$_lang.left.apply_silver_note1}></b></font>
+			</td>
+		</tr>
+		<tr bgcolor="#E5F9FF">
+			<td align="left">
+				<font color="red"><b><{$_lang.left.note}>2:</b></font>
+				<font class="STYLE2"><b><{$_lang.left.apply_silver_note2}></b></font>
+			</td>
+		</tr>
+		<tr bgcolor="#FFFFFF">
+			<td><textarea rows="4" cols="91" id="role_name_list" name="role_name_list"></textarea></td>
+		</tr>
+</table>
+<table width="800" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#E5F9FF">
+		<td colspan="8" background="/web/admin/static/images/wbg.gif" align="left"><font color="#666600" class="STYLE2"><b>::<{$_lang.left.giving_props}></b></font></td>
+	</tr>
+<!-- 	<tr bgcolor="#E5F9FF">
+			<td colspan="8" align="left">
+				<font color="red"><b>说明1:</b></font>
+				<font class="STYLE2"><b>该版本暂时不能赠送<font color="red">宠物、宝物、宝物部件</font></b></font>
+			</td>
+		</tr> -->
+		<tr bgcolor="#E5F9FF">
+			<td colspan="8" align="left">
+				<font color="red"><b><{$_lang.left.note}>1:</b></font>
+				<font class="STYLE2"><b><{$_lang.left.apply_props_note1}></b></font>
+			</td>
+		</tr>
+		<tr bgcolor="#E5F9FF">
+			<td colspan="8" align="left">
+				<font color="red"><b><{$_lang.left.note}>2:</b></font>
+				<font class="STYLE2"><b><{$_lang.left.apply_props_note2}></b></font>
+			</td>
+		</tr>
+	<tr bgcolor="#FFFFFF">
+		<!-- 道具id -->
+		<td align="right">ID</td>
+		<td><input type="text" name="goods_id" id="goods_id" value=""/></td>
+		<!-- 道具名 -->
+		<td align="right">(<{$_lang.conmon.or}>)<{$_lang.conmon.name}></td>
+		<td><input type="text" name="goods_name" id="goods_name" value=""/></td>
+		<!-- 分配数量 -->
+		<td align="right"><{$_lang.conmon.num}>(<=50)</td>
+		<td><input type="text" name="goods_num" id="goods_num" value="" size="7"/></td>
+		<td align="center">
+			<input type="checkbox" name="goods_bind" value="1" checked="checked" /><{$_lang.left.if_bind_item}>
+		</td>
+		<td align="center"><input name="btnAddGoods" onclick="doAddGoods();" value="<{$_lang.left.add_props}>" type="button"></td>
+	</tr>
+<table>
+
+<{if $send_goods_data}>
+<table width="800" cellspacing="1" cellpadding="5" border="0">
+	<!-- SECTION  START -------------------------->
+	<{section name=loop loop=$send_goods_data}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+			<tr class='table_list_head'  align="center">
+				<td>ID</td>
+				<td><{$_lang.conmon.name}></td>
+				<td><{$_lang.conmon.num}></td>
+				<td><{$_lang.new.type}></td>
+				<td><{$_lang.left.is_band}></td>
+				<td><{$_lang.conmon.operating}></td>
+			</tr>
+		<{/if}>
+
+		<{if $smarty.section.loop.rownum % 2 == 0}>
+		<tr class='trEven'  align="center">
+		<{else}>
+		<tr class='trOdd'  align="center">
+		<{/if}>
+			<td>
+				<input name="goods[<{$send_goods_data[loop].goods_id}>][goods_id]" value="<{$send_goods_data[loop].goods_id}>" type="hidden">
+				<{$send_goods_data[loop].goods_id}>
+			</td>
+			<td>
+				<input name="goods[<{$send_goods_data[loop].goods_id}>][goods_name]" value="<{$send_goods_data[loop].goods_name}>" type="hidden">
+				<{$send_goods_data[loop].goods_name}>
+			</td>
+			<td>
+				<input name="goods[<{$send_goods_data[loop].goods_id}>][goods_num]" value="<{$send_goods_data[loop].goods_num}>" type="hidden">
+				<{$send_goods_data[loop].goods_num}>
+			</td>
+			<td>
+				<input name="goods[<{$send_goods_data[loop].goods_id}>][goods_type]" value="<{$send_goods_data[loop].goods_type}>" type="hidden">
+				<{if $send_goods_data[loop].goods_type == 5}><{$_lang.left.item}>
+				<{elseif $send_goods_data[loop].goods_type == 6}><{$_lang.new.gemstone}>
+				<{elseif $send_goods_data[loop].goods_type == 7}><{$_lang.new.equip}>
+				<{/if}>
+			</td>
+			<td>
+				<input name="goods[<{$send_goods_data[loop].goods_id}>][goods_bind]" value="<{$send_goods_data[loop].goods_bind}>" type="hidden">
+				<{if $send_goods_data[loop].goods_bind == "1"}><{$_lang.new.yes}>
+				<{elseif $send_goods_data[loop].goods_bind == "0"}><{$_lang.new.no}>
+				<{/if}>
+			</td>
+			<td>
+				<input name="btnRemoveGoods" onclick="doRemoveGoods('<{$send_goods_data[loop].goods_id}>');" value="移除物品" type="button">
+			</td>
+		</tr>
+	<{sectionelse}>
+	<{/section}>
+	<!-- SECTION  END -------------------------->
+</table>
+<input name="remove_goods_id" id="remove_goods_id" value="" type="hidden">
+<{/if}>
+
+<table width="800" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#FFFFFF">
+        <td width="22%" colspan="1" align="right"><{$_lang.left.giving_reasons}>(<{$_lang.left.no_less_than_5}>)</td>
+        <td colspan="3" align="left"><input type="text" name="reason" value="" size="50" id="gold_reason"/></td>
+    </tr>
+	<tr bgcolor="#FFFFFF">
+		<td colspan="2" width="50%" align="center"><input name="btnAddEvent" onclick="doSendGoods();" value="<{$_lang.left.sure_giving}>" type="button"></td>
+		<td colspan="2" width="50%" align="center"><input name="btnClear" onclick="doClear();" value="<{$_lang.left.modify}>" type="button"></td>
+	</tr>
+</table>
+</form>
+
+</body>
+</html>

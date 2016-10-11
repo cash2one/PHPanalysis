@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新增/活跃</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/web/admin/static/css/tags.css" type="text/css">
+    <link rel="stylesheet" href="/web/admin/static/js/date/daterangepicker.css" />
+    <script src="/web/admin/static/js/jquery-3.0.0.min.js"></script>
+    <script src="/web/admin/static/js/date/moment.min.js"></script>
+    <script src="/web/admin/static/js/date/jquery.daterangepicker.js"></script>
+    <script src="/web/admin/static/js/databackend.js"></script>
+    <script src="/web/admin/static/js/highcharts/highcharts.js"></script>
+    <script src="/web/admin/static/js/highcharts/modules/exporting.js"></script>
+     <script language="JavaScript">
+    $(document).ready(function() {
+       var title = {
+          text: '新增用户和活跃用户折线图'   
+       };
+       var subtitle = {
+          text: 'X:日期,Y:用户总数'
+       };
+       var xAxis = {
+          title: {
+            text: '日期'  
+          },
+          categories: <{$date_m_d}>
+       };
+       var yAxis = {
+          title: {
+             text: '用户总数'
+          },
+          plotLines: [{
+             value: 0,
+             width: 1,
+             color: '#808080'
+          }]
+       };   
+
+       var tooltip = {
+          valueSuffix: '个'
+       }
+
+       var legend = {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle',
+          borderWidth: 0
+       };
+
+       var series =  [
+          {
+            name: '新增用户',
+            data: <{$json_new_data}>
+          },
+          {
+            name: '活跃用户',
+            data: <{$json_active_data}>
+          }
+       ];
+
+       var json = {};
+
+       json.title = title;
+       json.subtitle = subtitle;
+       json.xAxis = xAxis;
+       json.yAxis = yAxis;
+       json.tooltip = tooltip;
+       json.legend = legend;
+       json.series = series;
+
+       $('#container').highcharts(json);
+    });
+
+</script>
+</head>
+<script>
+function toajax(str)
+{
+    var xmlhttp;
+    if (str.length==0)
+   { 
+      document.getElementById("channelslist").innerHTML="";
+      return;
+   }
+    if (window.XMLHttpRequest)
+   {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp=new XMLHttpRequest();
+   }
+    else
+   {// code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+   }
+    xmlhttp.onreadystatechange=function()
+   {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+        document.getElementById("channelslist").innerHTML=xmlhttp.responseText;
+        }
+   }
+    xmlhttp.open("GET","./ajax.php?svr_id="+str,true);
+    xmlhttp.send();
+ }
+</script>
+<body>
+    <div class="explain">
+        <span>&diams;新增用户：当天新增的用户</span><br>
+        <span>&diams;活跃用户：当天登录游戏的用户</span><br>
+    </div><br>
+    <hr>
+    <form action="<{$URL_SELF}>" name="myform" id="myform" method="post">
+        <span><b>新增/活跃</b></span>&nbsp;&nbsp;
+        <span>
+        <select name="server" id="serverlist" style="width:100px;" onchange="toajax(this.value)" >
+                <option value="">选择服务器</option>
+            <{section name=server loop=$serverlist}>
+                <option value="<{$serverlist[server].svr_id}>"><{$serverlist[server].name}></option>
+            <{/section}>
+        </select> 
+        </span>
+        <span id="channelslist">
+
+        </span>&nbsp;
+        统计开始时间：<input type="text" name="begin_time" id="begin_time" size="10" placeholder="年/月/日" value="<{$begin_time}>" />&nbsp;
+        结束时间：<input type="text" name="end_time" id="end_time" size="10" placeholder="年/月/日" value="<{$end_time}>" />&nbsp;
+        <input type="submit" name="search" value="搜索"/>&nbsp;
+      <hr>
+      <div id="container" style="width: 100%; height: 500px; margin: 0 auto"></div>  
+       <!-- <table id="main_table">
+        <tr style="background-color:#2e6fac; color:white;">
+            <td>日期</td>
+            <td>活跃用户数</td>
+            <td>新增用户数</td>
+        </tr>
+        <{section name=loop loop=$dataList}>
+            <{if $smarty.section.loop.rownum % 2 == 0}>
+            <tr class='trEven'>
+            <{else}>
+                <tr class='trOdd'>
+            <{/if}>
+            <td> <{$dataList[loop].data_time}> </td>
+            <td> <{$dataList[loop].active_user_num}> </td>
+            <td> <{$dataList[loop].new_user_num}> </td>
+           </tr>
+        <{/section}>
+        </table><br>-->
+        <!--  <{include file="common/pages.shtml"}>  -->
+</form>
+   
+
+</body>
+</html>

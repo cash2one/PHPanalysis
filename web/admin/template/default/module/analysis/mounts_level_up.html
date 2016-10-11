@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#userid").keydown(function(){
+			$("#nickname").val('');
+			$("#acname").val('');
+		});
+		$("#nickname").keydown(function(){
+			$("#userid").val('');
+			$("#acname").val('');
+		});
+		$("#acname").keydown(function(){
+			$("#userid").val('');
+			$("#nickname").val('');
+		});
+	});
+</script>
+<title><{$_lang.new.mounts_level_up}></title>
+</head>
+
+
+<body>
+<div id="position"><{$_lang.new.operate_act}>：<{$_lang.new.mounts_level_up}></div>
+<table width="100%"  border="0" cellpadding="4" cellspacing="1">
+    <tr class='table_list_head' align='center'>
+        <td><{$_lang.new.mounts_class_level}></td>
+        <td><{$_lang.new.mounts_calss_total}></td>
+    </tr>
+    <{foreach key=key item=item from=$data}>
+    <tr class='<{if $key % 2 == 0}>trEven<{else}>trOdd<{/if}>' align='center'>
+    	<td><{$item.name}></td>
+        <td><{$item.times}></td>
+    </tr>
+    <{/foreach}>
+</table>
+
+</body>
+</html>

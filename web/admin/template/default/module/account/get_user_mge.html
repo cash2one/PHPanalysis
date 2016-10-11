@@ -1,0 +1,648 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.player_data_view}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#role_id").keydown(function(){
+			$("#role_name").val('');
+			$("#account_name").val('');
+		});
+		$("#role_name").keydown(function(){
+			$("#role_id").val('');
+			$("#account_name").val('');
+		});
+		$("#account_name").keydown(function(){
+			$("#role_id").val('');
+			$("#role_name").val('');
+		});
+	});
+    $(document).ready(function(){
+		window.fromInput = null;
+		$(".ban_reason").click(function(){
+			var offset = $(this).offset();
+			window.fromInput = $(this);
+			$("#ulBandReason").css("top",offset.top+20).css("left",offset.left);
+			$("#ulBandReason").show();
+		});
+		$("#closeReason").click(function(){
+			$("#ulBandReason").hide();
+		});
+		$(".reasonItem").click(function(){
+			window.fromInput.val($(this).find("a").text());
+			$("#ulBandReason").hide();
+			event.stopPropagation();
+		});
+		$("#ban_reason").keydown(function(){
+			$("#ulBandReason").hide();
+		});
+	});
+
+    function doBanOne(role_id){
+		if($.trim( $("#ban_reason").val() ) == "" ){
+			alert("<{$_lang.new.banned_js1}>");
+		}else if($.trim( $("#ban_time").val() ) == "null" ){
+			alert("<{$_lang.new.banned_js2}>");
+		}else{
+			yes = confirm("<{$_lang.new.banned_js3}>");
+			if(yes){
+				$("#frmBan").attr("action","?action=doBan");
+				$("#banRoleID").val(role_id);
+				$("#frmBan").submit();
+			}
+		}
+	}
+    function doUnBan(role_id,account_name){
+        if(role_id){
+            yes = confirm("<{$_lang.new.banned_js10}>");
+            if(yes){
+                $("#frmBan").attr("action","?action=doUnBan");
+                $("#frmBan").submit();
+            }
+        }
+    }
+
+</script>
+<style type="text/css">
+	#ulBandReason{
+		width:300px;
+		margin:0px;
+		padding:0px;
+		list-style:none;
+		background-color:#D9D9D9;
+		border:2px solid blue;
+		position:absolute;
+		display:none;
+	}
+	#ulBandReason li{
+		height:20px;
+		border:1px solid #CCC;
+	}
+	#closeReason{
+		text-align:right;
+		text-decoration:underline;
+	}
+	.reasonItem{
+		text-align:left;
+	}
+</style>
+<ul id="ulBandReason">
+	<li id="closeReason"><a href="javascript:void(0);"><{$_lang.new.close}></a></li>
+    <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.about_steal_account}></a></li>
+    <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.irregularities}></a></li>
+    <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.spreading_false_information}></a></li>
+    <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.fake_GM}></a></li>
+    <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.use_third_party_software}></a></li>
+    <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.use_forbid_rolename}></a></li>
+    <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.illegal_transactions}></a></li>
+    <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.use_bug}></a></li>
+    <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.use_forbid_rolename}></a></li>
+    <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.abuse_others}></a></li>
+</ul>
+</head>
+
+<body>
+	<div id="position"><{$_lang.left.data_analysis}>：<{$_lang.left.player_data_view}></div>
+	<form action="?action=search" id="frm" method="POST" >
+        <table cellspacing="1" cellpadding="5" class="SumDataGrid" width="800">
+            <tr>
+                <td align="right"><{$_lang.conmon.user_id}>：</td>
+                <td><input type="text" name="role_id" id="role_id" value="<{$search_role_id}>" /></td>
+                <td align="right"><{$_lang.conmon.role_name}>：</td>
+                <td><input type="text" name="role_name" id="role_name" value="<{$search_role_name}>" /></td>
+                <td align="right"><{$_lang.conmon.user_account}>：</td>
+                <td><input type="text" name="account_name" id="account_name" value="<{$search_account_name}>" /></td>
+                <td><input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/></td>
+            </tr>
+        </table>
+	    <br>
+	</form>
+    <{if $role_result|@count neq 0}>
+    <table class='paystat' style="width:55%">
+        <tr class='table_list_head'>
+            <td><{$_lang.conmon.user_id}></td>
+            <td><{$_lang.conmon.role_name}></td>
+            <td><{$_lang.conmon.user_account}></td>
+            <td><{$_lang.conmoon.operating}></td>
+        </tr>
+        <{foreach item="roleData" from="$role_result"}>
+        <tr class="trOdd">
+            <td><{$roleData.role_id}></td>
+            <td><{$roleData.role_name}></td>
+            <td><{$roleData.account_name}></td>
+            <td><a href="?action=search&type=continue&role_id=<{$roleData.role_id}>&role_name=<{$roleData.role_name}>&search_role_id=<{$search_role_id}>&search_role_name=<{$search_role_name}>&search_account_name=<{$search_account_name}>">查询</a></td>
+        </tr>
+        <{/foreach}>
+    </table>
+    <br>
+    <{/if}>
+    <!--
+    <form action="?action=kill" method="post">
+        <{foreach item="userData" from="$role"}>
+        <input name="role_id" type="hidden" value="<{$userData.role_id}>" >
+        <input name="role_name" type="hidden" value="<{$userData.role_name}>" >
+        <input name="account_name" type="hidden" value="<{$userData.account_name}>" >
+        <{/foreach}>
+        <table width="800s"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+            <tr bgcolor="#A5D0F1" align="left">
+                <td><b>::<{$_lang.left.user_manage}></b><font color="red">（<{$_lang.left.player_data_view_note}>）</font></td>
+            </tr>
+            <tr bgcolor="#FFFFFF">
+                <td width="70%">
+                    <input type="radio" name="action_type" value = "kill_role"><{$_lang.left.kick_user_offline}>
+                    <!--<input type="radio" name="action_type" value = "kill_role_utill">封玩家帐号<input type="text" name="ban_time" value = "30" size=12>分钟
+                    <input type="radio" name="action_type" value = "stop_chat"><{$_lang.left.gag}>
+                    <input type="text" name="chat_time" value = "60" size=12><{$_lang.conmon.minute}>
+                </td>
+                <td width="30%"><input type="submit" value="<{$_lang.left.submit}>"></td>
+            </tr>
+        </table>                    
+    </form>
+    <br>
+    <form action="?action=doBan" method="POST" id="frmBan">
+        <table width="800s" cellspacing="1" cellpadding="5" border="0">
+            <tr bgcolor="#A5D0F1" align="left"><td colspan="5">
+                    <b>::<{$_lang.left.banned_account}>+<{$_lang.left.gag}></b>
+                </td>
+            </tr>
+            <{if $ban_account}>
+			<tr class='table_list_head'  align="center">				
+				<td><{$_lang.new.banned_time}></td>
+				<td><{$_lang.new.no_banned_time}></td>
+				<td><{$_lang.left.banned_reason}></td>
+				<td><{$_lang.new.operator}></td>
+				<td><{$_lang.conmon.operating}></td>
+			</tr>
+            <tr class='trOdd'  align="center">
+                <input name="role_id" value="<{$ban_account.role_id}>" type="hidden">
+                <input name="role_name" value="<{$ban_account.role_name}>" type="hidden">
+                <input name="account_name" value="<{$ban_account.account_name}>" type="hidden">
+                <td><{$ban_account.start_time|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                <td><{$ban_account.end_time|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                <td><{$ban_account.ban_reason}></td>
+                <td><{$ban_account.admin}></td>
+                <td><input name="btnUnBan" value="<{$_lang.new.no_banned}>" onclick="doUnBan('<{$ban_account.role_id}>','<{$ban_account.account_name}>');" type="button"></td>
+            </tr>
+            <{else }>
+			<tr class='table_list_head'  align="center">
+				<!--<td><{$_lang.conmon.user_id}></td>
+				<td><{$_lang.conmon.role_name}></td>
+				<td><{$_lang.conmon.user_account}></td>-->
+				<!--<td><{$_lang.left.ip_address}></td>-->
+				<!--<td><{$_lang.conmon.role_level}></td>
+				<td><{$_lang.left.total_recharge}></td>-->
+				<!--<td><{$_lang.left.statu}></td>
+				<td><{$_lang.new.banned_time_long}></td>
+				<td><{$_lang.left.banned_reason}></td>
+                <td width="20%"><{$_lang.conmon.operating}></td>
+			</tr>
+            <tr class='trOdd'  align="center">
+                <input name="role_id" value="<{$account.role_id}>" type="hidden">
+                <input name="role_name" value="<{$account.role_name}>" type="hidden">
+                <input name="account_name" value="<{$account.account_name}>" type="hidden">
+                <input name="pay_all" value="<{$account.pay}>" type="hidden">
+                <td><input name="last_login_ip" value="<{$account.last_login_ip}>" type="hidden"><{$account.last_login_ip}></td>
+                <td><input name="is_online" value="<{$account.is_online}>" type="hidden"><{if $account.is_online ==1}><font color="#0000FF"><{$_lang.conmon.online}></font><{else}><{$_lang.new.offline}><{/if}></td>
+                <td>
+                    <select name="ban_time" id="ban_time">
+                        <{html_options options=$ban_time_option selected=$ban_time}>
+                    </select>
+                </td>
+                <td><input class="ban_reason" name="ban_reason" id="ban_reason" size="40" type="text"></td>
+                <td><input name="btnBan" onclick="doBanOne('<{$account.role_id}>');" value="<{$_lang.left.banned}>" type="button"></td>
+			</tr>
+       		<{/if}>
+        </table>
+    </form>
+	<br>-->
+
+	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr align="left">
+			<td><b><{$_lang.left.user_info}></b></td>
+		</tr>
+		<tr class='table_list_head'>
+			<td><{$_lang.conmon.user_id}></td><!-- 角色ID -->
+            <td><{$_lang.conmon.user_account}></td><!-- 账号名 -->
+            <td><{$_lang.conmon.role_name}></td><!-- 角色名 -->
+
+            <td><{$_lang.conmon.career}></td><!-- 新增 职业-->
+
+            <td><{$_lang.left.sex}></td><!-- 性别 -->
+            <td><{$_lang.left.martial_art}></td><!-- 国家 -->
+
+            <td><{$_lang.conmon.family}></td><!-- 新增 家族-->
+            <td><{$_lang.conmon.vip}></td> <!-- 新增 vip-->
+            <td><{$_lang.left.suicide}></td> <!--新增 转生-->
+
+			<td><{$_lang.conmon.role_level}></td><!-- 角色等级 -->
+
+            <td><{$_lang.left.rank}></td><!--新增 军衔-->
+            <td><{$_lang.left.map}></td><!--新增 所在地图 -->
+
+            <td><{$_lang.left.statu}></td><!-- 状态 -->
+        </tr>
+        <{section name=loop loop=$role}>
+        <{if $smarty.section.loop.rownum % 2 == 0}>
+        <tr class='trEven'>
+        <{else}>
+        <tr class='trOdd'>
+        <{/if}>
+            <td><{$role[loop].role_id}></td>
+            <td><{$role[loop].account_name}></td>
+            <td><{$role[loop].role_name}></td>
+            <td>
+                <{if $role[loop].class_id eq 1}>
+                <{$_lang.left.mengjiang}>
+                <{elseif $role[loop].class_id eq 2}>
+                <{$_lang.left.moushi}>
+                <{elseif $role[loop].class_id eq 3}>
+                <{$_lang.left.fangshi}>
+                <{/if}>
+            </td>
+
+            <{if $role[loop].sex eq 1}>
+            <td><{$_lang.new.man}></td>
+            <{else}>
+            <td><{$_lang.new.woman}></td>
+            <{/if}>
+
+            <{if $role[loop].faction_id eq 1}>
+            <td><{$_lang.left.tiandao}></td>
+            <{elseif $role[loop].faction_id eq 2}>
+            <td><{$_lang.left.yijian}></td>
+            <{elseif $role[loop].faction_id eq 3}>
+            <td><{$_lang.left.yinkui}></td>
+            <{else}>
+            <td><{$_lang.left.cihang}></td>
+            <{/if}>
+
+            <td>
+                <{if $role[loop].family_name}>
+                <{$role[loop].family_name}>
+                <{else}>
+                暂无家族
+                <{/if}>    
+            </td>
+            <!-- <td>
+                <{if $role[loop].family_name}>
+                    <{$role[loop].family_name}>
+                <{else}>
+                    null
+                <{/if}>
+            </td> -->
+            <td><{$role[loop].vip_level}></td>
+            <td><{$role[loop].reincarnation}></td>
+            <td><{$role[loop].level}></td>
+            <td><{$role[loop].militaryranks}></td>
+            <td><{$role[loop].map}></td>
+            <!--<td><{$role[loop].create_time}></td>
+            <td><{if $role[loop].is_online ==1}><font color="#0000FF">0</font><{else}><{if $role[loop].left_day>=3}><font color="red"><{/if}><{$role[loop].left_day}>天<{$role[loop].left_h_m}><{/if}></td>
+
+            <td><{$role[loop].gongxun}></td>
+            <td><{$role[loop].exp}></td>-->
+            <td><{if $role[loop].is_online eq 1}><font color="red"><{$_lang.conmon.online}><font><{else}><{$_lang.new.offline}><{/if}></td>
+        </tr>
+        <{/section}>
+    </table>
+    <br>
+    <table  width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+        <tr class='table_list_head'>
+            <td><{$_lang.left.rechenge_sum}></td><!--新增 累积充值元宝 -->
+            <td><{$_lang.left.sycee}></td><!-- 新增 当前元宝 -->
+            <td><{$_lang.new.bind_gold}></td> <!--新增 礼金 -->
+            <td><{$_lang.conmon.silver}></td><!-- 银两 -->
+            <td><{$_lang.new.remain_bind_silver}></td><!--新增 remain_bind_silver -->
+            <td><{$_lang.left.vigour}></td><!--新增 元气 -->
+            <td><{$_lang.left.courage}></td><!--新增 魄力 -->
+            <td><{$_lang.left.GOVCR}></td><!--新增 国家贡献 -->
+            <td><{$_lang.left.prestige}></td><!-- 功勋 -->
+            <td><{$_lang.left.honor}></td><!--新增 荣誉值-->
+            <td><{$_lang.left.pk}></td><!--新增 pk值 -->
+            <td><{$_lang.left.experience}></td><!-- 经验 -->
+            <td><{$_lang.left.up_experience}></td><!-- 升级经验 -->
+            <td><{$_lang.conmon.registered_time}></td><!-- 注册时间 -->
+            <td><{$_lang.conmon.last_log_time}></td><!--新增 最后登录时间 -->
+            <!--<td><{$_lang.left.register_ip}></td><!--新增 注册IP-->
+            <td><{$_lang.conmon.last_login_ip}></td><!-- 最后登录IP -->
+            <td><{$_lang.left.offline_time}></td><!-- 离线时长 -->
+        </tr>
+        <{section name=loop loop=$role}>
+        <{if $smarty.section.loop.rownum % 2 == 0}>
+        <tr class='trEven'>
+            <{else}>
+        <tr class='trOdd'>
+            <{/if}>
+            <td><{$role[loop].pay_gold}></td>
+            <td><{$role[loop].gold}></td>
+            <td><{$role[loop].gold_bind}></td>
+            <td><{$role[loop].silver}></td>
+            <td><{$role[loop].silver_bind}></td>
+            <td><{$role[loop].vitality}></td>
+            <td><{$role[loop].soul}></td>
+            <td><{$role[loop].jungong}></td>
+            <td><{$role[loop].exploit}></td>
+            <td><{$role[loop].honor}></td>
+            <td><{$role[loop].pk_points}></td>
+            <td><{$role[loop].exp}></td>
+            <td><{$role[loop].next_level_exp}></td>
+            <td><{$role[loop].create_time}></td>
+            <td><{$role[loop].last_login_time|date_format:'%Y-%m-%d %H:%M:%S'}></td>
+            <!--<td><{$role[loop].login_ip}></td>-->
+            <td><{$role[loop].last_login_ip}></td>
+            <td><{$role[loop].left_day}>天<{$role[loop].left_h_m}></td>
+        <!--
+            <td><{$role[loop].role_id}></td>
+            <td><{$role[loop].role_name}></td>
+            <td><{$role[loop].account_name}></td>
+            <td><{if $role[loop].is_online eq 1}><font color="red"><{$_lang.conmon.online}><font><{else}><{$_lang.new.offline}><{/if}></td>
+            <td><{$role[loop].level}></td>
+            <td><{$role[loop].gold}></td>
+            <td><{$role[loop].gold_bind}></td>
+            <td><{$role[loop].silver}></td>
+            <td><{$role[loop].last_login_ip}></td>
+            <td><{$role[loop].create_time}></td>
+            <td><{if $role[loop].is_online ==1}><font color="#0000FF">0</font><{else}><{if $role[loop].left_day>=3}><font color="red"><{/if}><{$role[loop].left_day}>天<{$role[loop].left_h_m}><{/if}></td>
+            <{if $role[loop].sex eq 1}>
+            <td><{$_lang.new.man}></td>
+            <{else}>
+            <td><{$_lang.new.woman}></td>
+            <{/if}>
+            <{if $role[loop].faction_id eq 1}>
+            <td><{$_lang.left.tiandao}></td>
+            <{elseif $role[loop].faction_id eq 2}>
+            <td><{$_lang.left.yijian}></td>
+            <{elseif $role[loop].faction_id eq 3}>
+            <td><{$_lang.left.yinkui}></td>
+            <{else}>
+            <td><{$_lang.left.cihang}></td>
+            <{/if}>
+            <td><{$role[loop].family_name}></td>
+            <td><{$role[loop].gongxun}></td>
+            <td><{$role[loop].exp}></td>
+            <td><{$role[loop].next_level_exp}></td>
+        -->
+        </tr>
+        <{/section}>
+
+    </table>
+    <!--<br>
+    <table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+        <tr align="left">
+        	<td><b>::<{$_lang.left.user_mounts_info}></b></td>
+        </tr>
+		     <tr class='table_list_head'>
+                <!--  <td>物品id</td>
+				<td><{$_lang.left.mountsment_id}></td>
+                <td><{$_lang.left.mountsment_name}></td>
+                <td><{$_lang.left.mountsment_type}></td>
+                <td><{$_lang.left.mountsment_color}></td>
+                <td><{$_lang.left.mountsment_timetype}></td>
+                <td><{$_lang.left.mountsment_time}></td>
+                <td><{$_lang.left.mountsment_level}></td>
+                <td><{$_lang.left.mountsment_class}></td>
+             </tr>
+             <{section name=loop loop=$mounts}>
+                    <{if $smarty.section.loop.rownum % 2 == 0}>
+					<tr class='trEven'>
+					<{else}>
+					<tr class='trOdd'>
+					<{/if}>
+                            <td><{$mounts[loop].typeid}></td>
+                        	<td><{$mounts[loop].name}></td>
+                            <td><{if $mounts[loop].endurance == 1}><{$_lang.left.mountsment_zhu}><{else}><{$_lang.left.mountsment_pi}><{/if}></td>
+                        	<{if $mounts[loop].color eq 1}><td><{$_lang.new.white}></td>
+							<{elseif $mounts[loop].color eq 2}><td><{$_lang.new.green}></td>
+							<{elseif $mounts[loop].color eq 3}><td><{$_lang.new.blue}></td>
+							<{elseif $mounts[loop].color eq 4}><td><{$_lang.new.purple}></td>
+							<{else}><td><{$_lang.new.orange}></td>
+                            <{/if}>
+                            <{if $mounts[loop].cur_endu == 0}>
+                            <td><{$_lang.left.mountsment_yongjiu}></td>
+                            <td>0</td>
+                            <{elseif $mounts[loop].cur_endu == 1}>
+                            <td><{$_lang.left.mountsment_riqi}></td>
+                            <td><{$equips[loop].end_time}></td>
+                            <{else}>
+                            <td><{$_lang.left.mountsment_shixian}></td>
+                            <td><{$mounts[loop].end_time}></td>
+                            <{/if}>
+                            <td><{$mounts[loop].level}></td>
+                            <td><{$mounts[loop].class_level}></td>
+                  </tr>
+             <{/section}>
+    </table>
+    -->
+    <br>
+    <!-- 装备 -->
+    <table width="50%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+			 <tr align="left">
+				<td><b><{$_lang.left.user_equipment_info}></b></td>
+			 </tr>
+		     <tr class='table_list_head'>
+                <!--  <td>物品id</td> -->
+				<td><{$_lang.left.equipment_id}></td><!-- 装备ID -->
+                <td><{$_lang.left.equipment_name}></td><!-- 装备名称 -->
+                 <td><{$_lang.left.equipment_num}></td><!-- 装备等级 -->
+                <td><{$_lang.left.rein_num}></td><!-- 强化等级 -->
+                <!--<td><{$_lang.left.star_num}></td><!-- 强化星数 -->
+                 <!--<td><{$_lang.left.hole_num}></td><!-- 装备孔数 -->
+                 <!--<td><{$_lang.left.gemstone}></td><!-- 灵石 -->
+                 <!--<td><{$_lang.left.is_band}></td><!-- 是否绑定 -->
+             </tr>
+        <{section name=loop loop=$equips}>
+        <{if $smarty.section.loop.rownum % 2 == 0}>
+        <tr class='trEven'>
+        <{else}>
+        <tr class='trOdd'>
+        <{/if}>
+           <!--  <td><{$equips[loop].id}></td> -->
+            <td><{$equips[loop].typeid}></td>
+            <td><{$equips[loop].name}></td>
+            <td>穿戴等级:<{$equips[loop].min_level}>(转生等级:<{$equips[loop].reincarnation}>)</td>
+            <td><{$equips[loop].reinforce}></td>
+        </tr>
+        <{/section}>
+    </table>
+    <br>
+
+    <table width="50%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+        <tr align="left">
+            <!--<td><b><{$_lang.left.user_props_info}></b></td><!-- 背包物品 -->
+        	<td><b><{$_lang.left.bag_goods}></b></td><!-- 背包物品 -->
+        </tr>
+        <tr class='table_list_head'>
+            <!-- <td>物品id</td> -->
+            <td><{$_lang.left.goods_id}></td>
+            <td><{$_lang.left.goods_name}></td>
+            <td><{$_lang.left.goods_num}></td>
+            <td><{$_lang.left.is_band}></td>
+        </tr>
+        <{section name=loop loop=$goods}>
+        <{if $smarty.section.loop.rownum % 2 == 0}>
+        <tr class='trEven'>
+        <{else}>
+        <tr class='trOdd'>
+        <{/if}>
+            <!-- <td><{$goods[loop].id}></td> -->
+            <td><{$goods[loop].typeid}></td>
+            <td><{$goods[loop].name}></td>
+            <td>
+                <{if $goods[loop].current_num}>
+                <{$goods[loop].current_num}>
+                <{else}>
+                1
+                <{/if}>
+            </td>
+            <td>
+            	<{if $goods[loop].bind eq 1}>
+                	<{$_lang.left.bind}>
+                <{else}>
+                	<{$_lang.new.tradable}>
+                <{/if}>
+            </td>
+        </tr>
+        <{/section}>
+    </table>
+    <br>
+
+
+
+    <table width="50%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+        <tr align="left">
+            <!--<td><b><{$_lang.left.user_props_info}></b></td><!-- 背包物品 -->
+            <td><b><{$_lang.left.warehouse_goods}></b></td><!-- 背包物品 -->
+        </tr>
+        <tr class='table_list_head'>
+            <!-- <td>物品id</td> -->
+            <td><{$_lang.left.goods_id}></td>
+            <td><{$_lang.left.goods_name}></td>
+            <td><{$_lang.left.goods_num}></td>
+            <td><{$_lang.left.is_band}></td>
+        </tr>
+        <{section name=loop loop=$depot}>
+        <{if $smarty.section.loop.rownum % 2 == 0}>
+        <tr class='trEven'>
+            <{else}>
+        <tr class='trOdd'>
+            <{/if}>
+            <!-- <td><{$goods[loop].id}></td> -->
+            <td><{$depot[loop].typeid}></td>
+            <td><{$depot[loop].name}></td>
+            <td>
+                <{if $depot[loop].current_num}>
+                <{$depot[loop].current_num}>
+                <{else}>
+                1
+                <{/if}>
+            </td>
+            <td>
+                <{if $depot[loop].bind eq 1}>
+                <{$_lang.left.bind}>
+                <{else}>
+                <{$_lang.new.tradable}>
+                <{/if}>
+            </td>
+        </tr>
+        <{/section}>
+    </table>
+    <br>
+<!--
+    <table width="50%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+        <tr align="left">
+        	<td><b><{$_lang.left.warehouse_goods}></b></td>
+        </tr>
+        <tr class='table_list_head'>
+            <td><{$_lang.left.goods_id}></td>
+            <td><{$_lang.left.goods_name}></td>
+            <td><{$_lang.left.goods_num}></td>
+            <td><{$_lang.left.is_band}></td>
+        </tr>
+        <{section name=loop loop=$goods}>
+        <{if $smarty.section.loop.rownum % 2 == 0}>
+        <tr class='trEven'>
+        <{else}>
+        <tr class='trOdd'>
+        <{/if}>
+            <td><{$goods[loop].typeid}></td>
+            <td><{$goods[loop].name}></td>
+            <td><{$goods[loop].current_num}></td>
+            <td>
+            	<{if $goods[loop].bind eq 1}>
+                	<{$_lang.left.bind}>
+                <{else}>
+                	<{$_lang.new.tradable}>
+                <{/if}>
+            </td>
+        </tr>
+        <{/section}>
+    </table>
+    <br>
+-->
+
+<!--
+    <table width="50%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+        <tr align="left">
+        	<td><b><{$_lang.left.inlay_gem}></b></td>
+        </tr>
+        <tr class='table_list_head'>
+            <td><{$_lang.left.inlay_part}></td>
+            <td><{$_lang.left.gemID}></td>
+            <td><{$_lang.left.gem_name}></td>
+        </tr>
+        <{section name=loop loop=$goods}>
+        <{if $smarty.section.loop.rownum % 2 == 0}>
+        <tr class='trEven'>
+        <{else}>
+        <tr class='trOdd'>
+        <{/if}>
+            <td><{$goods[loop].typeid}></td>
+            <td><{$goods[loop].name}></td>
+            <td><{$goods[loop].current_num}></td>
+            <td>
+            	<{if $goods[loop].bind eq 1}>
+                	<{$_lang.left.bind}>
+                <{else}>
+                	<{$_lang.new.tradable}>
+                <{/if}>
+            </td>
+        </tr>
+        <{/section}>
+    </table>
+-->
+
+    <table width="50%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+        <tr align="left">
+            <td><b><{$_lang.left.user_mounts_info}></b></td><!-- 坐骑信息 -->
+        </tr>
+        <tr class='table_list_head'>
+            <!-- <td>物品id</td> -->
+            <td><{$_lang.left.mountsment_name}></td>
+            <td><{$_lang.left.mountsment_level}></td>
+            <td><{$_lang.left.mountsment_class}></td>
+          <!--  <td><{$_lang.left.is_band}></td>-->
+        </tr>
+        <{section name=loop loop=$mounts}>
+        <{if $smarty.section.loop.rownum % 2 == 0}>
+        <tr class='trEven'>
+        <{else}>
+        <tr class='trOdd'>
+        <{/if}>
+            <td><{$mounts[loop].name}></td>
+            <td><{$mounts[loop].star_level}></td>
+            <td><{$mounts[loop].step_level}></td>
+        </tr>
+        <{/section}>
+    </table>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.register_statistics}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+
+<body>
+	<div id="all">
+		<div id="position"><{$_lang.left.online_register}>：<{$_lang.left.register_statistics}></div>
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                <form name="myform" action="?type=zonghe" method="post" >
+                <{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$start}>'/>
+                &nbsp;<{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$end}>'/>
+                &nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+                </form>
+                <table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="2" background="/web/admin/static/images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.current_register_info_statistics}></b></font>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                          <td width="25%"><{$_lang.left.register_total}>：</td>
+                          <td width="75%"><{$account_count}></td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                          <td width="25%"><{$_lang.left.current_accounts_num}>：</td>
+                          <td width="75%"><{$HaveRoleAccount}>---------<{$_lang.left.creat_role_lose_rate}>(<{$HaveRoleAccountload}>)</td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                          <td width="25%"><{$_lang.left.current_role_num}>：</td>
+                          <td width="75%"><{$role_count}></td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                          <td width="25%"><{$_lang.left.wei_users}>：</td>
+                          <td width="75%"><{$role_count_of_wei|default:0}>(<{$role_count_of_wei/$role_count}>)</td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                          <td width="25%"><{$_lang.left.shu_users}>：</td>
+                          <td width="75%"><{$role_count_of_shu|default:0}>(<{$role_count_of_shu/$role_count}>)</td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                          <td width="25%"><{$_lang.left.wu_users}>：</td>
+                          <td width="75%"><{$role_count_of_wu|default:0}>(<{$role_count_of_wu/$role_count}>)</td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                          <td width="25%"><{$_lang.left.no_users}>：</td>
+                          <td width="75%"><{$role_count_of_no|default:0}>(<{$role_count_of_no/$role_count}>)</td>
+                        </tr>
+                     </table>
+
+
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr class='table_list_head'>
+                            <td><{$_lang.conmon.year}></td><td><{$_lang.conmon.month}></td><td><{$_lang.conmon.date}></td><td><{$_lang.conmon.hour}></td><td><{$_lang.left.register_accounts}></td>
+                        </tr>
+
+                    <{section name=loop loop=$keywordlist}>
+
+                        <{if $keywordlist[loop].day==null || $keywordlist[loop].month==null || $keywordlist[loop].year==null || $keywordlist[loop].hour==null}>
+                        <tr bgcolor="#E5F9FF" align="center">
+                        <{else}>
+                        <{if $smarty.section.loop.rownum % 2 == 0}>
+                        <tr class='trEven'>
+                        <{else}>
+                        <tr class='trOdd'>
+                        <{/if}>
+                        <{/if}>
+                            <td>
+                            <{if $keywordlist[loop].year==null}><{$_lang.new.all_result_data}>
+                            <{else}>
+                            <{$keywordlist[loop].year}>
+                            <{/if}>
+                            </td><td>
+                            <{if $keywordlist[loop].day==null && $keywordlist[loop].month==null && $keywordlist[loop].year!=null}><{$_lang.conmon.year}><{$_lang.conmon.all}>
+                            <{else}>
+                            <{$keywordlist[loop].month}>
+                            <{/if}>
+                            </td><td>
+                            <{if $keywordlist[loop].day==null && $keywordlist[loop].month!=null && $keywordlist[loop].year!=null}><{$_lang.conmon.month}><{$_lang.conmon.all}>
+                            <{else}>
+                            <{$keywordlist[loop].day}>
+                            <{/if}>
+                            </td><td>
+                            <{if $keywordlist[loop].hour==null && $keywordlist[loop].day!==null && $keywordlist[loop].month!=null && $keywordlist[loop].year!=null}><{$_lang.conmon.date}><{$_lang.conmon.all}>
+                            <{else}>
+                            <{$keywordlist[loop].hour}>
+                            <{/if}>
+                            </td><td>
+                            <{$keywordlist[loop].c}>
+                            </td>
+                        </tr>
+                    <{sectionelse}>
+
+                    <{/section}>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+	</div>
+
+
+
+</body>
+</html>

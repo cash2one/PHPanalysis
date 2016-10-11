@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.online_statistics}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+
+<body>
+  <div id="all">
+    <div id="position"><{$_lang.left.online_register}>：<{$_lang.left.online_statistics}></div>
+      <div><{$errorMsg}></div>
+      <div class='divOperation'>
+        <form name="myform" method="post">
+        <{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='date1' name='date1' size='12' value='<{$date1}>'/>&nbsp;
+        <{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='date2' name='date2' size='12' value='<{$date2}>'/>
+        &nbsp;&nbsp;<{$_lang.left.sampling_unit}>：
+        <select id="viewtype" name="viewtype" >
+        <option value="1" <{if $viewtype==1}>selected<{/if}>><{$_lang.conmon.hour}></option>
+        <option value="2" <{if $viewtype==2}>selected<{/if}>><{$_lang.conmon.day}></option>
+        <option value="3" <{if $viewtype==3}>selected<{/if}>>5<{$_lang.conmon.minute}></option>
+        <option value="4" <{if $viewtype==4}>selected<{/if}>><{$_lang.conmon.today_highest}></option>
+        </select>
+        <{$_lang.conmon.hour}><input type='text' id="nickname" name='hour' size='10' value='<{$hour}>'/>
+        <{$_lang.conmon.minute}><input type='text' id="nickname" name='min' size='10' value='<{$min}>'/>
+        <input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+        </form>
+    </div><br>
+
+<TABLE style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid; BORDER-COLLAPSE: collapse; BACKGROUND-COLOR: white" cellSpacing=0 cellPadding=0 border=0>
+              <TBODY>
+              <TR>
+                <TD style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; FONT-WEIGHT: bold; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid" align="left" colSpan=33>
+                    <{$date1}><{$_lang.conmon.date}>~<{$date2}><{$_lang.conmon.date}>
+                    <FONT color=red>
+                        <{$_lang.new.per}>
+                        <{if $viewtype==1}>
+                        <{$_lang.conmon.hour}>
+                        <{/if}>
+                        <{if $viewtype==2}>
+                        <{$_lang.conmon.day}>
+                        <{/if}>
+                        <{if $viewtype==3}>
+                        5<{$_lang.conmon.minute}>
+                        <{/if}>
+                        <{$_lang.new.average_online}>
+                    </FONT>
+                    <{$_lang.left.trends_photo}>
+                    (<{$_lang.conmon.total_average}>:<{$avgonline}>&nbsp;&nbsp;&nbsp;&nbsp;<{$_lang.conmon.maximum}>：<{$maxonline}>) <font color="#696969"><{$_lang.left.online_explain}></font>
+                </TD>
+              </TR>
+              <TR>
+                <TD style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid"vAlign=bottom align=middle>
+                <table cellpadding="0" cellspacing="1">
+                    <tr>
+                 <{section name=loop loop=$datalist}>
+                <td valign="bottom" style="padding-left:10px">
+                  <TABLE cellSpacing=0 cellPadding=0 width=15 border=0 valign="bottom">
+                          <TBODY>
+                          <TR>
+                            <td valign=bottom>
+                              <table cellspacing=0 cellpadding="0" width=15 border=0 valign="bottom">
+                                <tbody>
+                                <tr>
+                                  <Td>
+                                    <FONT color=red size=1><{$datalist[loop].avgonline}></FONT>
+                                  </Td>
+                                </tr>  
+
+                                <tr>
+                                  <Td width=100%>
+                                    <IMG title=<{$_lang.left.login_times}>：<{$datalist[loop].avgonline}> height=<{$datalist[loop].height}> src="/web/admin/static/images/green.gif" width=100% >
+                                  </Td>
+                                </tr>  
+                                </tbody>
+                              </table>
+                            </td>
+
+                            <td valign=bottom>
+                              <table cellspacing=0 cellpadding="0" width=15 border=0 valign="bottom">
+                                <tbody>
+                                <tr>
+                                  <Td>
+                                    <FONT color=red size=1><{$datalist[loop].avg_distinct_ip}></FONT>
+                                  </Td>
+                                </tr>  
+
+                                <tr>
+                                  <Td width=100%>
+                                    <IMG title=<{$_lang.left.login_times}>：<{$datalist[loop].avg_distinct_ip}> height=<{$datalist[loop].distinctIpheight}>
+                                    src="/web/admin/static/images/red.gif" width=100%>
+                                  </Td>
+                                </tr>  
+                                </tbody>
+                              </table>
+                            </td>
+                          </TR>
+                          <tr>
+                            <TD style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; FONT-SIZE: 8pt; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid; WHITE-SPACE: nowrap; BACKGROUND-COLOR: whitesmoke"; colspan="2"
+                            align=middle>
+                            <{$datalist[loop].hour}>
+                            <{if $datalist[loop].minute!=""}>
+                            :
+                            <{/if}>
+                            <{$datalist[loop].minute}>
+                            <{if $datalist[loop].hour!=""}>
+                            <br/>
+                            <{/if}>
+                            <{$datalist[loop].month}>/<{$datalist[loop].day}>
+                           </TD>
+                          </tr>
+              </TBODY></TABLE>
+            </td>
+            <{/section}>
+            </tr>
+            </table>
+</TD></TR></TBODY></TABLE>
+
+<br>
+<br>
+
+
+<TABLE style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid; BORDER-COLLAPSE: collapse; BACKGROUND-COLOR: white" cellSpacing=0 cellPadding=0 border=0>
+              <TBODY>
+              <TR>
+                <TD style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; FONT-WEIGHT: bold; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid" align="left" colSpan=33><{$date1}><{$_lang.conmon.date}>~<{$date2}><{$_lang.conmon.date}><FONT
+                  color=red><{$_lang.new.per}><{if $viewtype==1}><{$_lang.conmon.hour}><{/if}><{if $viewtype==2}><{$_lang.conmon.day}><{/if}><{if $viewtype==3}>5<{$_lang.conmon.minute}><{/if}><{$_lang.left.top_online}></FONT></TD></TR>
+              <TR>
+                <TD style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid"
+                vAlign=bottom align=middle>
+                <table cellpadding="0" cellspacing="1"><tr>
+                <{section name=loop loop=$datalist}>
+                <td valign="bottom" style="padding-left:10px">
+                  <TABLE cellSpacing=0 cellPadding=0 width=15 border=0
+                        valign="bottom">
+                          <TBODY>
+                          <TR>
+                            <td valign=bottom>
+                              <table cellspacing=0 cellpadding="0" width=15 border=0 valign="bottom">
+                                <tbody>
+                                <tr>
+                                  <Td>
+                                    <FONT color=red size=1><{$maxdatalist[loop].avgonline}></FONT>
+                                  </Td>
+                                </tr>  
+
+                                <tr>
+                                  <Td width=100%>
+                                    <IMG
+                                      title=<{$_lang.left.login_times}>：<{$maxdatalist[loop].avgonline}> height=<{$datalist[loop].height}>
+                                      src="/web/admin/static/images/green.gif"
+                                      width=100%>
+                                  </Td>
+                                </tr>  
+                                </tbody>
+                              </table>
+                            </td>
+
+                            <td valign=bottom>
+                              <table cellspacing=0 cellpadding="0" width=15 border=0 valign="bottom">
+                                <tbody>
+                                <tr>
+                                  <Td>
+                                    <FONT color=red size=1><{$maxdatalist[loop].avg_distinct_ip}></FONT>
+                                  </Td>
+                                </tr>  
+
+                                <tr>
+                                  <Td width=100%>
+                                    <IMG title=<{$_lang.left.login_times}>：<{$maxdatalist[loop].avg_distinct_ip}> height=<{$datalist[loop].distinctIpheight}>
+                                    src="/web/admin/static/images/red.gif" width=100%>
+                                  </Td>
+                                </tr>  
+                                </tbody>
+                              </table>
+                            </td>
+                          </TR>
+                          <tr>
+                            <TD style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; FONT-SIZE: 8pt; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid; WHITE-SPACE: nowrap; BACKGROUND-COLOR: whitesmoke"; colspan="2"
+                            align=middle>
+                            <{$datalist[loop].hour}>
+                            <{if $datalist[loop].minute!=""}>
+                            :
+                            <{/if}>
+                            <{$datalist[loop].minute}>
+                            <{if $datalist[loop].hour!=""}>
+                            <br/>
+                            <{/if}>
+                            <{$datalist[loop].month}>/<{$datalist[loop].day}>
+                           </TD>
+                          </tr>
+              </TBODY></TABLE>
+            </td>
+            <{/section}>
+            </tr>
+            </table>
+</TD></TR></TBODY></TABLE>
+<!-- 
+<TABLE style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid; BORDER-COLLAPSE: collapse; BACKGROUND-COLOR: white" cellSpacing=0 cellPadding=0 border=0>
+              <TBODY>
+              <TR>
+                <TD style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; FONT-WEIGHT: bold; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid" align="left" colSpan=33><{$date1}><{$_lang.conmon.date}>~<{$date2}><{$_lang.conmon.date}><FONT
+                  color=red><{$_lang.new.per}><{if $viewtype==1}><{$_lang.conmon.hour}><{/if}><{if $viewtype==2}><{$_lang.conmon.day}><{/if}><{if $viewtype==3}>5<{$_lang.conmon.minute}><{/if}><{$_lang.left.top_online}></FONT></TD></TR>
+              <TR>
+                <TD style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid"
+                vAlign=bottom align=middle>
+                <table cellpadding="0" cellspacing="1"><tr>
+                <{section name=loop loop=$maxdatalist}>
+                <td valign="bottom">
+                  <TABLE cellSpacing=0 cellPadding=0 width=15 border=0
+                        valign="bottom">
+                          <TBODY>
+                          <TR>
+                            <TD height=47></TD></TR>
+                          <TR>
+                            <TD vAlign=bottom align=middle height=20><FONT
+                              color=red size=1><{$maxdatalist[loop].avgonline}></FONT>
+                           </TD></TR>
+                          <TR>
+                            <TD vAlign=bottom align=middle><IMG
+                              title=<{$_lang.left.login_times}>：<{$maxdatalist[loop].avgonline}> height=<{$datalist[loop].height}>
+                              src="/web/admin/static/images/green.gif"
+                          width=10></TD></TR>
+         <tr><TD style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; FONT-SIZE: 8pt; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid; WHITE-SPACE: nowrap; BACKGROUND-COLOR: whitesmoke"
+                align=middle>
+         <{$maxdatalist[loop].hour}>
+          <{if $maxdatalist[loop].minute!=""}>
+        :
+         <{/if}>
+          <{$maxdatalist[loop].minute}>
+         <{if $maxdatalist[loop].hour!=""}>
+         <br/>
+         <{/if}>
+
+         <{$maxdatalist[loop].month}>/<{$maxdatalist[loop].day}></TD></tr>
+              </TBODY></TABLE>
+            </td>
+
+
+            <td valign="bottom">
+                  <TABLE cellSpacing=0 cellPadding=0 width=15 border=0
+                        valign="bottom">
+                          <TBODY>
+                          <TR>
+                            <TD height=47></TD></TR>
+                          <TR>
+                            <TD vAlign=bottom align=middle height=20><FONT
+                              color=red size=1><{$maxdatalist[loop].avg_distinct_ip}></FONT>
+                           </TD></TR>
+                          <TR>
+                            <TD vAlign=bottom align=middle><IMG
+                              title=<{$_lang.left.login_times}>：<{$maxdatalist[loop].distinct_ip}> height=<{$datalist[loop].distinctIpheight}>
+                              src="/web/admin/static/images/red.gif"
+                          width=10></TD></TR>
+         <tr><TD style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; FONT-SIZE: 8pt; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid; WHITE-SPACE: nowrap; BACKGROUND-COLOR: whitesmoke"
+                align=middle>
+         <{$maxdatalist[loop].hour}>
+          <{if $maxdatalist[loop].minute!=""}>
+        :
+         <{/if}>
+          <{$maxdatalist[loop].minute}>
+         <{if $maxdatalist[loop].hour!=""}>
+         <br/>
+         <{/if}>
+
+         <{$maxdatalist[loop].month}>/<{$maxdatalist[loop].day}></TD></tr>
+              </TBODY></TABLE>
+            </td>
+            <{/section}>
+            </tr>
+            </table>
+</TD></TR></TBODY></TABLE>
+-->
+  </div>
+</body>
+</html>

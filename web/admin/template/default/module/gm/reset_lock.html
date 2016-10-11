@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#role_id").keydown(function(){
+			$("#role_name").val('');
+			$("#account_name").val('');
+			$("#ip_addr").val('');
+		});
+		$("#role_name").keydown(function(){
+			$("#role_id").val('');
+			$("#account_name").val('');
+			$("#ip_addr").val('');
+		});
+		$("#account_name").keydown(function(){
+			$("#role_id").val('');
+			$("#role_name").val('');
+			$("#ip_addr").val('');
+		});
+	});
+</script>
+<title>
+	<{$_lang.left.reset_lock}>
+</title>
+</head>
+<body>
+<div id="position"><{$_lang.left.gm_manage}>：<{$_lang.left.reset_lock}></div>
+
+<form action="?action=search" id="frmSearch" method="POST" >
+	<table cellspacing="1" cellpadding="5" class="SumDataGrid" width="900">
+		<tr>
+			<td align="right"><{$_lang.conmon.user_id}>：</td>
+			<td><input type="text" name="role_id" id="role_id" value="<{$role.role_id}>" /></td>
+			<td align="right"><{$_lang.conmon.role_name}>：</td>
+			<td><input type="text" name="role_name" id="role_name" value="<{$role.role_name}>" /></td>
+			<td align="right"><{$_lang.conmon.user_account}>：</td>
+			<td><input type="text" name="account_name" id="account_name" value="<{$role.account_name}>" /></td>
+			<td><input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/></td>
+		</tr>
+	</table>
+	<br>
+</form>
+<form action="?action=reset" id="frmSearch" method="POST" >
+<table width="100%" cellspacing="1" cellpadding="5" border="0">
+	<tr class='table_list_head' align="center">
+		<td><{$_lang.conmon.user_id}></td>
+		<td><{$_lang.conmon.role_name}></td>
+		<td><{$_lang.conmon.user_account}></td>
+		<td><{$_lang.conmon.operating}>
+	</tr>
+	<{if $role.role_id > 0}><tr class='table_list_head' align="center">
+			<input name="reset_role_id" value="<{$role.role_id}>" type="hidden">
+			<td><{$role.role_id}></td>
+			<td><{$role.role_name}></td>
+			<td><{$role.account_name}></td>
+			<td><input type="submit" name='reset' value ="<{$_lang.left.reset_lock}>"/></td>
+		</tr>
+		<{/if}>
+</table></body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/highcharts.js"></script>
+<title><{$_lang.left.recharge_statistics_hour}></title>
+</head>
+
+<body>
+<div id="position"><{$_lang.left.recharge_consumption}>：滚服数据统计：每日数据概况</div>
+<div id="position">
+    <form name="myform" method="post" action="<{$URL_SELF}>">
+        <{$_lang.left.statistical_time}>：
+        <input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$search_keyword1}>'/>
+        &nbsp;到&nbsp;
+        <input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$search_keyword2}>'/>
+        <input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"  />
+    </form>
+</div>
+<div id="position">
+<input name="mrgk" type="button" value="每日数据概况" onclick="location.href='pay_everyday_log.php'" /> <input name="cxzz" type="button" value="持续付费追踪" onclick="location.href='pay_track_log.php'" />
+</div>
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+<!-- SECTION  START -------------------------->
+<form id="form1" name="form1" method="post" action="">
+	<tr class='table_list_head'>
+		<td>日期</td>
+		<td>总注册</td>
+        <td>角色数</td>
+        <td>总充值(元宝)</td>
+		<td>充值人数</td>
+		<td>ARPU值</td>
+		<td colspan="4">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td colspan="4">老玩家</td>
+                </tr>
+                <tr>
+                    <td>角色数</td>
+                    <td>总充值(元宝)</td>
+                    <td>充值人数</td>
+                    <td>ARPU</td>
+                </tr>
+            </table>
+        </td>
+        <td colspan="4">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td colspan="4">新玩家</td>
+                </tr>
+                <tr>
+                    <td>角色数</td>
+                    <td>总充值(元宝)</td>
+                    <td>充值人数</td>
+                    <td>ARPU</td>
+                </tr>
+            </table>
+        </td>
+	</tr>
+<{section name=loop loop=$keywordlist}>
+	<{if $smarty.section.loop.rownum % 2 == 0}>
+	<tr class='trEven'>
+	<{else}>
+	<tr class='trOdd'>
+	<{/if}>
+		<td><{$keywordlist[loop].date}></td>
+		<td><{$keywordlist[loop].zzc}></td>
+        <td><{$keywordlist[loop].sum_dljs}></td>
+        <td><{$keywordlist[loop].sum_czje}></td>
+		<td><{$keywordlist[loop].sum_czrs}></td>
+		<td><{$keywordlist[loop].sum_arpu}></td>
+		<td width="5%"><{$keywordlist[loop].old_dljs}></td>
+        <td width="5%"><{$keywordlist[loop].old_czje}></td>
+        <td width="5%"><{$keywordlist[loop].old_czrs}></td>
+        <td width="4%"><{$keywordlist[loop].old_arpu}></td>
+        <td width="6%"><{$keywordlist[loop].new_dljs}></td>
+        <td width="6%"><{$keywordlist[loop].new_czje}></td>
+        <td width="6%"><{$keywordlist[loop].new_czrs}></td>
+        <td width="4%"><{$keywordlist[loop].new_arpu}></td>
+	</tr>
+<{sectionelse}>
+
+<{/section}>
+<!-- SECTION  END -------------------------->
+
+</form>
+</table>
+
+</body>
+</html>

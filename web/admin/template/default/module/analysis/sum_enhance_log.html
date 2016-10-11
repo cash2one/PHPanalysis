@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+    <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+    <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/web/admin/static/js/FusionCharts.js"></script>
+    <!--  添加回到顶部      start        -->
+    <script>
+        function goTopEx(){
+            var obj=document.getElementById("goTopBtn");
+            function getScrollTop(){
+                return document.documentElement.scrollTop;
+            }
+            function setScrollTop(value){
+                document.documentElement.scrollTop=value;
+            }
+            window.onscroll=function(){getScrollTop()>0?obj.style.display="":obj.style.display="none";
+            }
+            obj.onclick=function(){
+                var goTop=setInterval(scrollMove,10);
+                function scrollMove(){
+                    setScrollTop(getScrollTop()/1.1);
+                    if(getScrollTop()<1)clearInterval(goTop);
+                }
+            }
+        }
+
+        function setdate(flag){
+            var start = end = new Date();
+            //alert(start.getDate());
+            //var t = new  Date(start.getTime()-60*60*24*1000);
+            //var t = new Date("2012/1/4");
+            //alert(t.getDate());
+
+
+            switch(flag){
+                case 1:
+                    var t = new  Date(start.getTime()-2*60*60*24*1000);
+                    var dateStr = t.getFullYear()+'-'+(t.getMonth()*1+1)+'-'+t.getDate();
+                    $("#dStartDate").val(dateStr);
+                    var dateStr = end.getFullYear()+'-'+(end.getMonth()*1+1)+'-'+end.getDate();
+                    $("#dEndDate").val(dateStr);
+                    search();
+                    break;
+                case 2:
+                    var weekday = start.getDay()||7;
+                    var t = new  Date(start.getTime()-(weekday-1+14)*60*60*24*1000);
+                    var dateStr = t.getFullYear()+'-'+(t.getMonth()*1+1)+'-'+t.getDate();
+                    $("#dStartDate").val(dateStr);
+                    var weekday = end.getDay()||7;
+                    var t = new  Date(end.getTime()+(7-weekday)*60*60*24*1000);
+                    var dateStr = t.getFullYear()+'-'+(t.getMonth()*1+1)+'-'+t.getDate();
+
+                    $("#dEndDate").val(dateStr);
+                    search();
+                    break;
+                case 3:
+                    if(start.getMonth()>1)
+                        var dateStr = start.getFullYear()+'-'+(start.getMonth()*1+1-2)+'-1';
+                    else
+                        var dateStr = (start.getFullYear()-1)+'-'+(start.getMonth()*1+13-2)+'-1';
+                    $("#dStartDate").val(dateStr);
+                    search();
+                    break;
+            }
+        }
+    </script>
+    <!--  添加回到顶部   end        -->
+    <style type="text/css">
+        #all {text-align:left;margin-left:4px; line-height:1;}
+        #nodes {width:100%;float:left;border:1px #ccc solid;}
+        #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+        .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+
+        BODY { position: relative;}
+        #goTopBtn { z-index:333; position:fixed; TEXT-ALIGN:right; LINE-HEIGHT: 30px; WIDTH: 30px; BOTTOM: 35px; HEIGHT: 33px; FONT-SIZE: 12px; CURSOR: pointer; RIGHT: 0px; _position:absolute;
+                    _top:       expression(eval(document.compatMode &&
+                            document.compatMode=='CSS1Compat') ?
+                        documentElement.scrollTop+550 :
+                        document.body.scrollTop +
+                        (document.body.clientHeight
+                        -this.clientHeight));
+        }
+        <!--  添加回到顶部      end        -->
+    </style>
+    <title><{$_lang.new.streng_statistics_analysis}> </title>
+</head>
+    <body>
+        <div id="all">
+            <div id="position"><{$_lang.new.streng_statistics_analysis}> </div>
+            <div id="main">
+                <form name="form1" method="get">
+                    <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+                        <tr>
+                            <td >
+                                <b>&nbsp;<{$_lang.conmon.statistics}><{$_lang.new.type}>：</b>
+                                <input type="radio" id="radio_ttype" name="ttype" onclick="setdate(1)"  value="1"/><{$_lang.new.byday}>
+                                <input type="radio" id="radio_ttype" name="ttype" onclick="setdate(2)" value="2"/><{$_lang.new.byweek}>
+                                <input type="radio" id="radio_ttype" name="ttype" onclick="setdate(3)" value="3"/><{$_lang.new.bymonth}>
+								<b>&nbsp;&nbsp;<{$_lang.new.streng}><{$_lang.new.type}>：</b>
+                                <select id ="sel_money" name="act_type">
+                                    <option value="0"><{$_lang.new.please_select}><{$_lang.new.type}></option>
+                                    <{foreach key=key item=item from=$ctype_desc}>
+                                    <option value="<{$key}>"><{$item}></option>
+                                    <{/foreach}>
+           
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="sServerName_TD1" style="display:none"><td >&nbsp;<{$_lang.new.please_select}><{$_lang.conmon.server}>：</td></tr>
+                        <tr id="sServerName_TD2" style="display:none"><td id="sServer"></td></tr>
+                        <tr><td  bgcolor="#D7Eff5">
+                                &nbsp;<{$_lang.conmon.start_day_time}>：
+                                <input value="<{$search_keyword1}>" class="Wdate" id="dStartDate" readonly="readonly" name="dStartDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                <{$_lang.conmon.end_day_time}>：
+                                <input value="<{$search_keyword2}>" class="Wdate" id="dEndDate" readonly="readonly" name="dEndDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                <input value="<{$_lang.conmon.view}>" type="submit" onclick="search()" name="submit" />
+                            </td>
+                        </tr>
+
+                    </table>
+                </form>
+
+                <table style="background:#bbdde5" border="2" cellpadding="0" cellspacing="0"  >
+                    <tr><{$output}></tr>
+                </table>
+            </div>
+        </div>
+
+        <!--  添加回到顶部      start        -->
+        <div style="DISPLAY: none" id=goTopBtn>
+            <img border=0 src="/web/admin/static/images/lanren_top.jpg" />
+        </div>
+        <script  type="text/javascript">goTopEx();</script>
+        <!--  添加回到顶部      end      -->
+        </body>
+<script type="text/javascript">
+var server_id ="<{$server_id}>",agent_id = "<{$agent_id}>",ttype = '<{$ttype}>',money_type = '<{$money_type}>';
+$(function(){
+    //初始化搜索条件
+    if(agent_id > 0){
+        $("#sServerName_TD1").css("display", "block");
+        $("#sServerName_TD2").css("display", "block");
+        getServerRadios(agent_id,server_id);
+    }
+
+    $('input[name=ttype]').get(ttype-1).checked = true;
+    $('#sel_money').val(money_type)
+})
+
+function search(){
+    var dStartTime = $("#dStartDate").val();
+    var dEndTime = $("#dEndDate").val();
+    if(dStartTime =="" || dEndTime =="" || dEndTime<dStartTime){
+        alert("<{$_lang.new.endtime_cannot_smaller_starttime}>");
+        return false;
+    }
+
+    $('#btnsubmit').click()
+}
+
+function GetPlatServer(value) {
+    if (value == "0") {// hide servers if select all
+        $("#sServerName_TD1").css("display", "none");
+        $("#sServerName_TD2").css("display", "none");
+    } else {
+        $("#sServerName_TD1").css("display", "block");
+        $("#sServerName_TD2").css("display", "block");
+    }
+
+    getServerRadios(agent_id,0);
+    search();
+}
+
+function getServerRadios(agent_id,server_id){
+    var servers=<{$servers}>;
+    var server = servers[agent_id];
+    var radios = "<input name='radio_server'  value='0' onclick='search();' "
+        +(server_id == 0? "checked='checked'":' ')
+        +"type='radio'/><{$_lang.conmon.any}>  ";
+    for(var i in server){
+        radios += "<input name='radio_server'  value='" + i + "' onclick='search();' "
+            +(server_id == i? "checked='checked'":' ')
+            +"type='radio'/>" + server[i];
+    }
+    $("#sServer").html(radios);
+}
+
+
+
+
+
+
+</script>
+
+</html>

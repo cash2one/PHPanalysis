@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.title_achievement_protect}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+#all {
+	text-align: left;
+	margin-left: 4px;
+	line-height: 1;
+}
+
+#nodes {
+	width: 100%;
+	float: left;
+	border: 1px #ccc solid;
+}
+
+#result {
+	width: 100%;
+	height: 100%;
+	clear: both;
+	border: 1px #ccc solid;
+}
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#role_id").keydown(function(){
+			$("#role_name").val('');
+			$("#account_name").val('');
+		});
+		$("#role_name").keydown(function(){
+			$("#role_id").val('');
+			$("#account_name").val('');
+		});
+		$("#account_name").keydown(function(){
+			$("#role_id").val('');
+			$("#role_name").val('');
+		});
+	});
+</script>
+</head>
+
+<body>
+<div id="all">
+<div id="position"><{$_lang.left.gm_manage}>：<{$_lang.left.title_achievement_protect}></div>
+	<form action="?action=search" id="frm" method="POST" >
+	<table cellspacing="1" cellpadding="5" class="SumDataGrid" width="800">
+		<tr>
+			<td align="right"><{$_lang.conmon.user_id}>：</td>
+			<td><input type="text" name="role_id" id="role_id" value="<{$role.role_id}>" /></td>
+			<td align="right"><{$_lang.conmon.role_name}>：</td>
+			<td><input type="text" name="role_name" id="role_name" value="<{$role.role_name}>" /></td>
+			<td align="right"><{$_lang.conmon.user_account}>：</td>
+			<td><input type="text" name="account_name" id="account_name" value="<{$role.account_name}>" /></td>
+			<td><input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/></td>
+		</tr>
+	</table>
+	<br>
+	</form>
+
+<div id="main">
+<form action="?action=do&type=title_modify" method="post">
+<table width="800" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#E5F9FF">
+		<td colspan="2" background="/web/admin/static/images/wbg.gif"><font	color="#666600" class="STYLE2"><b><{$_lang.left.title_protect}>：</b></font></td>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+		<td width="25%" align="left"><{$_lang.left.user_title}>：</td>
+		<td width="75%"><select name="title_name" id="title_name"><{html_options options=$title_name_option selected=$title_name}></select></td>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+		<td width="25%"></td>
+		<td width="75%"><input type="submit" name="submit" value="<{$_lang.left.confirm_modify}>" />
+		</td>
+	</tr>
+</table>
+<input name="role_id" id="role_id" value="<{$role.role_id}>" type="hidden">
+</form>
+
+<br><br><br>
+
+<form action="?action=do2&type=achieve_modify" method="post">
+<table width="800" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#E5F9FF">
+		<td colspan="2" background="/web/admin/static/images/wbg.gif"><font	color="#666600" class="STYLE2"><b><{$_lang.left.achievement_protect}>：</b></font></td>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+		<td width="25%" align="left"><{$_lang.left.achievement_id}>：</td>
+		<td width="75%"><input type="text" name="achieve_id" value="" /></td>
+		</td>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+		<td width="25%"></td>
+		<td width="75%"><input type="submit" name="submit" value="<{$_lang.left.confirm_modify}>" />
+		</td>
+	</tr>
+</table>
+<input name="role_id" id="role_id" value="<{$role.role_id}>" type="hidden">
+</form>
+
+<br><br><br>
+
+<form action="?action=do3&type=title_delete" method="post">
+<table width="800" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+    <tr bgcolor="#E5F9FF">
+        <td colspan="2" background="/web/admin/static/images/wbg.gif"><font
+            color="#666600" class="STYLE2"><b><{$_lang.left.delete_title}>：</b></font></td>
+    </tr>
+    <tr bgcolor="#E5F9FF">
+        <td align="left" colspan="2">
+            <font color="red"><b><{$_lang.left.note}>:</b></font>
+            <font class="STYLE2"><b><{$_lang.new.delete_title_note1}><font color="red"><{$_lang.new.space}></font><{$_lang.new.delete_title_note2}></b></font>
+        </td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+        <td colspan="2"><textarea rows="4" cols="91" id="del_title_list" name="del_title_list"></textarea></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+        <td width="50%" align="center"><input type="submit" name="submit" value="<{$_lang.new.confirm_delete}>" /></td>
+        <td width="50%" align="center"><input type="reset" name="reset" value="<{$_lang.left.modify}>" /></td>
+    </tr>
+</table>
+</form>
+<br /><br />
+
+<form action="?action=do4&type=title_personal_del" method="post">
+<table width="800" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr bgcolor="#E5F9FF">
+		<td colspan="2" background="/web/admin/static/images/wbg.gif"><font	color="#666600" class="STYLE2"><b><{$_lang.new.del_personal_title}>:</b></font></td>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+		<td width="25%" align="left"><{$_lang.left.user_title}>：</td>
+		<td width="75%"><input type="text" name="title_name" id="title_name" /></td>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+		<td width="25%"></td>
+		<td width="75%"><input type="submit" name="submit" value="<{$_lang.new.confirm_delete}>" />
+		</td>
+	</tr>
+</table>
+<input name="role_id" id="role_id" value="<{$role.role_id}>" type="hidden">
+<input name="role_name" id="role_name" value="<{$role.role_name}>" type="hidden">
+</form>
+
+</div>
+</div>
+</body>
+</html>

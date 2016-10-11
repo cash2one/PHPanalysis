@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.all_online}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/FusionCharts.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/highcharts.js"></script>
+<script type="text/javascript">
+		
+			var chart;
+			$(document).ready(function() {
+				chart = new Highcharts.Chart({
+					chart: {
+						renderTo: 'container',
+						defaultSeriesType: 'spline'
+					},
+					title: {
+						text: '<{$_lang.left.online_real_graph}>'
+					},
+				//	subtitle: {
+				//		text: 'October 6th and 7th 2009 at two locations in Vik i Sogn, Norway'
+				//	},
+					xAxis: {
+						type: 'datetime'
+					},
+					yAxis: {
+						title: {
+							text: '<{$_lang.left.online_num}>'
+						},
+						min: 0,
+						maxPadding: 0.02,
+						minorGridLineWidth: 0, 
+						gridLineWidth: 0,
+						alternateGridColor: null,
+						plotBands: [{ 
+							from: 0,
+							to: 500,
+							color: 'rgba(0, 0, 0, 0)',
+							label: {
+								//text: 'Light air',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 500,
+							to: 1000,
+							color: 'rgba(68, 170, 213, 0.1)',
+							label: {
+								//text: 'Light breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 1000,
+							to: 1500,
+							color: 'rgba(0, 0, 0, 0)',
+							label: {
+								//text: 'Gentle breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 1500,
+							to: 2000,
+							color: 'rgba(68, 170, 213, 0.1)',
+							label: {
+								//text: 'Moderate breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 2000,
+							to: 2500,
+							color: 'rgba(0, 0, 0, 0)',
+							label: {
+								//text: 'Fresh breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 2500,
+							to: 3000,
+							color: 'rgba(68, 170, 213, 0.1)',
+							label: {
+								//text: 'Strong breeze',
+								style: {
+									color: '#606060'
+								}
+							}
+						}, { 
+							from: 3000,
+							to: 3500,
+							color: 'rgba(0, 0, 0, 0)',
+							label: {
+								//text: 'High wind',
+								style: {
+									color: '#606060'
+								}
+							}
+						}]
+					},
+					tooltip: {
+						formatter: function() {
+				                return '<b>'+ '<{$_lang.left.online_num}>' +'</b><br/>'+ this.series.name +
+								Highcharts.dateFormat(' %H:%M:%S', this.x) +', '+ this.y +' 人';
+						}
+					},
+					plotOptions: {
+						spline: {
+							lineWidth: 1,
+							states: {
+								hover: {
+									lineWidth: 2
+								}
+							},
+							marker: {
+								enabled: false,
+								states: {
+									hover: {
+										enabled: true,
+										symbol: 'circle',
+										radius: 5,
+										lineWidth: 1
+									}
+								}	
+							},
+							pointInterval: 30, // one hour
+							//pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+						}
+					},
+					series: [
+					<{foreach from=$today_data item=data key=key}>
+					{
+						name: '<{$data.desc}>:<{$data.time}>',
+						data: [<{$data.data}>]
+				
+					}, 
+					<{/foreach}>
+					
+					
+					],
+					navigation: {
+						menuItemStyle: {
+							fontSize: '10px'
+						}
+					}
+				});
+				
+				
+			});
+				
+		</script>
+</head>
+
+<body>
+	<div id="all">
+		<div id="position"><{$_lang.left.online_register}>：<{$_lang.left.all_online}></div>
+    	<div><{$errorMsg}></div>
+        <form action="" name="form" method="post">
+        日期：<input value="<{$dStartDate}>" class="Wdate" id="dStartDate" readonly="readonly" name="dStartDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp; <input value="查询" type="submit" onclick="search()" name="submit" />
+        </form>
+                	<table cellspacing="1" cellpadding="3" border="0" class='table_list'>
+                        <tr>	
+                            <td colspan=9><{$_lang.conmon.sys_time_now}>：<{$smarty.now|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                        </tr>
+                    </table>
+					<div id="container" style="width: 960px; height: 400px; margin: 0 auto"></div>
+					<center><b><{$_lang.left.full_service_alert}></b></center><br>
+                    
+                    
+                    
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF"> 
+                            <td colspan="3" background="/web/admin/static//images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b><{$_lang.left.full_online_statistics}></b></font>
+                            </td>
+                        </tr>
+					</table>           
+					<table width="100%"  border="0" cellpadding="4" cellspacing="1">
+                        <tr class='table_list_head' align='center'> 
+                          <td width="25%"><{$_lang.new.district_name}></td>
+                          <td width="25%"><{$_lang.left.current_online}></td>
+                          <td width="25%"><{$_lang.left.highest_online}></td>
+						  <td width="25%"><{$_lang.left.lowest_online}></td>
+                        </tr>
+                        <{foreach from=$all_online_info item=online key=key}>
+						<{if $key % 2 == 0}>
+						<tr class='trEven' align='center'>
+						<{else}>
+						<tr class='trOdd' align='center'>
+						<{/if}> 
+                          <td><{$online.desc}></td>
+                          <td><{$online.now_online}></td>
+                          <td><{$online.max_online}></td>
+						  <td><{$online.min_online}></td>
+                        </tr>
+                        <{foreachelse}>
+                       	<tr bgcolor="#FFFFFF"> 
+                          <td colspan="3"><font color="#FF0000"><{$_lang.left.no_record}></font></td>
+                        </tr>
+                        <{/foreach}>
+                        
+                     </table>
+
+	</div>
+</body>
+</html>

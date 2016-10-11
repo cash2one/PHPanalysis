@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/FusionCharts.js"></script>
+        <!--  添加回到顶部      start        -->
+        <SCRIPT type=text/javascript >
+
+</SCRIPT>
+ <!--  添加回到顶部   end        -->
+        <style type="text/css">
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%;float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+            .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+
+        </style>
+        <title>服务器管理</title>
+    </head>
+    <body>
+        <div id="all">
+            <div id="position">服务器管理</div>
+            <p align="center"><font color="red"><{$message}></font></p>
+            <div id="main"><form name="form" method="GET">
+                    <input type="hidden" name="id" value="<{$id}>"/>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+                        <tr>
+                            <td width="33%">
+                                &nbsp;代理ID：<select name="agentID" id="agentID" <{if $id!=0  }> disabled=”disabled” <{/if}>    >
+                                    <{foreach key=key item=item from=$allAgentName}>
+                                    <option value="<{$key}>" <{if $key==$agent}> selected <{/if}> ><{$item}></option>
+                                    <{/foreach}>
+                                </select>
+                            </td>
+                            <td width="33%">
+                                状态：<select name="serverStatus" id="serverStatus">
+                                    <option value="1" <{if $stat==1}> selected <{/if}> >开服</option>
+                                    <option value="2" <{if $stat==2}> selected <{/if}> >合服</option>
+                                    <option value="3" <{if $stat==3}> selected <{/if}> >停服</option>
+                                    <option value="4" <{if $stat==4}> selected <{/if}> >未开服</option>
+                                </select>
+                            </td>
+                            <td width="33%">
+                                类型：<select name="serverType" id="serverType"   >
+                                    <option value="1" <{if $type==1}> selected <{/if}> >简体服</option>
+                                    <option value="2" <{if $type==2}> selected <{/if}> >繁体服</option>
+                                    <option value="3" <{if $type==3}> selected <{/if}> >越南服</option>
+                                    <option value="4" <{if $type==4}> selected <{/if}> >测试服</option>
+                                    <option value="5" <{if $type==5}> selected <{/if}> >其它用途</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  width="33%">
+                                &nbsp;服务器：S<input type="text" name="serverID"  size="10"  value="<{$server_id}>"   <{if $id!=0  }> readonly <{/if}> />
+                                <font color="red">*</font>如：S1
+                            </td>
+                            <td  width="33%">
+                                域名：<input type="text" name="domainName" size="50" value="<{$domain_name}>"/>
+                                <font color="red">*</font>如：dtz1.my4399.com
+                            </td>                       
+                            <td  width="33%">
+                                IP：<input type="text" name="ip" size="50" value=" <{$ip}>">
+                                    <font color="red">*</font>如：113.105.250.226
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;开服时间：
+                                <input value="<{$open_time}>" class="Wdate" id="openTime"  name="openTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" size="22" />&nbsp;
+                            </td>
+                            <td>合服时间：
+                                <input value="<{$combine_time}>" class="Wdate" id="combineTime"  name="combineTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" size="22" />&nbsp;
+                            </td>
+                            <td>关服时间：
+                                <input value="<{$close_time}>" class="Wdate" id="closeTime"  name="closeTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" size="22" />&nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                &nbsp;描述：<textarea style="width:350px;height:50px;" name="sDesc" id="sDesc" ><{$desc}></textarea>(注：可为空)
+                            </td>
+                        </tr>
+                                        
+                        <tr>
+                             <td colspan="2">
+                                <div align="left">&nbsp;
+                                    <input type="hidden" name="action" value="save"/>
+                                    <input type="submit" name="submit" value="保存"/>&nbsp;&nbsp;&nbsp;
+                                    <input type="reset" name="reset" value="重置" />
+                                </div>
+                            </td>
+                         </tr>
+
+                    </table>
+                </form>
+
+
+            </div>
+        </div>
+
+    </body>
+    <script type="text/javascript">
+        function clkAgent(key){
+            key==0?$("#agentID").val(''):$("#agentID").val(key);
+
+        }
+
+
+    </script>
+</html>

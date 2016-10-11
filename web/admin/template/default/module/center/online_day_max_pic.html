@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/FusionCharts.js"></script>
+        <style type="text/css">
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%;float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+            .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+        </style>
+        <title><{$_lang.new.c1_daily_online_top_pic}></title>
+    </head>
+    <body>
+        <div id="all">
+            <div id="position"><{$_lang.new.c1_daily_online_top_pic}></div>
+            <div id="main"><form name="form" method="GET">
+                    <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+                        <tr><td>&nbsp;<{$_lang.left.select_agents}>：</td></tr>
+                        <tr>
+                            <td>
+                                <input type="radio" name="radio_agent" id="radio_agent" onclick="$('#btnsubmit').click()" value="0" <{if $agent==0}> checked <{/if}>  /><{$_lang.conmon.any}>
+                                <{foreach key=key item=item from=$allAgentName}>
+                                <input type="radio" name="radio_agent" id="radio_agent" onclick="$('#btnsubmit').click()"  value="<{$key}>"  <{if $agent==$key}> checked <{/if}> /><{$item}>
+                                <{/foreach}>
+                            </td>
+                        </tr>
+                        <tr><td  bgcolor="#D7Eff5">
+                                &nbsp;<{$_lang.conmon.start_day_time}>：
+                                <input value="<{$dStartTime}>" class="Wdate" id="dStartDate" readonly="readonly" name="dStartDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                <{$_lang.conmon.end_day_time}>：
+                                <input value="<{$dEndTime}>" class="Wdate" id="dEndDate" readonly="readonly" name="dEndDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                <input value="<{$_lang.conmon.view}>" type="submit" id="btnsubmit"/>
+                                <font color="#FF0000"><{$_lang.new.data_interval}>：20 min</font>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <{ if $message!='' }>
+                <p align="center"><b>&nbsp;&nbsp;&nbsp;<{$message}></b></p>
+                <{/if}>
+                <{foreach key=key item=item from=$data}>
+                <p align="left"><b>&nbsp;&nbsp;&nbsp;<{$item.message}></b></p>
+                <div id="name[<{$key}>]">
+                </div>
+                <script language="javascript">
+                    var name = 'char'+"<{$key}>";
+                    var xml = "<{$item.xml}>";
+                    var chart1 = new FusionCharts("/web/admin/static/FusionCharts/FCF_Column2D.swf", name, "1200", "220", "0", "1");
+                    chart1.setDataXML(xml);
+                    chart1.render("name[<{$key}>]");
+                </script>
+                <{/foreach}>
+            </div>
+        </div>
+    </body>
+</html>

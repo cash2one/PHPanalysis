@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<title>
+	聊天记录查询
+</title>
+</head>
+
+<body style="margin:0">
+<div id="position">充值与消费：聊天记录查询</div>
+<div class='divOperation'>
+<form name="myform" method="post" action="<{$URL_SELF}>">
+	<form name="myform" method="post" >
+	查看频道：
+	<select name="channel">
+		<{html_options options=$channeltype selected=$channelchoose}>
+	</select>
+	查看日期：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='datetime' name='datetime' size='12' value='<{$date|date_format:"%Y-%m-%d"}>'/>
+	&nbsp;
+	<input type="submit" class="button" name="Submit" value="查看">
+	</form>
+</form>
+</div>
+
+<table width="100%"  border="0" cellspacing="0" cellpadding="0" class='table_page_num'>
+  <tr>
+    <td height="30" class="even">
+<form method="get" action="">
+ <{foreach key=key item=item from=$page_list}>
+ <a href="<{$URL_SELF}>?channel=<{$channelchoose}>&amp;datetime=<{$date|date_format:"%Y-%m-%d"}>&amp;page=<{$item}>&amp;forceFlag=<{$forceFlag}>"><{$key}></a><span style="width:5px;"></span>
+ <{/foreach}>
+
+<{if $page_count > 0}>
+总页数(<{$page_count}>)
+<{if $page_count > 5}>
+	<input name="datetime" type="hidden" value='<{$date|date_format:"%Y-%m-%d"}>'>
+	<input name="channel" type="hidden" value='<{$channelchoose}>'>
+  <input name="page" type="text" class="text" size="3" maxlength="6">&nbsp;<input type="submit" class="button" name="Submit" value="GO">
+<{/if}>
+
+<{/if}>
+</form>
+    </td>
+  </tr>
+</table>
+
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+<!-- SECTION  START -------------------------->
+<form id="form1" name="form1" method="post" action="">
+<{section name=loop loop=$chatlist}>
+	<{if $smarty.section.loop.rownum % 20 == 1}>
+	<tr class='table_list_head'>
+		<td>时间</td>
+		<td>角色名</td>
+		<td>内容</td>
+	</tr>
+	<{/if}>
+
+	<{if $smarty.section.loop.rownum % 2 == 0}>
+	<tr class='trEven'>
+	<{else}>
+	<tr class='trOdd'>
+	<{/if}>
+		<td>
+		<{$chatlist[loop].time|date_format:"%Y-%m-%d %H:%M:%S"}>
+		</td><td>
+		<{$chatlist[loop].rolename}>
+		</td><td>
+		<{$chatlist[loop].msg}>
+		</td>
+	</tr>
+<{sectionelse}>
+
+<{/section}>
+<!-- SECTION  END -------------------------->
+
+</form>
+</table>
+
+</body>
+</html>

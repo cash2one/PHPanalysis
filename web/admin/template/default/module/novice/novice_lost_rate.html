@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新手引导流失率</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/web/admin/static/css/tags.css" type="text/css">
+    <script type="text/javascript" src="/web/admin/static/js/jquery-3.0.0.min.js"></script>
+    <script src="/web/admin/static/js/highcharts/highcharts.js"></script>
+    <script src="/web/admin/static/js/highcharts/modules/exporting.js"></script>
+    <script src="/web/admin/static/js/databackend.js"></script>
+</head>
+<body>
+    <div class="explain">
+        <span>&diams;单服：新手流程流失率：每个新手流程流失玩家数量/该服流失玩家总数量*100%</span><br>
+        <span>&diams;全服：新手流程流失率：每个新手流程流失玩家数量/全服流失玩家总数量*100%</span><br>
+
+    </div><br>
+    <hr>
+    <form action="<{$URL_SELF}>" name="myform" id="myform" method="post">
+        <span><b>新手流程流失率</b></span>&nbsp;&nbsp;
+        <span>
+            <select name="server" style="width:100px;">
+                <option value="all">所有服</option>
+                <option value="2002">2002服</option>
+                <option value="2003">2003服</option>
+                <option value="2007">2007服</option>
+                <option value="3001">3001服</option>
+            </select>
+        </span>
+        <span><input type="submit" name="search" /></span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>服务器：<input type="text" name="sertxt"  readonly style="width:100px;" value="<{$server}>" /></span>&nbsp;
+        <span>新手引导流程流失总数：<input type="text" name="flowtxt"  readonly style="width:100px;" value="<{$flow_num}>" /></span>&nbsp;
+        <span>该服流失总数：<input type="text" name="numtxt"  readonly style="width:100px;" value="<{$server_num}>" /></span>&nbsp;
+        <span>所有服流失总数：<input type="text" name="allnumtxt"  readonly style="width:100px;" value="<{$all_server_num}>" /></span>&nbsp;
+         
+        <!--<span>统计开始时间:<input type="date" name="begin_time" id="begin_time" />&nbsp;至&nbsp;<input type="date" name="end_time" id="end_time" /></span>
+        <span><input type="submit" name="tosubmit" value="搜索"/></span>&nbsp;
+        <span><a href="" id="oneweek" onclick="timeSelect(this)" >最近一周</a></span>&nbsp;
+        <span><a href="" id="onemonth" onclick="timeSelect(this)">最近1个月</a></span>&nbsp;
+        <span><a href="" id="threemonth" onclick="timeSelect(this)">最近3个月</a></span>&nbsp;
+        <span><a href="" id="sixmonth" onclick="timeSelect(this)">最近6个月</a></span>-->
+    <hr>
+
+        <table id="main_table">
+        <tr style="background-color:#2e6fac; color:white;">
+            <td>流失流程ID</td>
+            <td>该流程流失总数</td>
+            <td>该流程流失率</td>
+        </tr>
+        <{section name=loop loop=$dataList}>
+            <{if $smarty.section.loop.rownum % 2 == 0}>
+            <tr class='trEven'>
+            <{else}>
+                <tr class='trOdd'>
+            <{/if}>
+            <td> <{$dataList[loop].id}> </td>
+            <td> <{$dataList[loop].num}> </td>
+            <td> <{$dataList[loop].rate}> %</td>
+           </tr>
+        <{/section}>
+        </table>
+    <br>
+</form>
+   
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.history_online}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+
+<body>
+	<div id="all">	
+		<div id="position"><{$_lang.left.online_register}>：<{$_lang.left.history_online}></div>
+    	<div><{$errorMsg}></div>
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                	<table>
+                    	<tr>
+						<form method="get" action="">
+                        	<{foreach from=$pageHTML key=page_name item=page_id}>
+                        	<td><a href="?pid=<{$page_id}>&dateStart=<{$time_start}>&hour=<{$hour}>&min=<{$min}>"><{$page_name}></a></td>
+                            <{/foreach}>
+							<td><{if $page_count > 0}><{$_lang.conmon.all_page}>(<{$page_count}>)<{/if}></td>
+              <td>
+                  <{$_lang.conmon.start_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' 
+                      value='<{$time_start}>'/>
+                  <{$_lang.conmon.hour}><input type='text' id="nickname" name='hour' size='10' value='<{$hour}>'/> 
+                  <{$_lang.conmon.minute}><input type='text' id="nickname" name='min' size='10' value='<{$min}>'/>    
+              </td>
+							<td><input name="pid" type="text" class="text" size="3" maxlength="6">&nbsp;<input type="submit" class="button" name="Submit" value="GO"></td>
+						</form>
+                        </tr>
+                    </table>
+                	<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+                        <tr>	
+                            <td colspan=9><{$_lang.conmon.sys_time_now}>：<{$smarty.now|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                        </tr>
+                    </table>
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF"> 
+                            <td colspan="4" background="/web/admin/static/images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b><{$_lang.left.today_online_Statistics_30second_per}></b></font>
+                            </td>
+                        </tr>
+                        <tr class='table_list_head'> 
+                          <td width="25%"><{$_lang.left.statistical_time}></td>
+                          <td width="25%"><label style="color:red; font-weight:bold;"><{$_lang.new.current}></label><{$_lang.left.online_num}></td>
+                          <td width="25%"><{$_lang.conmon.ip_count}></td>
+                          <td width="50%"></td>
+                        </tr>
+
+                        <{foreach from=$onlines item=online key=key}>
+						<{if $key % 2 == 0}>
+						<tr class='trEven'>
+						<{else}>
+						<tr class='trOdd'>
+						<{/if}>
+                          <td width="25%"><{$online.dateline|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+                          <td width="25%"><{$online.online}></td>
+                          <td width="25%"><{$online.distinct_ip}></td>
+                          <td width="50%" align="left"><img src="/web/admin/static/images/green.gif" height="5" width="<{$online.weight}>" /></td>
+                        </tr>
+                        <{foreachelse}>
+                       	<tr bgcolor="#FFFFFF"> 
+                          <td colspan="3"><font color="#FF0000"><{$_lang.left.no_record}></font></td>
+                        </tr>
+                        <{/foreach}>
+                        
+                     </table>
+
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

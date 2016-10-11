@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.approval_silver}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+	function doAgreeOne(send_id){
+		$("#frmSend").attr("action","?action=doAgreeOne");
+		$("#sendID").val(send_id);
+		$("#frmSend").submit();
+	}
+	function doDenyOne(send_id){
+		$("#frmSend").attr("action","?action=doDenyOne");
+		$("#sendID").val(send_id);
+		$("#frmSend").submit();
+	}
+
+	function doAgreeMany(){
+		$("#frmSend").attr("action","?action=doAgreeMany");
+		var num = 0;
+		$(".Send_check").each(function(i){
+			 	if($(this).attr("checked"))
+	    		{
+					num = 1;
+			    }
+		});
+		if(num==0){
+			alert("<{$_lang.left.approval_silver}>没有选中任何条目");
+			return false;
+		}
+		else{
+			$("#frmSend").submit();
+		}
+	}
+	function doDenyMany(){
+		$("#frmSend").attr("action","?action=doDenyMany");
+		var num = 0;
+		$(".Send_check").each(function(i){
+			 	if($(this).attr("checked"))
+	    		{
+					num = 1;
+			    }
+		});
+		if(num==0){
+			alert("<{$_lang.left.approval_silver}>没有选中任何条目");
+			return false;
+		}
+		else{
+			$("#frmSend").submit();
+		}
+	}
+</script>
+
+<body>
+<div id="position"><{$_lang.left.recharge_consumption}>：<{$_lang.left.approval_silver}></div>
+	<div id="all">
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#FFFFFF">
+                        <tr>
+							<td colspan="8">
+							  <form  name=form action="?action=" method="post">
+                              <input type='hidden' name='dopost' value='submit'>
+							   <{$_lang.left.applicant}>：<input type="text" name="apply_admin_name" value="<{$apply_admin_name}>" />&nbsp;&nbsp;
+							   <{$_lang.left.reviewer}>：<input type="text" name="review_admin_name" value="<{$review_admin_name}>" />&nbsp;&nbsp;
+							  <{$_lang.conmon.statistics}><{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$search_keyword1}>'/>
+							   <{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$search_keyword2}>'/>&nbsp;&nbsp;
+			                  <select name=op_id>
+				              <{foreach key=key item=item from=$op_name}>
+					          <{if $key == $op_id}>
+							  <option value="<{$key}>" selected="selected"><{$item}></option>
+						      <{else}>
+							  <option value="<{$key}>"><{$item}></option>
+						      <{/if}>
+				              <{/foreach}>
+			                  </select>
+		                      <input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+		                      </form>
+                            </td>
+						</tr>
+                        </tr>
+						<tr class='table_list_head'>
+							<td colspan="8"><{$_lang.left.time_statistics}>：<{$search_keyword1}>&nbsp;00:00:00&nbsp;~&nbsp;<{$search_keyword2}>&nbsp;23：59：59</td>
+						</tr>
+					</table>
+
+					<form action="?action=" id="frmSend" method="post">
+					<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#FFFFFF"
+					style="table-layout:fixed;word-break:break-all;word-wrap:break-word;">
+						<{section name=loop loop=$keywordlist}>
+	                    <{if $smarty.section.loop.rownum % 20 == 1}>
+						<tr class='table_list_head' align="center">
+							<td >id</td>
+							<td ><{$_lang.new.app_time}></td>
+							<td ><{$_lang.left.applicant}></td>
+							<!-- <td width="8%">申请人IP</td> -->
+							<td><{$_lang.conmon.operating}></td>
+							<td><{$_lang.left.gm_to_role_name}></td>
+							<td ><{$_lang.new.user_role_id}></td>
+							<td><{$_lang.new.type}></td>
+							<!-- <td width="5%">物品ID</td> -->
+							<td ><{$_lang.left.bind}></td>
+							<td ><{$_lang.conmon.num}></td>
+							<td ><{$_lang.new.reason}></td>
+							<td ><{$_lang.new.review_time}></td>
+							<td><{$_lang.left.reviewer}></td>
+							<!-- <td width="8%">审核者IP</td> -->
+							<td><{$_lang.left.statu}></td>
+							<td>
+								<input name="btnAgreeMany" onclick="doAgreeMany();" value="<{$_lang.new.batch}>&#13;&#10;<{$_lang.new.agree}>" type="button">
+							</td>
+							<td >
+								<input name="btnDenyMany" onclick="doDenyMany();" value="<{$_lang.new.batch}>&#13;&#10;<{$_lang.new.refuse}>" type="button">
+							</td>
+							<td ><{$_lang.new.select}></td>
+						</tr>
+                        <{/if}>
+	                    <{if $smarty.section.loop.rownum % 2 == 0}>
+	                    <tr class='trEven' align="center">
+	                    <{else}>
+	                    <tr class='trOdd'  align="center">
+	                    <{/if}>
+						   <td><{$keywordlist[loop].id}></td>
+		                   <td><{$keywordlist[loop].mtime|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+	                 	   <td><{$keywordlist[loop].admin_name}></td>
+		                   <!-- <td><{$keywordlist[loop].admin_ip}> </td> -->
+		                   <td><{$keywordlist[loop].desc}></td>
+		                   <td><{$keywordlist[loop].user_name}></td>
+						   <td><{if $keywordlist[loop].user_id != '0'}><{$keywordlist[loop].user_id}><{/if}></td>
+						   <td><{$keywordlist[loop].item_name}></td>
+						   <!-- <td><{if $keywordlist[loop].item_id != '0'}><{$keywordlist[loop].item_id}><{/if}></td> -->
+						   <td><{$keywordlist[loop].bind_cn}></td>
+						   <td><{$keywordlist[loop].number}></td>
+						   <td><{$keywordlist[loop].reason}></td>
+						   <td><{if $keywordlist[loop].review_mtime != '0'}><{$keywordlist[loop].review_mtime|date_format:"%Y-%m-%d %H:%M:%S"}><{/if}></td>
+						   <td><{$keywordlist[loop].review_admin_name}></td>
+						   <!-- <td><{$keywordlist[loop].review_admin_ip}></td> -->
+						   <td><{if $keywordlist[loop].status != '4'}><FONT color=red><{/if}><{$keywordlist[loop].status_desc}></td>
+						    <td>
+								<input name="btnAgree" onclick="doAgreeOne('<{$keywordlist[loop].id}>');" value="<{$_lang.new.agree}>" type="button">
+							</td>
+							<td>
+								<input name="btnDeny" onclick="doDenyOne('<{$keywordlist[loop].id}>');" value="<{$_lang.new.refuse}>" type="button">
+							</td>
+							<td>
+								<input name="Send_check[]" class="Send_check" value="<{$keywordlist[loop].id}>" type="checkbox">
+							</td>
+				<input type="hidden" name="send[<{$keywordlist[loop].id}>][id]" value="<{$keywordlist[loop].id}>" />
+				<input type="hidden" name="send[<{$keywordlist[loop].id}>][role_id]" value="<{$keywordlist[loop].user_id}>" />
+				<input type="hidden" name="send[<{$keywordlist[loop].id}>][role_name]" value="<{$keywordlist[loop].user_name}>" />
+				<input type="hidden" name="send[<{$keywordlist[loop].id}>][item_type]" value="<{$keywordlist[loop].item_name}>" />
+				<input type="hidden" name="send[<{$keywordlist[loop].id}>][item_id]" value="<{$keywordlist[loop].item_id}>" />
+				<input type="hidden" name="send[<{$keywordlist[loop].id}>][bind]" value="<{$keywordlist[loop].bind}>" />
+				<input type="hidden" name="send[<{$keywordlist[loop].id}>][number]" value="<{$keywordlist[loop].number}>" />
+				<input type="hidden" name="send[<{$keywordlist[loop].id}>][reason]" value="<{$keywordlist[loop].reason}>" />
+
+<!-- 							<form action="?action=do1&type=agree" method="post">
+							<td><input type="hidden" name="id" value="<{$keywordlist[loop].id}>" />
+								<input type="hidden" name="role_id" value="<{$keywordlist[loop].user_id}>" />
+								<input type="hidden" name="role_name" value="<{$keywordlist[loop].user_name}>" />
+								<input type="hidden" name="item_type" value="<{$keywordlist[loop].item_name}>" />
+								<input type="hidden" name="item_id" value="<{$keywordlist[loop].item_id}>" />
+								<input type="hidden" name="bind" value="<{$keywordlist[loop].bind}>" />
+								<input type="hidden" name="number" value="<{$keywordlist[loop].number}>" />
+								<input type="hidden" name="reason" value="<{$keywordlist[loop].reason}>" />								
+								<input type="submit" name="submit" value=" 同意 "/></td>
+							</form>
+						   
+							<form action="?action=do2&type=deny" method="post">
+							<td><input type="hidden" name="id" value="<{$keywordlist[loop].id}>" />
+								<input type="hidden" name="role_id" value="<{$keywordlist[loop].user_id}>" />
+								<input type="hidden" name="role_name" value="<{$keywordlist[loop].user_name}>" />
+								<input type="hidden" name="item_type" value="<{$keywordlist[loop].item_name}>" />
+								<input type="hidden" name="item_id" value="<{$keywordlist[loop].item_id}>" />
+								<input type="hidden" name="bind" value="<{$keywordlist[loop].bind}>" />
+								<input type="hidden" name="number" value="<{$keywordlist[loop].number}>" />
+								<input type="hidden" name="reason" value="<{$keywordlist[loop].reason}>" />	
+								<input type="submit" name="submit" value=" 拒绝 "/></td>
+							</form> -->
+	                    </tr>
+                    <{/section}>
+                  </table>
+				  <input name="sendID" id="sendID" value="" type="hidden">
+				  </form>
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

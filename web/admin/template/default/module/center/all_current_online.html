@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+        <title><{$_lang.new.c1_all_online}></title>
+    </head>
+    <body>
+        <div id="all">
+            <div id="position"><{$_lang.new.c1_all_online}></div>
+            <div id="main"><form name="form" method="GET">
+                    <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+                        <tr align="left"><td>&nbsp;<{$_lang.left.select_agents}>：</td></tr>
+                        <tr align="left">
+                            <td>
+                                <input type="radio" name="radio_agent" id="radio_agent" onclick="$('#btnsubmit').click()" value="0" <{if $agent==0}> checked <{/if}>  /><{$_lang.conmon.any}>
+                                <{foreach key=key item=item from=$allAgentName}>
+                                <input type="radio" name="radio_agent" id="radio_agent" onclick="$('#btnsubmit').click()"  value="<{$key}>"  <{if $agent==$key}> checked <{/if}> /><{$item}>
+                                <{/foreach}>
+                            </td>
+                        </tr>
+                        <tr  align="left"><td  bgcolor="#D7Eff5">
+                                &nbsp;日期：
+                                <input value="<{$dStartDate}>" class="Wdate" id="dStartDate" readonly="readonly" name="dStartDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                
+                                <input value="<{$_lang.conmon.view}>" type="submit" id="btnsubmit"/>
+                                <font color="#FF0000"><{$_lang.new.data_interval}>：20 min</font>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+                <table width="100%"  border="0" cellpadding="4" cellspacing="1">
+                        <tr class='table_list_head' align='center'>
+                          <td width="25%"><{$_lang.new.district_name}></td>
+                          <td width="25%"><{$_lang.left.current_online}></td>
+                          <td width="25%"><{$_lang.left.highest_online}></td>
+						  <td width="25%"><{$_lang.left.lowest_online}></td>
+                        </tr>
+                <{foreach from=$all_online_info item=online key=key}>
+						<{if $key % 2 == 0}>
+						<tr class='trEven' align='center'>
+						<{else}>
+						<tr class='trOdd' align='center'>
+						<{/if}>
+                          <td><{$online.desc}></td>
+                          <td><{$online.now}></td>
+                          <td><{$online.max}></td>
+						  <td><{$online.min}></td>
+                        </tr>
+                        <{foreachelse}>
+                       	<tr bgcolor="#FFFFFF">
+                          <td colspan="3"><font color="#FF0000"><{$_lang.left.no_record}></font></td>
+                        </tr>
+                        <{/foreach}>
+            </div>
+        </div>
+    </body>
+</html>

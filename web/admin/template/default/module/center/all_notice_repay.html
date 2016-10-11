@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+    <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+      <style type="text/css">
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%;float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+            .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+
+            BODY { position: relative;}
+        </style>
+<title>
+	<{$_lang.left.sys_notice_and_compens_config}>
+</title>
+
+</head>
+
+<body>
+<div id="position">[C]<{$_lang.left.sys_notice_and_compens_config}></div>
+<div id="main">
+<form name="form" id="schForm" method="GET">
+    <input type="hidden" id="action" name="action" value=""/>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="2" align="center" bgcolor="#D7E4F5">
+                        <tr><td align="left">&nbsp;<{$_lang.left.select_agents}>：</td></tr>
+                        <tr>
+                            <td align="left">
+                                <input type="radio" name="radio_agent" id="radio_agent" onclick="GetPlatServer(this.value)" value="0" <{if $agent_id==0}> checked <{/if}>  /><{$_lang.conmon.any}>
+                                       <{foreach key=key item=item from=$allAgentName}>
+                                       <input type="radio" name="radio_agent" id="radio_agent" onclick="GetPlatServer(this.value)" value="<{$key}>"  <{if $agent_id==$key}> checked <{/if}> /><{$item}>
+                                       <{/foreach}>
+                                       </td>
+                        </tr>
+                        <tr id="sServerName_TD1" style="display:none"><td align="left">&nbsp;<{$_lang.left.select_agents}>：</td></tr>
+                        <tr id="sServerName_TD2" style="display:none"><td id="sServer" align="left"></td></tr>
+                        <tr>
+                            <td align="left">
+                                &nbsp;<{$_lang.conmon.start_day_time}>：
+                                <input value="<{$dStartTime}>" class="Wdate" id="dStartDate" readonly="readonly" name="dStartDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                <{$_lang.conmon.end_day_time}>：
+                                <input value="<{$dEndTime}>" class="Wdate" id="dEndDate" readonly="readonly" name="dEndDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" type="text" size="14" />&nbsp;
+                                <input type="image" name='search' src="<{$_lang.new.search_button}>"  class="input2" />
+                            </td>
+                        </tr>
+                    </table>
+
+    <table bgcolor="#F0F8FF"><tr><td>
+    
+            
+		<table width="500"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="2" background="/web/admin/static/images/wbg.gif" align="left">
+				<font color="#666600" class="STYLE2"><b><{$_lang.left.sys_note}></b></font>
+			</td>
+		</tr>
+         <tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.left.note_title}>：</td>
+           <td width="75%"><input type="text" size="45" name="title" value= <{$title}> ></td>
+         </tr>
+		 <tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.conmon.end_time}>：</td>
+           <td width="75%"><input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='notice_end_time' name='notice_end_time' size='23' value='<{$notice_end_time}>'/>
+		   </td>
+		</tr>
+		 <tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.left.note_content}>：</td>
+           <td>
+           <textarea rows="8" cols="30" name="text" value=<{$text}>></textarea>
+           </td>
+         </tr>
+		 <tr bgcolor="#FFFFFF">
+           <td width="25%"></td>
+           <td width="75%">
+             <input type="button" name='search' value="<{$_lang.left.submit}>"  class="input2" onclick="bulletin()"/>
+            
+           </td>
+         </tr>
+
+    </table>   
+            </td>
+            <td>   
+    <table height="290" width="500"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr bgcolor="#E5F9FF">
+			<td colspan="3"  align="left"><font color="#666600" class="STYLE2"><b><{$_lang.new.config_sys_give}></b></font></td>
+		</tr>
+        <tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.left.level_limit}></td>
+           <td width="50%"><input type="text"  size='5.5' id="level_min" name="level_min" value= <{$level_min}> >&nbsp;<{$_lang.conmon.level}>&nbsp;~&nbsp;
+						   <input type="text"  size='5.5' id="level_max" name="level_max" value= <{$level_max}> >&nbsp;<{$_lang.conmon.level}></td><td "25%"><font color="#FF0000">**<{$_lang.left.limit_level}></font></td>
+		</tr>
+		<tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.conmon.start_time}></td>
+           <td width="50%"><input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='start_time' name='start_time' size='23' value='<{$reply_start_time}>' /> </td><td "25%"><font color="#FF0000">**<{$_lang.conmon.start_time}></font></td>
+		</tr>
+		<tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.conmon.end_time}></td>
+           <td width="50%"><input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id='end_time' name='end_time' size='23' value='<{$reply_end_time}>' /></td><td "25%"><font color="#FF0000">**<{$_lang.conmon.end_time}></font>
+		   </td>
+		</tr>
+		<tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.new.goods_id}></td>
+           <td width="50%"><input type="text"  size='23' name="goods" value= <{$goods}> > </td><td "25%"><font color="#FF0000">**<{$_lang.new.goods_id}></font></td>
+		</tr>
+		<tr bgcolor="#FFFFFF">
+           <td width="25%"><{$_lang.left.goods_num}></td>
+           <td width="50%"><input type="text"  size='23' name="num" value= "1" ></td><td "25%"><font color="#FF0000">**<{$_lang.left.goods_num}>< 5</font></td>
+        </tr>
+		 <tr bgcolor="#FFFFFF">
+           <td width="25%"></td>
+           <td width="50%">
+         
+             <input type="button" name='search' value="<{$_lang.left.submit}>"  class="input2" onclick="compensation_conf()"/>
+       
+           </td>
+           <td width="25%">
+           </td>
+         </tr>
+    </table>
+ 
+            </td>
+        </tr>
+    </table>
+</form>
+<table class="table_page_num" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+        <td class="even" height="30" align="center">
+<form method="get" action="">
+    <input type='hidden' name='urlflag'  value="1"/>
+    <input type='hidden' name='dStartDate'  value="<{$dStartTime}> "/>
+    <input type='hidden' name='dEndDate'  value="<{$dEndTime}> "/>
+    <input type='hidden' name='radio_agent'  value="<{$agent_id}>" />
+    <input type='hidden' name='search_servers' value="<{$search_servers}>" />
+  <{foreach key=key item=item from=$page_list}>
+	<a href="<{$URL_SELF}>?page=<{$item}>&urlflag=1&id=<{$item.id}>&radio_agent=<{$agent_id}>&search_servers=<{$search_servers}>&keyword=<{$keyword}>&dStartDate=<{$dStartTime}>&dEndDate=<{$dEndTime}>"><{$key}></a><span style="width:5px;"></span>
+ <{/foreach}>
+<{$_lang.conmon.all_page}>(<{$page_count}>)
+  <input name="page" type="text" class="text" size="3" maxlength="6">&nbsp;<input type="submit" class="button" name="Submit" value="GO">
+</form>
+</td>
+</tr>
+</tbody>
+</table>
+
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' style="table-layout:fixed;word-break:break-all;word-wrap:break-word;">
+    <tr class='table_list_head'>
+        <td width="25%"><{$_lang.left.config_time}></td>
+        <td><{$_lang.new.goods_id}></td>
+        <td><{$_lang.new.goods_name}></td>
+        <td><{$_lang.left.limit_level}></td>
+        <td><{$_lang.left.config_num}></td>
+        <td><{$_lang.left.admin}></td>
+        <td><{$_lang.new.agent_name}></td>
+        <td><{$_lang.new.server_name}></td>
+	</tr>
+    <{foreach key=key  item=item from=$data}>
+    <{if $key % 2 == 0}>
+    <tr class='trEven'>
+        <{else}>
+        <tr class='trOdd'>
+            <{/if}>
+            <td ><{$item.start_time|date_format:'%Y/%m/%d %H:%M:%S'}>-<{$item.end_time|date_format:'%Y/%m/%d %H:%M:%S'}></td>
+            <td><{$item.goods_id}></td>
+            <td><{$item.name}></td>
+            <td><{$item.level_min}>~<{$item.level_max}></td>
+            <td><{$item.num}></td>
+            <td><{$item.operator}></td>
+            <td><{$item.agent_name}></td>
+        <td>S<{$item.server_id}></td>
+        </tr>
+<{/foreach}>
+</table>
+    <table class="table_page_num" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+        <td class="even" height="30" align="center">
+<form method="get" action="">
+    <input type='hidden' name='urlflag'  value="1"/>
+    <input type='hidden' name='dStartDate'  value="<{$dStartTime}> "/>
+    <input type='hidden' name='dEndDate'  value="<{$dEndTime}> "/>
+    <input type='hidden' name='radio_agent'  value="<{$agent_id}>" />
+    <input type='hidden' name='search_servers' value="<{$search_servers}>" />
+  <{foreach key=key item=item from=$page_list}>
+	<a href="<{$URL_SELF}>?page=<{$item}>&urlflag=1&id=<{$item.id}>&radio_agent=<{$agent_id}>&search_servers=<{$search_servers}>&keyword=<{$keyword}>&dStartDate=<{$dStartTime}>&dEndDate=<{$dEndTime}>"><{$key}></a><span style="width:5px;"></span>
+ <{/foreach}>
+<{$_lang.conmon.all_page}>(<{$page_count}>)
+  <input name="page" type="text" class="text" size="3" maxlength="6">&nbsp;<input type="submit" class="button" name="Submit" value="GO">
+</form>
+</td>
+</tr>
+</tbody>
+</table>
+
+<br>
+</div>
+</body>
+    <script type="text/javascript">
+  var server_id =<{$server_id}>,agent_id = "<{$agent_id}>";
+        $(function(){
+            if(agent_id > 0){
+                $("#sServerName_TD1").css("display", "block");
+                $("#sServerName_TD2").css("display", "block");
+                getServerRadios(agent_id,server_id,0);
+            }
+
+        })
+
+        function GetPlatServer(value) {
+            if (value == "0") {// hide servers if select all
+                $("#sServerName_TD1").css("display", "none");
+                $("#sServerName_TD2").css("display", "none");
+            } else {
+                $("#sServerName_TD1").css("display", "block");
+                $("#sServerName_TD2").css("display", "block");
+            }
+            getServerRadios(value,0,1);
+
+        }
+        function getServerRadios(agent_id,server_id,flag){
+            var servers=<{$servers}>;
+            var server = servers[agent_id];
+
+           // if(server_id==0) continue;
+           if(server_id !=null && (flag==1||server_id[0] == 1 ) )
+               checked = "checked='checked'";
+           else
+               checked = '';
+
+            var radios = "<input name='server_ids[0]' id='server_all' class='server_id'  value='1' onclick='checkboxAll();' "
+                + checked
+                +"type='checkbox'/><{$_lang.conmon.any}> ";
+
+            for(var i in server){
+
+                if(server_id !=null && (server_id[i] == 1 || flag==1) )
+                    checked = "checked='checked'";
+                else checked = '';
+
+                radios += "<input name='server_ids["+i+"]' class='server_id'  value='1' onclick='checkboxOne();' "
+                    + checked
+                    +"type='checkbox'/>" + server[i];
+            }
+            $("#sServer").html(radios);
+        }
+
+            function checkboxAll(){
+                if($("#server_all").attr("checked"))
+                    $(".server_id").attr("checked",true);
+                else
+                    $(".server_id").removeAttr("checked");
+            }
+
+            function checkboxOne(){
+                $("#server_all").removeAttr("checked");
+            }
+function bulletin(){
+	$("#action").val('bulletin');
+        $("#schForm").submit();
+}
+function compensation_conf(){
+	$("#action").val('compensation_conf');
+        $("#schForm").submit();
+}
+
+    </script>
+</html>

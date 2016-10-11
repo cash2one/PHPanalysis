@@ -1,0 +1,992 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.input_new_card}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+
+        $("#CreateFreshCard").click(function(){
+            $("#frmFreshCard").attr("action","?action=do1&type=doCreateFreshCard").submit();
+        });
+
+        $("#LoadFreshCard").click(function(){
+            $("#frmFreshCard").attr("action","?action=do1&type=doLoadFreshCard").submit();
+        });
+
+        $("#CreateFamilyCard").click(function(){
+            $("#frmFamilyCard").attr("action","?action=do3&type=doCreateFamilyCard").submit();
+        });
+
+        $("#LoadFamilyCard").click(function(){
+            $("#frmFamilyCard").attr("action","?action=do3&type=doLoadFamilyCard").submit();
+        });
+
+        $("#CreatePhoneCard").click(function(){
+            $("#frmPhoneCard").attr("action","?action=do4&type=doCreatePhoneCard").submit();
+        });
+
+        $("#LoadPhoneCard").click(function(){
+            $("#frmPhoneCard").attr("action","?action=do4&type=doLoadPhoneCard").submit();
+        });
+
+        $("#CreateGXCard").click(function(){
+            $("#frmGXCard").attr("action","?action=do5&type=doCreateGXCard").submit();
+        });
+
+        $("#LoadGXCard").click(function(){
+            $("#frmGXCard").attr("action","?action=do5&type=doLoadGXCard").submit();
+        });
+
+        $("#CreateQQCard").click(function(){
+            $("#frmQQCard").attr("action","?action=do6&type=doCreateQQCard").submit();
+        });
+
+        $("#LoadQQCard").click(function(){
+            $("#frmQQCard").attr("action","?action=do6&type=doLoadQQCard").submit();
+        });
+
+        $("#CreateDate").click(function(){
+            $("#perfectDateCard").attr("action","?action=do7&type=doCreatePerfectDateCard").submit();
+        });
+
+        $("#LoadPerfectDate").click(function(){
+            $("#perfectDateCard").attr("action","?action=do7&type=doLoadperfectDateCard").submit();
+        });
+
+        $("#CreatePlatinaCard").click(function(){
+            $("#platinaCard").attr("action","?action=do18&type=doCreatePlatinaCard").submit();
+        });
+
+        $("#LoadPlatinaCard").click(function(){
+            $("#platinaCard").attr("action", "?action=do18&type=doLoadPlatinaCard").submit();
+        });
+
+        $("#CreateGoldCard").click(function(){
+            $("#goldCard").attr("action","?action=do8&type=doCreateGoldCard").submit();
+        });
+
+        $("#LoadGoldCard").click(function(){
+            $("#goldCard").attr("action", "?action=do8&type=doLoadGoldCard").submit();
+        });
+
+        $("#CreateSilverCard").click(function(){
+            $("#silverCard").attr("action","?action=do11&type=doCreateSilverCard").submit();
+        });
+
+        $("#LoadSilverCard").click(function(){
+            $("#silverCard").attr("action", "?action=do11&type=doLoadSilverCard").submit();
+        });
+
+        $("#CreateJewelCard").click(function(){
+            $("#jewelCard").attr("action", "?action=do9&type=doCreateJewelCard").submit();
+        });
+
+        $("#LoadJewelCard").click(function(){
+            $("#jewelCard").attr("action", "?action=do9&type=doLoadJewelCard").submit();
+        });
+
+        $("#CreatePebbleCard").click(function(){
+
+            $("#pebbleCard").attr("action","?action=do10&type=doCreatePebbleCard").submit();
+        });
+
+        $("#LoadPebbleCard").click(function(){
+            $("#pebbleCard").attr("action","?action=do10&type=doLoadPebbleCard").submit();
+        });
+
+        $("#CreateReserve1Card").click(function(){
+            $("#reserve1Card").attr("action","?action=do12&type=doCreateReserve1Card").submit();
+        });
+
+        $("#LoadReserve1Card").click(function(){
+            $("#reserve1Card").attr("action","?action=do12&type=doLoadReserve1Card").submit();
+        });
+
+        $("#CreateReserve2Card").click(function(){
+            $("#reserve2Card").attr("action","?action=do13&type=doCreateReserve2Card").submit();
+        });
+
+        $("#LoadReserve2Card").click(function(){
+            $("#reserve2Card").attr("action","?action=do13&type=doLoadReserve2Card").submit();
+        });
+
+        $("#CreateReserve3Card").click(function(){
+            $("#reserve3Card").attr("action","?action=do14&type=doCreateReserve3Card").submit();
+        });
+
+        $("#LoadReserve3Card").click(function(){
+            $("#reserve3Card").attr("action","?action=do14&type=doLoadReserve3Card").submit();
+        });
+
+        $("#CreateReserve4Card").click(function(){
+            $("#reserve4Card").attr("action","?action=do15&type=doCreateReserve4Card").submit();
+        });
+
+        $("#LoadReserve4Card").click(function(){
+            $("#reserve4Card").attr("action","?action=do15&type=doLoadReserve4Card").submit();
+        });
+
+        $("#CreateReserve5Card").click(function(){
+            $("#reserve5Card").attr("action","?action=do16&type=doCreateReserve5Card").submit();
+        });
+
+        $("#LoadReserve5Card").click(function(){
+            $("#reserve5Card").attr("action","?action=do16&type=doLoadReserve5Card").submit();
+        });
+
+        $("#CreateReserve6Card").click(function(){
+            $("#reserve6Card").attr("action","?action=do17&type=doCreateReserve6Card").submit();
+        });
+
+        $("#LoadReserve6Card").click(function(){
+            $("#reserve6Card").attr("action","?action=do17&type=doLoadReserve6Card").submit();
+        });
+    });
+
+</script>
+</head>
+
+ <body>
+ <div id="position"><{$_lang.left.gm_manage}>：<{$_lang.left.input_new_card}></div>
+ <div id="all">
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+
+				 <{if $show_family_card}>
+					<form action="?action=do3" method="post" id="frmFamilyCard">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_new_card_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+							<td colspan="4">
+								<font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font>
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.start_id}>：</td>
+							<td><input type="text" name="start_id_family" value="<{$start_id_family}>" /></td>
+							<td><{$_lang.new.end_id}>：</td>
+							<td><input type="text" name="end_id_family" value="<{$end_id_family}>" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.agent_name}>：</td>
+							<td><input type="text" name="agent_flag_family" value="<{$agent_flag_family}>" /></td>
+							<td><{$_lang.new.server_name}>：</td>
+							<td><input type="text" name="server_flag_family" value="<{$server_flag_family}>" />
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.create_sh}>：</td>
+							<td colspan="3"><{$create_family_sh}></td>
+
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td align="center" colspan="2">
+								<input name="btnCreateFamilyCard" id="CreateFamilyCard" value="<{$_lang.new.create_fresh}>" type="button">
+							</td>
+							<td align="center" colspan="2">
+								<input type="checkbox" name="auto_load_family" value="1" checked="checked" /><{$_lang.new.auto_load}>
+								<input name="btnLoadFamilyCard" id="LoadFamilyCard" value="<{$_lang.left.click_import_yiqi_server}>" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+				<{else}>
+					恭喜您，不用导入新手礼包！
+				<{/if}>
+    			<br><br>
+
+                <{if $show_qq_card}>
+					<form action="?action=do6" method="post" id="frmQQCard">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_qq_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+							<td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.start_id}>：</td>
+							<td><input type="text" name="start_id_qq" value="<{$start_id_qq}>" /></td>
+							<td><{$_lang.new.end_id}>：</td>
+							<td><input type="text" name="end_id_qq" value="<{$end_id_qq}>" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.agent_name}>：</td>
+							<td><input type="text" name="agent_flag_qq" value="<{$agent_flag_qq}>" /></td>
+							<td><{$_lang.new.server_name}>：</td>
+							<td><input type="text" name="server_flag_qq" value="<{$server_flag_qq}>" />
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.create_sh}>：</td>
+							<td colspan="3"><{$create_qq_sh}></td>
+
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td align="center" colspan="2">
+								<input name="btnCreateQQCard" id="CreateQQCard" value="<{$_lang.new.create_qq}>" type="button">
+							</td>
+							<td align="center" colspan="2">
+								<input type="checkbox" name="auto_load_qq" value="1" checked="checked" /><{$_lang.new.auto_load}>
+								<input name="btnLoadQQCard" id="LoadQQCard" value="<{$_lang.left.click_import_qq_server}>" type="button">
+							</td>
+
+						</tr>
+						</table>
+					</form>
+				<{else}>
+					恭喜您，不用导入QQ群卡！
+				<{/if}>
+                <br><br>
+
+
+
+
+                <{if $show_perfectDate_card}>
+					<form action="?action=do7" method="post" id="perfectDateCard">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_perfectDate_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+							<td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.start_id}>：</td>
+							<td><input type="text" name="start_id_perfectDate" value="<{$start_id_perfectDate}>" /></td>
+							<td><{$_lang.new.end_id}>：</td>
+							<td><input type="text" name="end_id_perfectDate" value="<{$end_id_perfectDate}>" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.agent_name}>：</td>
+							<td><input type="text" name="agent_flag_perfectDate" value="<{$agent_flag_perfectDate}>" /></td>
+							<td><{$_lang.new.server_name}>：</td>
+							<td><input type="text" name="server_flag_perfectDate" value="<{$server_flag_perfectDate}>" />
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.create_sh}>：</td>
+							<td colspan="3"><{$create_qq_sh}></td>
+
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td align="center" colspan="2">
+								<input name="btnCreateQQCard" id="CreateDate" value="<{$_lang.new.perfectDate}>" type="button">
+							</td>
+							<td align="center" colspan="2">
+								<input type="checkbox" name="auto_load_perfectDateCard" value="1" checked="checked" /><{$_lang.new.auto_load}>
+								<input name="btnLoadQQCard" id="LoadPerfectDate" value="<{$_lang.left.click_import_perfectDate_server}>" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+				<{else}>
+					恭喜您，不用导入完善资料卡！
+				<{/if}>
+                <br><br>
+
+                <{if $show_phone_card}>
+                <form action="?action=do4" method="post" id="frmPhoneCard">
+                    <table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                                <font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_tequan_server}></b></font>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td><{$_lang.new.start_id}>：</td>
+                            <td><input type="text" name="start_id_phone" value="<{$start_id_phone}>" /></td>
+                            <td><{$_lang.new.end_id}>：</td>
+                            <td><input type="text" name="end_id_phone" value="<{$end_id_phone}>" /></td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td><{$_lang.new.agent_name}>：</td>
+                            <td><input type="text" name="agent_flag_phone" value="<{$agent_flag_phone}>" /></td>
+                            <td><{$_lang.new.server_name}>：</td>
+                            <td><input type="text" name="server_flag_phone" value="<{$server_flag_phone}>" />
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td><{$_lang.new.create_sh}>：</td>
+                            <td colspan="3"><{$create_phone_sh}></td>
+
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td align="center" colspan="2">
+                                <input name="btnCreatePhoneCard" id="CreatePhoneCard" value="<{$_lang.new.create_phone}>" type="button">
+                            </td>
+                            <td align="center" colspan="2">
+                                <input type="checkbox" name="auto_load_phone" value="1" checked="checked" /><{$_lang.new.auto_load}>
+                                <input name="btnLoadPhoneCard" id="LoadPhoneCard" value="<{$_lang.left.click_import_phone_server}>" type="button">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <{else}>
+                恭喜您，不用导入手机礼包卡！
+                <{/if}>
+                <br><br>
+
+                <{if $show_platina_card}>
+                <form action="?action=do18" method="post" id="platinaCard">
+                    <table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                                <font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_platina_server}></b></font>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font> </td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td><{$_lang.new.start_id}>：</td>
+                            <td><input type="text" name="start_id_platina" value="<{$start_id_platina}>" /></td>
+                            <td><{$_lang.new.end_id}>：</td>
+                            <td><input type="text" name="end_id_platina" value="<{$end_id_platina}>" /></td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td><{$_lang.new.agent_name}>：</td>
+                            <td><input type="text" name="agent_flag_platina" value="<{$agent_flag_platina}>" /></td>
+                            <td><{$_lang.new.server_name}>：</td>
+                            <td><input type="text" name="server_flag_platina" value="<{$server_flag_platina}>" />
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td><{$_lang.new.create_sh}>：</td>
+                            <td colspan="3"><{$create_platina_sh}></td>
+
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td align="center" colspan="2">
+                                <input name="btnCreatePlatinaCard" id="CreatePlatinaCard" value="<{$_lang.new.create_platina}>" type="button">
+                            </td>
+                            <td align="center" colspan="2">
+                                <input type="checkbox" name="auto_load_platina" value="1" checked="checked" /><{$_lang.new.auto_load}>
+                                <input name="btnLoadPlatinaCard" id="LoadPlatinaCard" value="<{$_lang.left.click_import_platina_server}>" type="button">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <{else}>
+                恭喜您，不用导入铂金礼包卡！
+                <{/if}>
+                <br><br>
+
+                <{if $show_gold_card}>
+					<form action="?action=do8" method="post" id="goldCard">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_gold_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+							<td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.start_id}>：</td>
+							<td><input type="text" name="start_id_gold" value="<{$start_id_gold}>" /></td>
+							<td><{$_lang.new.end_id}>：</td>
+							<td><input type="text" name="end_id_gold" value="<{$end_id_gold}>" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.agent_name}>：</td>
+							<td><input type="text" name="agent_flag_gold" value="<{$agent_flag_gold}>" /></td>
+							<td><{$_lang.new.server_name}>：</td>
+							<td><input type="text" name="server_flag_gold" value="<{$server_flag_gold}>" />
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.create_sh}>：</td>
+							<td colspan="3"><{$create_gold_sh}></td>
+
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td align="center" colspan="2">
+								<input name="btnCreateGoldCard" id="CreateGoldCard" value="<{$_lang.new.create_gold}>" type="button">
+							</td>
+							<td align="center" colspan="2">
+								<input type="checkbox" name="auto_load_gold" value="1" checked="checked" /><{$_lang.new.auto_load}>
+								<input name="btnLoadGoldCard" id="LoadGoldCard" value="<{$_lang.left.click_import_gold_server}>" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+				<{else}>
+					恭喜您，不用导入黄金礼包卡！
+				<{/if}>
+                <br><br>
+
+                <{if $show_silver_card}>
+					<form action="?action=do11" method="post" id="silverCard">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_silver_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+							<td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.start_id}>：</td>
+							<td><input type="text" name="start_id_silver" value="<{$start_id_silver}>" /></td>
+							<td><{$_lang.new.end_id}>：</td>
+							<td><input type="text" name="end_id_silver" value="<{$end_id_silver}>" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.agent_name}>：</td>
+							<td><input type="text" name="agent_flag_silver" value="<{$agent_flag_silver}>" /></td>
+							<td><{$_lang.new.server_name}>：</td>
+							<td><input type="text" name="server_flag_silver" value="<{$server_flag_silver}>" />
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.create_sh}>：</td>
+							<td colspan="3"><{$create_silver_sh}></td>
+
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td align="center" colspan="2">
+								<input name="btnCreateSilverCard" id="CreateSilverCard" value="<{$_lang.new.create_silver}>" type="button">
+							</td>
+							<td align="center" colspan="2">
+								<input type="checkbox" name="auto_load_silver" value="1" checked="checked" /><{$_lang.new.auto_load}>
+								<input name="btnLoadSilverCard" id="LoadSilverCard" value="<{$_lang.left.click_import_silver_server}>" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+				<{else}>
+					恭喜您，不用导入白银礼包卡！
+				<{/if}>
+                <br><br>
+
+                <{if $show_jewel_card}>
+					<form action="?action=do9" method="post" id="jewelCard">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_jewel_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+							<td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.start_id}>：</td>
+							<td><input type="text" name="start_id_jewel" value="<{$start_id_jewel}>" /></td>
+							<td><{$_lang.new.end_id}>：</td>
+							<td><input type="text" name="end_id_jewel" value="<{$end_id_jewel}>" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.agent_name}>：</td>
+							<td><input type="text" name="agent_flag_jewel" value="<{$agent_flag_jewel}>" /></td>
+							<td><{$_lang.new.server_name}>：</td>
+							<td><input type="text" name="server_flag_jewel" value="<{$server_flag_jewel}>" />
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.create_sh}>：</td>
+							<td colspan="3"><{$create_jewel_sh}></td>
+
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td align="center" colspan="2">
+								<input name="btnCreateJewelCard" id="CreateJewelCard" value="<{$_lang.new.create_jewel}>" type="button">
+							</td>
+							<td align="center" colspan="2">
+								<input type="checkbox" name="auto_load_jewel" value="1" checked="checked" /><{$_lang.new.auto_load}>
+								<input name="btnLoadJewelCard" id="LoadJewelCard" value="<{$_lang.left.click_import_jewel_server}>" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+				<{else}>
+					恭喜您，不用导入钻石卡！
+				<{/if}>
+                <br><br>
+
+                <{if $show_pebble_card}>
+					<form action="?action=do10" method="post" id="pebbleCard">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_pebble_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+							<td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.start_id}>：</td>
+							<td><input type="text" name="start_id_pebble" value="<{$start_id_pebble}>" /></td>
+							<td><{$_lang.new.end_id}>：</td>
+							<td><input type="text" name="end_id_pebble" value="<{$end_id_pebble}>" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.agent_name}>：</td>
+							<td><input type="text" name="agent_flag_pebble" value="<{$agent_flag_pebble}>" /></td>
+							<td><{$_lang.new.server_name}>：</td>
+							<td><input type="text" name="server_flag_pebble" value="<{$server_flag_pebble}>" />
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.create_sh}>：</td>
+							<td colspan="3"><{$create_pebble_sh}></td>
+
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td align="center" colspan="2">
+								<input name="btnCreatePebbleCard" id="CreatePebbleCard" value="<{$_lang.new.create_pebble}>" type="button">
+							</td>
+							<td align="center" colspan="2">
+								<input type="checkbox" name="auto_load_pebble" value="1" checked="checked" /><{$_lang.new.auto_load}>
+								<input name="btnLoadPebbleCard" id="LoadPebbleCard" value="<{$_lang.left.click_import_pebble_server}>" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+				<{else}>
+					恭喜您，不用导入水晶卡！
+				<{/if}>
+                <br><br>
+
+                <{if $show_reserve1_card}>
+                <form action="?action=do12" method="post" id="reserve1Card">
+                    <table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                                <font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_reserve1_server}></b></font>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td><{$_lang.new.start_id}>：</td>
+                            <td><input type="text" name="start_id_reserve1" value="<{$start_id_reserve1}>" /></td>
+                            <td><{$_lang.new.end_id}>：</td>
+                            <td><input type="text" name="end_id_reserve1" value="<{$end_id_reserve1}>" /></td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td><{$_lang.new.agent_name}>：</td>
+                            <td><input type="text" name="agent_flag_reserve1" value="<{$agent_flag_reserve1}>" /></td>
+                            <td><{$_lang.new.server_name}>：</td>
+                            <td><input type="text" name="server_flag_reserve1" value="<{$server_flag_reserve1}>" />
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td><{$_lang.new.create_sh}>：</td>
+                            <td colspan="3"><{$create_reserve1_sh}></td>
+
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td align="center" colspan="2">
+                                <input name="btnCreateReserve1Card" id="CreateReserve1Card" value="<{$_lang.new.create_reserve1}>" type="button">
+                            </td>
+                            <td align="center" colspan="2">
+                                <input type="checkbox" name="auto_load_reserve1" value="1" checked="checked" /><{$_lang.new.auto_load}>
+                                <input name="btnLoadReserve1Card" id="LoadReserve1Card" value="<{$_lang.left.click_import_reserve1_server}>" type="button">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <{else}>
+                恭喜您，不用导入媒体卡1！
+                <{/if}>
+                <br><br>
+
+                <{if $show_reserve2_card}>
+					<form action="?action=do13" method="post" id="reserve2Card">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_reserve2_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+							<td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.start_id}>：</td>
+							<td><input type="text" name="start_id_reserve2" value="<{$start_id_reserve2}>" /></td>
+							<td><{$_lang.new.end_id}>：</td>
+							<td><input type="text" name="end_id_reserve2" value="<{$end_id_reserve2}>" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.agent_name}>：</td>
+							<td><input type="text" name="agent_flag_reserve2" value="<{$agent_flag_reserve2}>" /></td>
+							<td><{$_lang.new.server_name}>：</td>
+							<td><input type="text" name="server_flag_reserve2" value="<{$server_flag_reserve2}>" />
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.create_sh}>：</td>
+							<td colspan="3"><{$create_reserve2_sh}></td>
+
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td align="center" colspan="2">
+								<input name="btnCreateReserve2Card" id="CreateReserve2Card" value="<{$_lang.new.create_reserve2}>" type="button">
+							</td>
+							<td align="center" colspan="2">
+								<input type="checkbox" name="auto_load_reserve2" value="1" checked="checked" /><{$_lang.new.auto_load}>
+								<input name="btnLoadReserve2Card" id="LoadReserve2Card" value="<{$_lang.left.click_import_reserve2_server}>" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+				<{else}>
+					恭喜您，不用导入媒体卡1！
+				<{/if}>
+                <br><br>
+
+                <{if $show_reserve3_card}>
+					<form action="?action=do14" method="post" id="reserve3Card">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_reserve3_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+							<td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.start_id}>：</td>
+							<td><input type="text" name="start_id_reserve3" value="<{$start_id_reserve3}>" /></td>
+							<td><{$_lang.new.end_id}>：</td>
+							<td><input type="text" name="end_id_reserve3" value="<{$end_id_reserve3}>" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.agent_name}>：</td>
+							<td><input type="text" name="agent_flag_reserve3" value="<{$agent_flag_reserve3}>" /></td>
+							<td><{$_lang.new.server_name}>：</td>
+							<td><input type="text" name="server_flag_reserve3" value="<{$server_flag_reserve3}>" />
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.create_sh}>：</td>
+							<td colspan="3"><{$create_reserve3_sh}></td>
+
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td align="center" colspan="2">
+								<input name="btnCreateReserve3Card" id="CreateReserve3Card" value="<{$_lang.new.create_reserve3}>" type="button">
+							</td>
+							<td align="center" colspan="2">
+								<input type="checkbox" name="auto_load_reserve3" value="1" checked="checked" /><{$_lang.new.auto_load}>
+								<input name="btnLoadReserve3Card" id="LoadReserve3Card" value="<{$_lang.left.click_import_reserve3_server}>" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+				<{else}>
+					恭喜您，不用导入媒体卡1！
+				<{/if}>
+                <br><br>
+
+                <{if $show_reserve4_card}>
+					<form action="?action=do15" method="post" id="reserve4Card">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_reserve4_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+							<td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.start_id}>：</td>
+							<td><input type="text" name="start_id_reserve4" value="<{$start_id_reserve4}>" /></td>
+							<td><{$_lang.new.end_id}>：</td>
+							<td><input type="text" name="end_id_reserve4" value="<{$end_id_reserve4}>" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.agent_name}>：</td>
+							<td><input type="text" name="agent_flag_reserve4" value="<{$agent_flag_reserve4}>" /></td>
+							<td><{$_lang.new.server_name}>：</td>
+							<td><input type="text" name="server_flag_reserve4" value="<{$server_flag_reserve4}>" />
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.create_sh}>：</td>
+							<td colspan="3"><{$create_reserve4_sh}></td>
+
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td align="center" colspan="2">
+								<input name="btnCreateReserve4Card" id="CreateReserve4Card" value="<{$_lang.new.create_reserve4}>" type="button">
+							</td>
+							<td align="center" colspan="2">
+								<input type="checkbox" name="auto_load_reserve4" value="1" checked="checked" /><{$_lang.new.auto_load}>
+								<input name="btnLoadReserve4Card" id="LoadReserve4Card" value="<{$_lang.left.click_import_reserve4_server}>" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+				<{else}>
+					恭喜您，不用导入媒体卡1！
+				<{/if}>
+                <br><br>
+
+                <{if $show_reserve5_card}>
+					<form action="?action=do16" method="post" id="reserve5Card">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_reserve5_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+							<td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.start_id}>：</td>
+							<td><input type="text" name="start_id_reserve5" value="<{$start_id_reserve5}>" /></td>
+							<td><{$_lang.new.end_id}>：</td>
+							<td><input type="text" name="end_id_reserve5" value="<{$end_id_reserve5}>" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.agent_name}>：</td>
+							<td><input type="text" name="agent_flag_reserve5" value="<{$agent_flag_reserve5}>" /></td>
+							<td><{$_lang.new.server_name}>：</td>
+							<td><input type="text" name="server_flag_reserve5" value="<{$server_flag_reserve5}>" />
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.create_sh}>：</td>
+							<td colspan="3"><{$create_reserve5_sh}></td>
+
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td align="center" colspan="2">
+								<input name="btnCreateReserve5Card" id="CreateReserve5Card" value="<{$_lang.new.create_reserve5}>" type="button">
+							</td>
+							<td align="center" colspan="2">
+								<input type="checkbox" name="auto_load_reserve5" value="1" checked="checked" /><{$_lang.new.auto_load}>
+								<input name="btnLoadReserve5Card" id="LoadReserve5Card" value="<{$_lang.left.click_import_reserve5_server}>" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+				<{else}>
+					恭喜您，不用导入媒体卡1！
+				<{/if}>
+                <br><br>
+
+                <{if $show_reserve6_card}>
+					<form action="?action=do17" method="post" id="reserve6Card">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="4"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_reserve6_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+							<td colspan="4">
+                                <font color="#0033FF">
+                                    <{$_lang.left.import_new_card_note1}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note2}><br/>&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note3}><br />&nbsp; &nbsp;
+                                    <{$_lang.left.import_new_card_note4}>
+                                </font></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.start_id}>：</td>
+							<td><input type="text" name="start_id_reserve6" value="<{$start_id_reserve6}>" /></td>
+							<td><{$_lang.new.end_id}>：</td>
+							<td><input type="text" name="end_id_reserve6" value="<{$end_id_reserve6}>" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.agent_name}>：</td>
+							<td><input type="text" name="agent_flag_reserve6" value="<{$agent_flag_reserve6}>" /></td>
+							<td><{$_lang.new.server_name}>：</td>
+							<td><input type="text" name="server_flag_reserve6" value="<{$server_flag_reserve6}>" />
+							</td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td><{$_lang.new.create_sh}>：</td>
+							<td colspan="3"><{$create_reserve6_sh}></td>
+
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td align="center" colspan="2">
+								<input name="btnCreateReserve6Card" id="CreateReserve6Card" value="<{$_lang.new.create_reserve6}>" type="button">
+							</td>
+							<td align="center" colspan="2">
+								<input type="checkbox" name="auto_load_reserve6" value="1" checked="checked" /><{$_lang.new.auto_load}>
+								<input name="btnLoadReserve6Card" id="LoadReserve6Card" value="<{$_lang.left.click_import_reserve6_server}>" type="button">
+							</td>
+						</tr>
+						</table>
+					</form>
+				<{else}>
+					恭喜您，不用导入媒体卡1！
+				<{/if}>
+                <br><br>
+
+<!-- 
+					<form action="?action=do2&type=load_festival_card" method="post">
+                		<table width="800"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="3"  align="left">
+                            	<font color="#666600" class="STYLE2"><b>::<{$_lang.left.import_activity_card_server}></b></font>
+							</td>
+                        </tr>
+						<tr bgcolor="#FFFFFF">
+						<td width="25%" align="center"><input type="submit" name="submit" value="<{$_lang.left.click_import_activity_server}> "/></td>
+							<td><font color="#0033FF"><{$_lang.left.import_new_activity_note1}><br /><{$_lang.left.import_new_activity_note2}></font></td>
+						</tr>
+						</table>
+					</form> -->
+
+					<{if $show_activity_card}>
+					<form action="?action=do21&type=auto_create_festival_card" method="post">
+						<table width="800" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+						<tr bgcolor="#E5F9FF">
+							<td colspan="4" background="/web/admin/static/images/wbg.gif"><font color="#666600" class="STYLE2"><b><{"运营自动开启媒体卡"}>：</b></font></td>
+						</tr>
+                            <tr bgcolor="#FFFFFF">
+                                <td colspan="4">
+                                    <font color="#0033FF">
+                                        这里的id指的是config_gift配置表对应的id<br />
+                                        目前ID范围 28-56<br/>
+                                    </font></td>
+                            </tr>
+						<tr bgcolor="#FFFFFF">
+							<td width="25%" align="left"><{"创建数量"}>：</td>
+							<td width="25%"><input type="text" name="create_count" value="" /></td>
+                            <td width="25%">卡ID（即标识）：</td>
+                            <td width="25%"><input type="text" name="card_id" value="" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td width="25%" align="left"><{"服务器标识"}>：</td>
+							<td width="75%" colspan="3"><input type="text" name="key_info" value="" /></td>
+						</tr>
+						<tr bgcolor="#FFFFFF">
+							<td width="25%"></td>
+							<td width="75%" colspan="3"><input type="submit" name="submit" value="创建媒体卡" /></td>
+						</tr>
+						</table>
+					</form>
+					<{/if}>
+					
+                </div>
+            </div>
+        </div>
+	</div>
+ 
+ </body>
+</html>

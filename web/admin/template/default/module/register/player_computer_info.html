@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<title>
+	<{$_lang.left.player_software_info}>
+</title>
+</head>
+
+
+
+<body>
+<div id="position"><{$_lang.left.loss_rate_analysis}>：<{$_lang.left.player_software_info}></div>
+<form action="?action=search" id="frm" method="POST" >
+	<table cellspacing="1" cellpadding="5" class="SumDataGrid" width="500">
+		<tr>
+			<td><{$_lang.left.message_type}>：&nbsp;&nbsp;<select name="info_type" id="info_type"><{html_options options=$info_type_option selected=$info_type}></select></td>
+			<td width="40%"><input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/></td>
+		</tr>
+	</table>
+	<br>
+</form>
+
+<{if $info_type}>
+<table width="400" border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+	<tr class='table_list_head'>
+		<td colspan=2 align="center">
+	    <font color="red"><{if $info_type=='version'}><{$_lang.left.user_flash_version}><{elseif $info_type=='resolution'}><{$_lang.new.display_resolution_statistics}><{elseif $info_type=='brower'}><{$_lang.left.browser_version_statistics}><{/if}></font></td>
+	</tr>
+	
+	<tr class='table_list_head' align='center'>
+		<td><{if $info_type=='version'}><{$_lang.left.version}><{elseif $info_type=='resolution'}><{$_lang.left.display_resolution}><{elseif $info_type=='brower'}><{$_lang.left.browser_version}><{/if}></td>
+		<td><{$_lang.left.user_num}></td>
+	</tr>
+
+		<{section name=loop loop=$version_data}>
+		<{if $smarty.section.loop.rownum % 20 == 1}>
+		<{/if}>
+			<{if $smarty.section.loop.rownum % 2 == 0}>
+			<tr class='trEven' align='center'>
+			<{else}>
+			<tr class='trOdd' align='center'>
+			<{/if}>
+				<td width='60%'><{$version_data[loop].version_name}></td>
+				<td><{$version_data[loop].version_cnt}></td>
+			</tr>
+		<{sectionelse}>
+        <{/section}>
+</table>
+<{/if}>
+
+</body>
+</html>

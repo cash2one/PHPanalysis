@@ -1,0 +1,398 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+    <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+    <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+    <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+    <script language="javascript">
+        function doImport(){
+            $("#frmImport").submit();
+        }
+
+        function doBanOne(role_id){
+            if($.trim( $("#ban_"+role_id+"_ban_reason").val() ) == "" ){
+                alert("<{$_lang.new.banned_js1}>");
+            }else if($.trim( $("#ban_"+role_id+"_ban_time").val() ) == "null" ){
+                alert("<{$_lang.new.banned_js2}>");
+            }else{
+                yes = confirm("<{$_lang.new.banned_js3}>");
+                if(yes){
+                    $("#frmBan").attr("action","?action=doBan");
+                    $("#banRoleID").val(role_id);
+                    $("#frmBan").submit();
+                }
+            }
+        }
+
+        function doBanMany(){
+            var flag = true;
+            var num = 0;
+            $(".Ban_check").each(function(i){
+                if($(this).attr("checked"))
+                {
+                    var role_id = $(this).val();
+                    if($.trim( $("#ban_"+role_id+"_ban_reason").val() ) == "" ){
+                        alert("<{$_lang.new.banned_js4}>"+role_id+"<{$_lang.new.banned_js5}>");
+                        flag = false;
+                        return false;
+                    }else if($.trim( $("#ban_"+role_id+"_ban_time").val() ) == "null" ){
+                        alert("<{$_lang.new.banned_js6}>"+role_id+"<{$_lang.new.banned_js7}>");
+                        flag = false;
+                        return false;
+                    }
+                    num = 1;
+                }
+            });
+            if(flag==true){
+                if(num==0){
+                    alert("<{$_lang.new.banned_js8}>");
+                    return false;
+                }
+                else{
+                    yes = confirm("<{$_lang.new.banned_js9}>");
+                    if(yes){
+                        $("#frmBan").attr("action","?action=doBanMany");
+                        $("#frmBan").submit();
+                    }
+                }
+            }
+        }
+
+        function doUnBan(role_id,account_name){
+            if(role_id){
+                yes = confirm("<{$_lang.new.banned_js10}>");
+                if(yes){
+                    $("#frmUnBan").attr("action","?action=doUnBan");
+                    $("#unBanRoleID").val(role_id);
+                    $("#unBanAccountName").val(account_name);
+                    $("#frmUnBan").submit();
+                }
+            }
+        }
+
+        function doCheckAll(checkBoxName){
+            var checkBox = document.getElementsByName(checkBoxName);
+            for (var i = 0; i < checkBox.length; i++)
+            {
+                var temp = checkBox[i];
+                temp.checked = true;
+            }
+        }
+
+        function doUnBanMany(){
+            $("#frmUnBan").attr("action","?action=doUnBanMany");
+            var num = 0;
+            $(".unBan_check").each(function(i){
+                if($(this).attr("checked"))
+                {
+                    num = 1;
+                }
+            });
+            if(num==0){
+                alert("<{$_lang.new.banned_js11}>");
+                return false;
+            }
+            else{
+                yes = confirm("<{$_lang.new.banned_js12}>");
+                if(yes){
+                    $("#frmUnBan").submit();
+                }
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#role_id").keydown(function(){
+                $("#role_name").val('');
+                $("#account_name").val('');
+                $("#ip_addr").val('');
+            });
+            $("#role_name").keydown(function(){
+                $("#role_id").val('');
+                $("#account_name").val('');
+                $("#ip_addr").val('');
+            });
+            $("#account_name").keydown(function(){
+                $("#role_id").val('');
+                $("#role_name").val('');
+                $("#ip_addr").val('');
+            });
+            $("#ip_addr").keydown(function(){
+                $("#role_id").val('');
+                $("#role_name").val('');
+                $("#account_name").val('');
+            });
+        });
+    </script>
+    <style type="text/css">
+        #ulBandReason{
+            width:300px;
+            margin:0px;
+            padding:0px;
+            list-style:none;
+            background-color:#D9D9D9;
+            border:2px solid blue;
+            position:absolute;
+            display:none;
+        }
+        #ulBandReason li{
+            height:20px;
+            border:1px solid #CCC;
+        }
+        #closeReason{
+            text-align:right;
+            text-decoration:underline;
+        }
+        .reasonItem{
+            text-align:left;
+        }
+    </style>
+    <ul id="ulBandReason">
+        <li id="closeReason"><a href="javascript:void(0);"><{$_lang.new.close}></a></li>
+        <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.about_steal_account}></a></li>
+        <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.irregularities}></a></li>
+        <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.spreading_false_information}></a></li>
+        <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.fake_GM}></a></li>
+        <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.use_third_party_software}></a></li>
+        <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.use_forbid_rolename}></a></li>
+        <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.illegal_transactions}></a></li>
+        <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.use_bug}></a></li>
+        <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.use_forbid_rolename}></a></li>
+        <li class="reasonItem"><a href="javascript:void(0);"><{$_lang.new.abuse_others}></a></li>
+    </ul>
+    <script language="javascript">
+        $(document).ready(function(){
+            window.fromInput = null;
+            $(".ban_reason").click(function(){
+                var offset = $(this).offset();
+                window.fromInput = $(this);
+                $("#ulBandReason").css("top",offset.top+20).css("left",offset.left);
+                $("#ulBandReason").show();
+            });
+            $("#closeReason").click(function(){
+                $("#ulBandReason").hide();
+            });
+            $(".reasonItem").click(function(){
+                window.fromInput.val($(this).find("a").text());
+                $("#ulBandReason").hide();
+                event.stopPropagation();
+            });
+            $("#ban_reason").keydown(function(){
+                $("#ulBandReason").hide();
+            });
+        });
+    </script>
+
+    <title>
+        <{$_lang.left.banned_account}>
+    </title>
+</head>
+
+<body>
+<div id="position"><{$_lang.left.gm_manage}>：账号禁言</div>
+
+<form action="?action=search" id="frmSearch" method="POST" >
+    <table cellspacing="1" cellpadding="5" class="SumDataGrid" width="900">
+        <tr>
+            <td align="right"><{$_lang.conmon.user_id}>：</td>
+            <td><input type="text" name="role_id" id="role_id" value="<{$role.role_id}>" /></td>
+            <td align="right"><{$_lang.conmon.role_name}>：</td>
+            <td><input type="text" name="role_name" id="role_name" value="<{$role.role_name}>" /></td>
+            <td align="right"><{$_lang.conmon.user_account}>：</td>
+            <td><input type="text" name="account_name" id="account_name" value="<{$role.account_name}>" /></td>
+            <td align="right"><{$_lang.left.ip_address}>：</td>
+            <td><input type="text" name="ip_addr" id="ip_addr" value="<{$ip_addr}>" /></td>
+            <td><input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/></td>
+        </tr>
+    </table>
+    <br>
+</form>
+
+<!-- <form action="?action=import" id="frmImport" method="POST">
+	<table width="100%" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+		<tr class="table_list_head" align="left">
+			<td width="100%"><input name="btnBanImport" onclick="doImport();" value="<{$_lang.left.banned_account_note1}>" type="button">
+			<font color="red"><{$_lang.left.banned_account_note2}></font>
+			</td>
+		</tr>
+	</table>
+	<br>
+</form> -->
+
+
+<form action="?action=doBan" method="POST" id="frmBan">
+    <{if $same_ip_rst}>
+    <table width="100%" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+        <tr bgcolor="#E5F9FF">
+            <td colspan="2" background="/web/admin/static/images/wbg.gif" align="left">
+                <font color="#666600" class="STYLE2"><b>::<{$_lang.new.all_normal_account_the_same_IP}></b></font>
+            </td>
+        </tr>
+    </table>
+    <input name="ip_addr" id="ip_addr" value="<{$ip_addr}>" type="hidden">
+    <table width="100%" cellspacing="1" cellpadding="5" border="0">
+        <!-- SECTION  START -------------------------->
+        <{section name=loop loop=$same_ip_rst}>
+        <{if $smarty.section.loop.rownum % 20 == 1}>
+        <tr class='table_list_head'  align="center">
+            <td><{$_lang.conmon.user_id}></td>
+            <td><{$_lang.conmon.role_name}></td>
+            <td><{$_lang.conmon.user_account}></td>
+            <td><{$_lang.conmon.ip_address}></td>
+            <td><{$_lang.conmon.role_level}></td>
+            <td><{$_lang.left.total_recharge}></td>
+            <td><{$_lang.left.statu}></td>
+            <td><{$_lang.new.banned_time_long}></td>
+            <td><{$_lang.left.banned_reason}></td>
+            <td><{$_lang.conmon.operating}><input name="btnBanMany" onclick="doBanMany();" value="<{$_lang.new.lot_banned}>" type="button"></td>
+            <td><{$_lang.new.select}><input name="btnCheckAll" onclick="doCheckAll('Ban_check[]');" value="<{$_lang.new.select_all}>" type="button"></td>
+        </tr>
+        <{/if}>
+
+        <{if $smarty.section.loop.rownum % 2 == 0}>
+        <tr class='trEven'  align="center">
+            <{else}>
+        <tr class='trOdd'  align="center">
+            <{/if}>
+            <td>
+                <input name="ban[<{$same_ip_rst[loop].role_id}>][role_id]" value="<{$same_ip_rst[loop].role_id}>" type="hidden">
+                <{$same_ip_rst[loop].role_id}>
+            </td>
+            <td>
+                <input name="ban[<{$same_ip_rst[loop].role_id}>][role_name]" value="<{$same_ip_rst[loop].role_name}>" type="hidden">
+                <{$same_ip_rst[loop].role_name}>
+            </td>
+            <td>
+                <input name="ban[<{$same_ip_rst[loop].role_id}>][account_name]" value="<{$same_ip_rst[loop].account_name}>" type="hidden">
+                <{$same_ip_rst[loop].account_name}>
+            </td>
+            <td>
+                <input name="ban[<{$same_ip_rst[loop].role_id}>][last_login_ip]" value="<{$same_ip_rst[loop].last_login_ip}>" type="hidden">
+                <{$same_ip_rst[loop].last_login_ip}>
+            </td>
+            <td>
+                <input name="ban[<{$same_ip_rst[loop].role_id}>][level]" value="<{$same_ip_rst[loop].level}>" type="hidden">
+                <{$same_ip_rst[loop].level}>
+            </td>
+            <td>
+                <input name="ban[<{$same_ip_rst[loop].role_id}>][pay_all]" value="<{$same_ip_rst[loop].pay_all}>" type="hidden">
+                <{$same_ip_rst[loop].pay_all}>
+            </td>
+            <td>
+                <input name="ban[<{$same_ip_rst[loop].role_id}>][is_online]" value="<{$same_ip_rst[loop].is_online}>" type="hidden">
+                <{if $same_ip_rst[loop].is_online ==1}><font color="#0000FF"><{$_lang.conmon.online}></font>
+                <{else}><{$_lang.new.offline}><{/if}>
+            </td>
+            <td>
+                <select name="ban[<{$same_ip_rst[loop].role_id}>][ban_time]" id="ban_<{$same_ip_rst[loop].role_id}>_ban_time">
+                    <{html_options options=$ban_time_option selected=$ban_time}>
+                </select>
+            </td>
+            <td>
+                <input class="ban_reason" name="ban[<{$same_ip_rst[loop].role_id}>][ban_reason]" id="ban_<{$same_ip_rst[loop].role_id}>_ban_reason" size="40" type="text">
+            </td>
+            <td>
+                <input name="btnBan" onclick="doBanOne('<{$same_ip_rst[loop].role_id}>');" value="<{$_lang.left.banned}>" type="button">
+            </td>
+            <td>
+                <input name="Ban_check[]" class="Ban_check" value="<{$same_ip_rst[loop].role_id}>" type="checkbox">
+            </td>
+        </tr>
+        <{sectionelse}>
+        <{/section}>
+        <!-- SECTION  END -------------------------->
+    </table>
+    <input name="banRoleID" id="banRoleID" value="" type="hidden">
+    <br>
+    <{/if}>
+</form>
+
+
+<form action="?action=doUnBan" method="POST" id="frmUnBan">
+    <{if $all_ban_account}>
+    <table width="100%" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+        <tr bgcolor="#E5F9FF">
+            <td colspan="2" background="/web/admin/static/images/wbg.gif" align="left">
+                <font color="#666600" class="STYLE2"><b>::<{$_lang.left.banned_account}></b></font>
+            </td>
+        </tr>
+    </table>
+
+    <input name="ip_addr" id="ip_addr" value="<{$ip_addr}>" type="hidden">
+    <table width="100%" cellspacing="1" cellpadding="5" border="0">
+        <!-- SECTION  START -------------------------->
+        <{section name=loop loop=$all_ban_account}>
+        <{if $smarty.section.loop.rownum % 20 == 1}>
+        <tr class='table_list_head'  align="center">
+            <td><{$_lang.conmon.user_id}></td>
+            <td><{$_lang.conmon.role_name}></td>
+            <td><{$_lang.conmon.user_account}></td>
+            <td><{$_lang.left.ip_address}></td>
+            <td><{$_lang.conmon.role_level}></td>
+            <td><{$_lang.left.total_recharge}></td>
+            <td><{$_lang.new.banned_time}></td>
+            <td><{$_lang.new.no_banned_time}></td>
+            <td><{$_lang.left.banned_reason}></td>
+            <td><{$_lang.new.operator}></td>
+            <td><{$_lang.conmon.operating}><input name="btnUnBanMany" onclick="doUnBanMany();" value="<{$_lang.new.lot_no_banned}>" type="button"></td>
+            <td><{$_lang.new.select}></td>
+        </tr>
+        <{/if}>
+
+        <{if $smarty.section.loop.rownum % 2 == 0}>
+        <tr class='trEven'  align="center">
+            <{else}>
+        <tr class='trOdd'  align="center">
+            <{/if}>
+            <td>
+                <input name="unBan[<{$all_ban_account[loop].role_id}>][role_id]" value="<{$all_ban_account[loop].role_id}>" type="hidden">
+                <{$all_ban_account[loop].role_id}>
+            </td>
+            <td>
+                <input name="unBan[<{$all_ban_account[loop].role_id}>][role_name]" value="<{$all_ban_account[loop].role_name}>" type="hidden">
+                <{$all_ban_account[loop].role_name}>
+            </td>
+            <td>
+                <input name="unBan[<{$all_ban_account[loop].role_id}>][account_name]" value="<{$all_ban_account[loop].account_name}>" type="hidden">
+                <{$all_ban_account[loop].account_name}>
+            </td>
+            <td>
+                <{$all_ban_account[loop].last_login_ip}>
+            </td>
+            <td>
+                <{$all_ban_account[loop].level}>
+            </td>
+            <td>
+                <{$all_ban_account[loop].pay_all}>
+            </td>
+            <td>
+                <{$all_ban_account[loop].start_time|date_format:"%Y-%m-%d %H:%M:%S"}>
+            </td>
+            <td>
+                <{$all_ban_account[loop].end_time|date_format:"%Y-%m-%d %H:%M:%S"}>
+            </td>
+            <td>
+                <{$all_ban_account[loop].ban_reason}>
+            </td>
+            <td>
+                <{$all_ban_account[loop].admin}>
+            </td>
+            <td>
+                <input name="btnUnBan" value="<{$_lang.new.no_banned}>" onclick="doUnBan('<{$all_ban_account[loop].role_id}>','<{$all_ban_account[loop].account_name}>');" type="button">
+            </td>
+            <td>
+                <input name="unBan_check[]" class="unBan_check" value="<{$all_ban_account[loop].role_id}>" type="checkbox">
+            </td>
+        </tr>
+        <{sectionelse}>
+        <{/section}>
+        <!-- SECTION  END -------------------------->
+    </table>
+    <input name="unBanRoleID" id="unBanRoleID" value="" type="hidden">
+    <input name="unBanAccountName" id="unBanAccountName" value="" type="hidden">
+    <{/if}>
+</form>
+
+</body>
+</html>

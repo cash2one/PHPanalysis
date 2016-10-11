@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+        <link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css"></link>
+        <link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css"></link>
+        <script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+
+        <style type="text/css">
+            #all {text-align:left;margin-left:4px; line-height:1;}
+            #nodes {width:100%;float:left;border:1px #ccc solid;}
+            #result {width: 100%; height:100%; clear:both;border:1px #ccc solid;}
+            .table_all_head { color:#232323; background-color:#99CC66;font-weight:bold; }
+
+        </style>
+        <title>代理商管理列表</title>
+    </head>
+    <body>
+        <div id="all">
+            <div id="position">代理商管理列表</div>
+            <p align="center"><font color="red"><{$message}></font></p>
+            <div id="main">
+                <form name="form" method="GET">
+                    <input type="hidden" name="id" value="<{$data.id}>"/>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="2" align="left" bgcolor="#D7E4F5">
+                        <tr>
+                             <td>
+                                代理ID：&nbsp;&nbsp;<input name="agentID" value="<{$data.agent_id}>" <{if $data.id>0}>readonly <{/if}> />
+                             </td>
+                             <td>
+                                 代理名：<input name="agentName" value="<{$data.agent_name}>" <{if $data.id>0}>readonly <{/if}> />
+                             </td>
+                             <td>
+                                 已开服数量：<input name="serverNum"  value="<{$data.server_num}>" />
+                             </td>
+                        </tr>
+                        <tr>
+                             <td>
+                                官网：&nbsp;&nbsp;&nbsp;&nbsp;<input name="website" size="50"  value="<{$data.official_website}>" />
+                            </td>
+                            <td>
+                                论坛：&nbsp;&nbsp;<input name="bbs" size="50"  value="<{$data.bbs}>" />
+                            </td>                      
+                            <td>
+                                首服时间：&nbsp;
+                                <input value="<{$data.first_open_time}>" class="Wdate"  name="openTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" size="22" />&nbsp;
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                代理后台：<input name="agentSystem" size="50"  value="<{$data.agent_system}>" />
+                            </td> 
+                        </tr>
+                        <tr>
+                             
+                            <td colspan="2">
+                                <div align="left">&nbsp;
+                                    <input type="hidden" name="action" value="save"/>
+                                    <input type="submit" name="submit" value="保存"/>&nbsp;&nbsp;&nbsp;
+                                    <input type="reset" name="reset" value="重置" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<title>
+	<{$_lang.left.bug_info}>
+</title>
+
+</head>
+
+<body>
+<div id="position"><{$_lang.left.gm_manage}>：<{$_lang.left.bug_info}></div>
+<table class="table_page_num" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="even" height="30">
+<form method="get" action="">
+  <{foreach key=key item=item from=$page_list}>
+	<a href="<{$URL_SELF}>?page=<{$item}>"><{$key}></a><span style="width:5px;"></span>
+ <{/foreach}>
+<{$_lang.conmon.all_page}>(<{$page_count}>)
+  <input name="page" type="text" class="text" size="3" maxlength="6">&nbsp;<input type="submit" class="button" name="Submit" value="GO">
+</form>
+</td>
+</tr></tbody></table>
+
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' style="table-layout:fixed;word-break:break-all;word-wrap:break-word;">
+    <tr class='table_list_head'>
+		<td width="4%">ID</td>
+		<td width="5%"><{$_lang.conmon.user_id}></td>
+		<td width="8%"><{$_lang.conmon.user_account}></td>
+		<td width="5%"><{$_lang.conmon.role_name}></td>
+		<td width="5%"><{$_lang.conmon.role_level}></td>
+		<td width="5%"><{$_lang.left.submit_time}></td>
+		<td width="5%"><{$_lang.left.bug_type}></td>
+		<td width="10%"><{$_lang.left.title}></td>
+		<td><{$_lang.left.content}></td>
+		<td><{$_lang.left.reply_content}></td>
+		<td width="5%"><{$_lang.left.bug_statu}></td>
+	</tr>
+	<{foreach key=key  item=item from=$rs}>
+		<{if $key % 2 == 0}>
+		<tr class='trEven'>
+		<{else}>
+		<tr class='trOdd'>
+		<{/if}>
+		    <td>
+			<{$item.id}>
+			</td>
+			<td>
+			<{$item.roleid}>
+			</td>
+			<td>
+			<{$item.account_name}>
+			</td>
+			<td>
+			<{$item.role_name}>
+			</td>
+			<td>
+			<{$item.level}>
+			</td>
+			<td>
+			<{$item.time|date_format:"%Y-%m-%d %H:%M:%S"}>
+			</td>
+			<td>
+			<{$item.msgType}>
+			</td>
+			<td>
+			<{$item.title}>
+			</td>
+			<td style="word-break : break-all;width:200px;overflow:auto; ">
+			<a href="<{$URL_SELF}>?page=<{$page}>&id=<{$item.id}>"><{$item.content}></a>
+			</td>
+			<td>
+			<a href="<{$URL_SELF}>?page=<{$page}>&id=<{$item.id}>"><{$item.reply}></a>
+			</td>
+			<td>
+			<{if $item.state ==0}><a href="<{$URL_SELF}>?page=<{$page}>&amp;action=<{$item.id}>"><{$_lang.new.mark_has_handled}></a>
+			<{elseif $item.state ==1}><FONT color=red><{$_lang.left.processed}>
+			<{else}><{$_lang.new.put_off}>
+			<{/if}>
+			</td>
+	</tr>
+	<{if $one_msg.id == $item.id}>
+	<tr id="div1" >
+		<td colspan="11">
+	      <div  align=left>
+	        ID:<{$id}>&nbsp;&nbsp;<{$_lang.conmon.role_name}>：<{$role_name}><br>
+	        <{$_lang.left.title}>：<{$title}><br>
+	        <{$_lang.left.content}>：<{$content}><br>
+	        <{$_lang.left.reply_content}>：<{$reply}>
+	        <div style="text-align:center;width:150px;">
+				<font color="green"><{$_lang.new.direct_replay_player}>：</font>
+			</div>
+			<form name="myform" method="post" action="../../module/gm/reply.php">
+			  <table style="text-align:;left;">
+			   <tr>
+				<input type='hidden' name='id' size='10' value=<{$id}> />
+				<input type='hidden' name='roleid' size='10' value=<{$roleid}> />
+				<input type='hidden' name='role_name' size='10' value='<{$role_name}>' />
+				<input type='hidden' name='page' size='10' value=<{$page}> />
+			   </tr>
+			   <tr>
+				<textarea  name='content' style="width:350px;height:100px;"></textarea>
+			   </tr>
+			   <tr>
+				<div style="text-align:center;width:300px;">
+					<input type="submit" name='submit' value='<{$_lang.left.submit}>' class="input2"  />
+				</div>
+				</tr>
+			  </table>
+			</form>
+			</div>
+		</td>
+	</tr>
+	<{/if}>
+
+<{/foreach}>
+
+</table>
+<br>
+
+</body>
+
+</html>

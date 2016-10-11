@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#role_id").keydown(function(){
+			$("#account_name").val('');
+			$("#role_name").val('');
+		});
+		$("#role_name").keydown(function(){
+			$("#role_id").val('');
+			$("#account_name").val('');
+		});
+		$("#account_name").keydown(function(){
+			$("#role_id").val('');
+			$("#role_name").val('');
+		});
+	});
+</script>
+<title>
+	<{$_lang.left.message_tran_view}>
+</title>
+</head>
+
+
+
+<body>
+
+<div id="position"><{$_lang.left.data_analysis}>：<{$_lang.left.message_tran_view}></div>
+<div class='divOperation'>
+<form name="myform" method="post" action="<{$URL_SELF}>?action=letter_exchange">
+&nbsp;<{$_lang.conmon.user_id}>:<input type="text" id="role_id" name="role_id" size="10" value="<{$role_id}>" />
+&nbsp;<{$_lang.conmon.role_name}>：<input type='text' id="role_name" name='role_name' size='10' value='<{$role_name}>'/> 
+&nbsp;<{$_lang.conmon.user_account}>：<input type='text' id="account_name" name='account_name' size='10' value='<{$account_name}>'/>
+&nbsp;<{$_lang.conmon.statistics}><{$_lang.conmon.start_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='datestart' name='datestart' size='12' value='<{$start|date_format:"%Y-%m-%d"}>'/>
+&nbsp;<{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateend' name='dateend' size='12' value='<{$end|date_format:"%Y-%m-%d"}>'/>
+&nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+<{if $record_count >0}>
+&nbsp;&nbsp;<{$_lang.conmon.total}><{$record_count}><{$_lang.conmon.records}>
+<{elseif $record_count == 0}>
+&nbsp;&nbsp;<font color="red"><{$_lang.new.no_message_exchange}></font>
+<{/if}>
+</form>
+</div>
+
+<table width="100%"  border="0" cellspacing="0" cellpadding="0" class='table_page_num'>
+  <tr>
+    <td height="30" class="even">
+	<form method="get" action="">
+		<{foreach key=key item=item from=$page_list}>
+		 <a href="<{$URL_SELF}>?role_id=<{$role_id}>&amp;role_name=<{$role_name}>&amp;account_name=<{$account_name}>&amp;datestart=<{$start|date_format:"%Y-%m-%d"}>&amp;dateend=<{$end|date_format:"%Y-%m-%d"}>&amp;page=<{$item}>"><{$key}></a><span style="width:5px;"></span>
+		<{/foreach}>
+		<{if $page_count > 0}><{$_lang.conmon.all_page}>(<{$page_count}>)
+			<{if $page_count > 5}>
+			<input name="role_id" type="hidden" value="<{$role_id}>">
+			<input name="role_name" type="hidden" value="<{$role_name}>">
+			<input name="account_name" type="hidden" value="<{$account_name}>">
+			<input name="datestart" type="hidden" value="<{$start|date_format:"%Y-%m-%d"}>">
+			<input name="dateend" type="hidden" value="<{$end|date_format:"%Y-%m-%d"}>">
+			<input name="page" type="text" class="text" size="3" maxlength="6">
+			&nbsp;<input type="submit" class="button" name="Submit" value="GO">
+			<{/if}>
+		<{/if}>
+	</form>
+    </td>
+  </tr>
+</table>
+<{if $keywordlist}>
+	<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+		<tr class='table_list_head'>
+			<td width="10%"></td>
+			<td width="28%"><font color="red"><{$_lang.new.from_message}></font><{$_lang.new.message}></td>
+			<td width="34%"><{$_lang.new.goods_detail}></td>
+			<td width="28%"><font color="#0000FF"><{$_lang.new.get_message}></font><{$_lang.new.message}></td>
+	</tr>
+	</table>
+<{/if}>
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+<!-- SECTION  START -------------------------->
+<form id="form1" name="form1" method="post" action="">
+<{foreach item=row from=$keywordlist key=key}>
+	<{if $key % 20 == 0}>
+	<tr class='table_list_head'>
+		<td width="10%"><{$_lang.new.time}></td>
+		<td width="7%"><{$_lang.conmon.user_id}><font color="red">(<{$_lang.new.send}>)</font></td>
+		<td width="10%"><{$_lang.conmon.role_name}><font color="red">(<{$_lang.new.send}>)</font></td>
+		<td width="11%"><{$_lang.conmon.user_account}><font color="red">(<{$_lang.new.send}>)</font></td>
+		<td width="10%"><{$_lang.new.goods_id}></td>
+		<td width="16%"><{$_lang.new.goods_name}></td>
+		<td width="8%"><{$_lang.conmon.num}></td>
+		<td width="7%"><{$_lang.conmon.user_id}><font color="#0000FF">(<{$_lang.new.get}>)</font></td>
+		<td width="10%"><{$_lang.conmon.role_name}><font color="#0000FF">(<{$_lang.new.get}>)</font></td>
+		<td width="11%"><{$_lang.conmon.user_account}><font color="#0000FF">(<{$_lang.new.get}>)</font></td>
+	</tr>
+	<{/if}>
+
+	<{if $key % 2 == 0}>
+	<tr class='trEven'>
+	<{else}>
+	<tr class='trOdd'>
+	<{/if}>
+		<td><{$row.mtime|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+		<td><{$row.src_role_id}></td>
+		<td><{$row.src_role_name}></td>
+		<td><{$row.src_account_name}></td>
+		<td><{$row.item_id}></td>
+		<td><{$row.item_name}></td>
+		<td><{$row.item_num}></td>
+		<td><{$row.role_id}></td>
+		<td><{$row.role_name}></td>
+		<td><{$row.account_name}></td>
+	</tr>
+<{foreachelse}>
+
+<{/foreach}>
+<!-- SECTION  END -------------------------->
+
+</form>
+</table>
+
+</body>
+</html>

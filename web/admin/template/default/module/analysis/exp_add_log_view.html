@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/web/admin/static/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#role_id").keydown(function(){
+			$("#nickname").val('');
+			$("#acname").val('');
+		});
+		$("#nickname").keydown(function(){
+			$("#role_id").val('');
+			$("#acname").val('');
+		});
+		$("#acname").keydown(function(){
+			$("#role_id").val('');
+			$("#nickname").val('');
+		});
+	});
+</script>
+<title>
+	<{$_lang.left.silver_use_records}>
+</title>
+
+    <style>
+        .show_page{
+            margin:0 4px;
+        }
+        .me{
+            color:#ff0000;
+        }
+    </style>
+</head>
+
+
+
+<body>
+<div id="position"><{$_lang.left.data_analysis}>：<{$_lang.new.role_add_exp}></div>
+<div class='divOperation'>
+<form name="myform" method="post" action="<{$URL_SELF}>?action=do">
+&nbsp;<{$_lang.conmon.user_id}>:<input type="text" id="role_id" name="role_id" size="10" value="<{$role_id}>" />
+&nbsp;<{$_lang.conmon.role_name}>：<input type='text' id="nickname" name='nickname' size='10' value='<{$search_keyword2}>'/> 
+&nbsp;<{$_lang.conmon.user_account}>：<input type='text' id="acname" name='acname' size='10' value='<{$search_keyword1}>'/>
+&nbsp;<{$_lang.conmon.start_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateStart' name='dateStart' size='12' value='<{$time_start}>'/>
+&nbsp;<{$_lang.conmon.end_time}>：<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id='dateEnd' name='dateEnd' size='12' value='<{$time_end}>'/>
+&nbsp;&nbsp;<{$_lang.conmon.sort}>
+<select name="sort_1">
+	<{html_options options=$sortoption selected=$search_sort_1}>
+</select>
+&nbsp;<input type="image" name='search' src="<{$_lang.new.search_button}>" class="input2"/>
+&nbsp;&nbsp;
+<{if $record_count}>
+<{$_lang.conmon.total}><{$record_count}><{$_lang.conmon.records}>
+<{/if}>
+</form>
+</div>
+
+<{if $role}>
+<table class='paystat' style="width:100%">
+	<tr class='table_list_head'>
+		<td>角色ID</td>
+		<td>角色名称</td>
+		<td>用户名</td>
+		<td>操作</td>
+	</tr>
+
+	<{foreach item="val" from="$role"}>
+	<tr class="trOdd">
+		<td><{$val.role_id}></td>
+		<td><{$val.role_name}></td>
+		<td><{$val.account_name}></td>
+		<td><a href="<{$URL_SELF}>?action=continue&role_id=<{$val.role_id}>&role_name=<{$val.role_name}>&account_name=<{$val.account_name}>">查询</a></td>
+	</tr>
+	<{/foreach}>
+</table>
+<{/if}>
+<!-- <{if $balance}>
+<span style="color:red;font-weight: bold;">银两流水统计：<{$balance}>银两</span>
+<span>这里的数值必须是负数或0。正数表明该玩家帐号有问题。如果为-100，则表示该玩家目前拥有100银两；0表示没有银两。</span>
+<{/if}> -->
+
+<table width="100%"  border="0" cellspacing="0" cellpadding="0" class='table_page_num'>
+  <tr>
+    <td height="30" class="even">
+        <{$show}>
+    </td>
+  </tr>
+</table>
+
+<table cellspacing="1" cellpadding="3" border="0" class='table_list' >
+<!-- SECTION  START -------------------------->
+<form id="form1" name="form1" method="post" action="">
+<{section name=loop loop=$list}>
+	<{if $smarty.section.loop.rownum % 20 == 1}>
+	<tr class='table_list_head'>
+		<td>id</td>
+		<td><{$_lang.conmon.user_id}></td>
+		<td><{$_lang.conmon.role_name}></td>
+		<td><{$_lang.conmon.user_account}></td>
+		<td><{$_lang.left.use_time}></td>
+        <td><{$_lang.new.level_after_add}></td>
+		<td><{$_lang.new.old_exp}></td>
+		<td><{$_lang.new.now_exp}></td>
+		<td><{$_lang.new.add_exp}></td>
+	</tr>
+	<{/if}>
+
+	<{if $smarty.section.loop.rownum % 2 == 0}>
+	<tr class='trEven'>
+	<{else}>
+	<tr class='trOdd'>
+	<{/if}>
+		<td><{$list[loop].id}></td>
+		<td><{$list[loop].role_id}></td>
+		<td><{$list[loop].role_name}></td>
+		<td><{$list[loop].account_name}></td>
+		<td>
+		<{$list[loop].mtime|date_format:"%Y-%m-%d %H:%M:%S"}>
+		</td>
+		<td><{$list[loop].level}>
+		</td>
+        <td><{$list[loop].old_exp}>
+		</td>
+        <td>
+		<{$list[loop].now_exp}>
+		</td>
+		<td>
+		<{$list[loop].add_exp}>
+		</td>
+	</tr>
+<{sectionelse}>
+
+<{/section}>
+<!-- SECTION  END -------------------------->
+
+</form>
+</table>
+
+</body>
+</html>

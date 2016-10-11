@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.task_lose_rate}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+
+<body>
+	<div id="all">
+	<div id="position"><{$_lang.left.loss_rate_analysis}>：<{$_lang.left.task_lose_rate}></div>
+		<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+             <{section name=loop loop=$mission}>
+			 <{if $smarty.section.loop.rownum % 20 == 1}>
+			 <tr class='table_list_head'>
+                 <td><{$_lang.left.task_id}></td><td><{$_lang.left.task_name}></td><td><{$_lang.left.accept_num}></td><td><{$_lang.left.finish_num}></td><td><{$_lang.left.task_lose_rate}></td>
+             </tr>
+			 <{/if}>
+					<{if $smarty.section.loop.rownum % 2 == 0}>
+					<tr class='trEven'>
+					<{else}>
+					<tr class='trOdd'>
+					<{/if}>
+                            <td><{$mission[loop].mission_id }></td>
+                            <td><{$mission[loop].name}></td>
+                        	<td><{$mission[loop].accept_num}></td>
+                            <td><{$mission[loop].complete_num}></td>
+                            <td><{$mission[loop].mission_lost_rate}>%</td>
+                  </tr>
+             <{/section}>
+		</table>
+	</div>
+</body>
+</html>

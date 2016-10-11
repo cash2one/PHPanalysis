@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.back_list_user}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+
+#all {text-align:left;margin-left:4px; line-height:1;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+
+<body>
+	<div id="all">
+	<div id="position"><{$_lang.left.admin_manage}>：<{$_lang.left.back_list_user}></div>
+        <div id="main">
+            <div class="box">
+			    <input type=button value="<{$_lang.left.add_admin}>" onclick="window.location='../../module/backstat/authority.php';">
+                <div id="nodes">
+
+					<input type='hidden' name='dopost' value='save'>
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#FFFFFF">
+                        <tr bgcolor="#D2E9FF">
+							<td width="10%"><{$_lang.conmon.user_account}></td>
+							<td width="10%"><{$_lang.left.note}></td>
+							<td width="10%"><{$_lang.new.operator_privileges}></td>
+							<td width="50%"><{$_lang.new.have_operating_authority}></td>
+							<td width="10%"><{$_lang.left.update}></td>
+							<td width="10%"><{$_lang.new.delete_user}></td>
+						</tr>
+						<{section name=loop loop=$data}>
+						<form  name=checkboxform action="delete_user.php" method="post">
+						<{if $smarty.section.loop.rownum % 2 == 0}>
+						<tr class='trEven'>
+						<{else}>
+						<tr class='trOdd'>
+						<{/if}>
+						    <td width="10%"><{$data[loop].username}></td>
+							<td width="10%"><{$data[loop].admin_desc}></td>
+							<td width="10%"><{$data[loop].agent_auth}></td>
+							<td width="50%"><{$data[loop].desc}></td>
+							<td width="10%"><a href='../../module/backstat/update_user.php?uid=<{$data[loop].uid}>'><{$_lang.left.update}></a></td>
+							<td width="10%"><input type="hidden" name="uid" value="<{$data[loop].uid}>"><input type="submit" name="submit" value="<{$_lang.new.delete_user}>" /></td>
+						</tr>
+						</form>
+						<{/section}>
+                     </table>
+
+                    <div id='1'><center>
+                      <{$page}>
+                    </div></center>
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

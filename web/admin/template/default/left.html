@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.login.back_sys_name}></title>
+<link rel="stylesheet" href="../admin/static/css/base.css" type="text/css">
+<style type="text/css">
+body { margin:3px; padding:0px; font-size:12px; font-family:"Courier New", Courier, monospace; background:#86C1FF; margin:3 0 0 0;}
+.tdborder {
+	border-left: 1px solid #43938B;
+	border-right: 1px solid #43938B;
+	border-bottom: 1px solid #43938B;
+}
+.tdrl {
+	border-left: 1px solid #788C47;
+	border-right: 1px solid #788C47;
+}
+.topitem {
+	cursor: hand;
+	background-image:url(../admin/static/images/mtbg1.gif);
+	height:24px;
+	width:98%;
+	border-right: 1px solid #2FA1DB;
+	border-left: 1px solid #2FA1DB;
+	clear:left
+}
+.itemsct {
+	border-right: 1px solid #2FA1DB;
+	border-left: 1px solid #2FA1DB;
+	background-color:#EEFAFE;
+	margin-bottom:6px;
+	width:98%;
+}
+.itemem {
+	text-align:left;
+	clear:left;
+	border-bottom: 1px solid #2FA1DB;
+	height:21px;
+}
+.tdl {
+	float:left;
+	margin-top:2px;
+	margin-left:6px;
+	margin-right:5px
+}
+.tdr {
+	float:left;
+	margin-top:2px
+}
+.topl {
+	float:left;
+
+	margin-right:3px;
+}
+.topr {
+	padding-top:4px;
+	cursor:pointer;
+}
+.toprt {
+	text-align:center;
+	padding-top:3px
+}
+body {
+	scrollbar-base-color:#8CC1FE;
+	scrollbar-arrow-color:#FFFFFF;
+	scrollbar-shadow-color:#6994C2
+}
+.green{
+	background-color:#CCFFCC;
+}
+
+
+</style>
+<script type="text/javascript" src="../admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+showHide = function(objID) {
+	$('#' + objID).toggle();//切换元素的可见状态
+}
+$(document).ready(function(){
+	$(".itemem").click(function(){
+		$(".itemem").removeClass("green");
+		$(this).addClass("green");
+	});
+});
+
+</script>
+</head>
+
+<body>
+	<div id="all">
+    	<div class='topitem' align='left'>
+    		<div class='topl'></div>
+    		<div class='topr'><{$_lang.login.back_sys_name}></div>
+  	</div>
+         
+            
+        <!--  原本的目录  -->
+        <!--
+    	<div onClick='showHide("items1")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.left.server_info}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items1' class='itemsct'>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "SERVER_INFO"}>
+			<dl class='itemem'>
+              <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+              <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+            </dl>
+			<{/if}>
+		<{/section}>
+     	</div>
+
+
+        <div onClick='showHide("items2")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.left.online_register}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items2' class='itemsct'>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "ONLINE_REG"}>
+			<dl class='itemem'>
+              <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+              <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+            </dl>
+			<{/if}>
+		<{/section}>
+     	</div>
+
+        
+	<div onClick='showHide("items3")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.left.loss_rate_analysis}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items3' class='itemsct'>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "LOST_RATE"}>
+			<dl class='itemem'>
+              <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+              <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+            </dl>
+			<{/if}>
+		<{/section}>
+     	</div>
+
+
+        <div onClick='showHide("items4")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.left.recharge_consumption}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items4' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "CONSUME_LOG"}>
+			<dl class='itemem'>
+              <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+              <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+            </dl>
+			<{/if}>
+		<{/section}>
+     	</div>
+
+
+     	<div onClick='showHide("items5")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.left.data_analysis}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items5' class='itemsct'>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "DATA_ANL"}>
+			<dl class='itemem'>
+              <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+              <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+            </dl>
+			<{/if}>
+		<{/section}>
+     	</div>
+
+
+	<div onClick='showHide("items6")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.new.operate_act}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items6' class='itemsct'>
+		<{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "FESTIVAL_DATA"}>
+			<dl class='itemem'>
+              <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+              <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+            </dl>
+			<{/if}>
+		<{/section}>
+     	</div>
+
+
+     	<div onClick='showHide("items7")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.left.message_manage}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items7' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "MSG_MAN"}>
+			<dl class='itemem'>
+              <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+              <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+            </dl>
+			<{/if}>
+		<{/section}>
+     	</div>
+
+
+     	<div onClick='showHide("items8")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.left.gm_manage}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items8' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "GM_MAN"}>
+			<dl class='itemem'>
+              <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+              <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+            </dl>
+			<{/if}>
+		<{/section}>
+     	</div>
+
+
+     	<div onClick='showHide("items9")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.left.admin_manage}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items9' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+            <{if $user_power[loop].man_type == "BACK_MAN"}>
+		<dl class='itemem'>
+                  <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+                  <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+                </dl>
+            <{/if}>
+	<{/section}>
+     	</div>
+    -->  
+
+     	<div onClick='showHide("items10")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.left.sys_manage}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items10' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+            <{if $user_power[loop].man_type == "SYSTEM"}>
+		<dl class='itemem'>
+                  <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+                  <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+                </dl>
+            <{/if}>
+	<{/section}>
+     	</div>
+      
+        
+    <!-- 以下为新加入功能 根据数据后台需求表-->
+    <!-- 基本信息 -->
+        <div onClick='showHide("items11")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.data.basic_info}></div>
+      	</div>
+      	<div style='clear:both'></div><!-- 清除全部样式 使下面的div不会错位 -->
+      	<div style='display:none' id='items11' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+            <{if $user_power[loop].man_type == "BASIC_INFO"}>
+                <dl class='itemem'>
+                    <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+                    <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+                </dl>
+            <{/if}>
+        <{/section}>
+     	</div>
+        
+        <!-- 用户付费 -->
+        <div onClick='showHide("items12")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.data.user_pay}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items12' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "USER_PAY"}>
+			<dl class='itemem'>
+              <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+              <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+            </dl>
+			<{/if}>
+		<{/section}>
+     	</div>
+        
+        <!-- 留存活跃 -->
+        <div onClick='showHide("items13")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.data.keep_active}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items13' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "KEEP_ACTIVE"}>
+			<dl class='itemem'>
+              <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+              <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+            </dl>
+			<{/if}>
+		<{/section}>
+     	</div>
+        
+        <!-- 参与信息 -->
+        <div onClick='showHide("items14")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.data.participate_info}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items14' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "PARTICIPATE_INFO"}>
+			<dl class='itemem'>
+              <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+              <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+            </dl>
+			<{/if}>
+		<{/section}>
+     	</div>
+        
+        <!-- 资源概况 -->
+       <div onClick='showHide("items15")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.data.resource_overview}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items15' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+			<{if $user_power[loop].man_type == "RESOURCE_OVERVIEW"}>
+			<dl class='itemem'>
+              <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+              <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+            </dl>
+			<{/if}>
+		<{/section}>
+     	</div>
+        
+        <!-- 新手引导-->
+        <div onClick='showHide("items16")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.data.novice}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items16' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+            <{if $user_power[loop].man_type == "NOVICE"}>
+                <dl class='itemem'>
+                  <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+                  <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+                </dl>
+            <{/if}>
+	<{/section}>
+     	</div>
+        
+        <!-- 关卡流失 -->
+        <div onClick='showHide("items17")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.data.checkpoint_lost}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items17' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+            <{if $user_power[loop].man_type == "CHECKPOINT_LOST"}>
+                <dl class='itemem'>
+                  <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+                  <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+                </dl>
+            <{/if}>
+	<{/section}>
+     	</div>
+        
+        <!-- 等级流失 -->
+        <div onClick='showHide("items18")' class='topitem' align='left'>
+        	<div class='topl'><img src='./static/images/mtimg1.gif' width='21' height='24' border='0'></div>
+        	<div class='topr'><{$_lang.data.level_lost}></div>
+      	</div>
+      	<div style='clear:both'></div>
+      	<div style='display:none' id='items18' class='itemsct'>
+        <{section name=loop loop=$user_power}>
+            <{if $user_power[loop].man_type == "LEVEL_LOST"}>
+                <dl class='itemem'>
+                  <dd class='tdl'><img src='./static/images/newitem.gif' width='7' height='10' alt=''/></dd>
+                  <dd class='tdr'><a href=<{$user_power[loop].url}> target='main_frame'><{$user_power[loop].desc}></a></dd>
+                </dl>
+            <{/if}>
+	<{/section}>
+     	</div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新手引导</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/web/admin/static/css/tags.css" type="text/css">
+    <script type="text/javascript" src="/web/admin/static/js/jquery-3.0.0.min.js"></script>
+    <script src="/web/admin/static/js/highcharts/highcharts.js"></script>
+    <script src="/web/admin/static/js/highcharts/modules/exporting.js"></script>
+    <script src="/web/admin/static/js/databackend.js"></script>
+</head>
+<body>
+    <div class="explain">
+        <span>&diams;角色最高流程：角色挑战过的最高流程(无论是否通过)，未进入流程为0</span><br>
+    </div><br>
+    <hr>
+    <form action="<{$URL_SELF}>" name="myform" id="myform" method="post">
+        <span><b>角色最高流程</b></span>
+         <span>
+            <select  name="server" style="width:100px;">
+                <option value="">选择服务器</option>
+                <option value="2002">2002服</option>
+                <option value="2003">2003服</option>
+                <option value="2007">2007服</option>
+                <option value="3001">3001服</option>
+            </select>
+        </span>
+        <!--<span>统计开始时间:<input type="date" name="begin_time" id="begin_time" />&nbsp;至&nbsp;<input type="date" name="end_time" id="end_time" /></span>-->
+        <span><input type="submit" name="tosubmit" value="搜索"/></span>&nbsp;
+       <!-- <span><a href="" id="oneweek" onclick="timeSelect(this)" >最近一周</a></span>&nbsp;
+        <span><a href="" id="onemonth" onclick="timeSelect(this)">最近1个月</a></span>&nbsp;
+        <span><a href="" id="threemonth" onclick="timeSelect(this)">最近3个月</a></span>&nbsp;
+        <span><a href="" id="sixmonth" onclick="timeSelect(this)">最近6个月</a></span>-->
+        <span>服务器：<input type="text" name="servertxt"  readonly style="width:80px;border:0px;" value="<{$server}>" /></span>&nbsp;
+        <span>该服角色总数：<input type="text" name="numtxt"  readonly style="width:70px;border:0px;" value="<{$server_role_num}>" /></span>&nbsp;
+        <span>统计时段：<input type="text" name="starttime" readonly style="width:100px;border:0px;" value="<{$begin_time}>"/>-<input type="text" name="endtime" readonly style="width:100px;border:0px;" value="<{$end_time}>"/></span>
+    <hr>
+
+        <table id="main_table">
+        <tr style="background-color:#2e6fac; color:white;">
+            <td>玩家ID</td>
+            <td>角色名</td>
+            <td>挑战过最高流程ID</td>
+        </tr>
+        <{section name=loop loop=$dataList}>
+            <{if $smarty.section.loop.rownum % 2 == 0}>
+            <tr class='trEven'>
+            <{else}>
+                <tr class='trOdd'>
+            <{/if}>
+            <td> <{$dataList[loop].uid}> </td>
+            <td> <{$dataList[loop].nick}> </td>
+            <td> <{$dataList[loop].condition_guide_ids}> </td>
+           </tr>
+        <{/section}>
+        </table>
+        <{include file="common/pages.shtml"}>
+</form>
+   
+
+</body>
+</html>

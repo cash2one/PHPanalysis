@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$_lang.left.message_broadcast}></title>
+<link rel="stylesheet" href="/web/admin/static/css/base.css" type="text/css">
+<link rel="stylesheet" href="/web/admin/static/css/style.css" type="text/css">
+<style type="text/css">
+body {font-size:14px; font-family:"Courier New", Courier, monospace; text-align:center; margin:auto;}
+#all {text-align:left;margin-left:4px;}
+#nodes {width:100%; float:left;border:1px #ccc solid;}
+#result {width: 100%; height:100%; clear:both; border:1px #ccc solid;}
+
+</style>
+<script type="text/javascript" src="/web/admin/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+</head>
+
+<body>
+	<div id="all">
+		<div id="position"><{$_lang.left.message_manage}>：<{$_lang.left.message_broadcast}></div>
+    	<div><{$errorMsg}></div>
+        <div id="main">
+            <div class="box">
+                <div id="nodes">
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="7" >
+                            	<input type="button" name ="add" id="add" value="<{$_lang.conmon.add}>" onclick="add();"/>
+                            	<input type="button" name ="del" id="del" value="<{$_lang.conmon.delete}>" onclick="del();"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                	<table width="100%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#A5D0F1">
+                        <tr bgcolor="#E5F9FF">
+                            <td colspan="7" background="/web/admin/static/images/wbg.gif">
+                            	<font color="#666600" class="STYLE2"><b>◆<{$_lang.left.message_broadcast_list}></b></font>
+                            </td>
+                        </tr>
+                        <tr class='table_list_head'>
+                          <td width="5%">
+                          	<input type="checkbox" id="selectAll"  value="" onchange="selectAll(this);" />
+                          </td>
+                          <td width="10%">Id</td>
+                          <td width="10%"><{$_lang.left.out_key}></td>
+                          <td width="10%"><{$_lang.left.message_type}></td>
+                          <td width="10%"><{$_lang.left.send_type}></td>
+                          <td width="45%"><{$_lang.left.message_content}></td>
+                          <td width="10%"><{$_lang.conmon.operating}></td>
+                        </tr>
+                        <{foreach from=$dataResultSet item=item}>
+                    	<tr class="<{cycle values='trOdd, trEven'}>">
+                          <td >
+                          	<input type="checkbox" name="selectItem" value="<{$item.id}>" />
+                          </td>
+                          <td ><{$item.id}></td>
+                          <td ><{$item.foreign_id}></td>
+                          <td >
+<{if $item.type eq 2906}>
+<{$_lang.new.sys_message}>
+<{elseif $item.type eq 2908}>
+<{$_lang.new.bugle_message}>
+<{elseif $item.type eq 2909}>
+<{$_lang.new.central_broadcast_message}>
+<{elseif $item.type eq 2920}>
+<{$_lang.new.scrolling_message_central}>
+<{elseif $item.type eq 2910}>
+<{$_lang.new.chat_channel_messages}>
+<{elseif $item.type eq 2911}>
+<{$_lang.new.pop_message}>
+<{else}>
+<{$_lang.new.sys_message}>
+<{/if}>
+						   </td>
+                          <td >
+<{if $item.send_strategy eq 0}>
+<{$_lang.new.right_now}>
+<{elseif $item.send_strategy eq 1}>
+<{$_lang.new.date_time1}>
+<{elseif $item.send_strategy eq 2}>
+<{$_lang.new.week}>
+<{elseif $item.send_strategy eq 3}>
+<{$_lang.new.opening}>
+<{elseif $item.send_strategy eq 4}>
+<{$_lang.new.later}>
+<{else}>
+<{$_lang.new.right_now}>
+<{/if}>
+						  </td>
+                          <td ><{$item.content|base64_decode|escape}></td>
+                          <td >
+                          	<a href="?action=show&id=<{$item.id}>"><{$_lang.new.look}></a>
+                          	<a href="?action=edit&id=<{$item.id}>"><{$_lang.left.update}></a>
+                          </td>
+                        </tr>
+                        <{foreachelse}>
+                       	<tr bgcolor="#FFFFFF">
+                          <td colspan="7"><font color="#FF0000"><{$_lang.new.no_rec}></font></td>
+                        </tr>
+                        <{/foreach}>
+
+                     </table>
+
+                </div>
+            </div>
+        </div>
+	</div>
+
+<script language="JavaScript" type="text/JavaScript">
+function selectAll(SelectObj){
+	var selected = SelectObj.checked;
+	if(selected){
+		$("input:checkbox").attr("checked",true);
+	}else{
+	    $("input:checkbox").attr("checked",false);
+	}
+}
+function add(){
+	window.location.href = "?action=add";
+}
+function del(){
+	var ids = new Array();
+	var i = 0;
+	$("input[name='selectItem']@[checked]").each(function(){
+			ids[i] = $(this).val();
+			i = i + 1;
+	});
+	if(ids.length < 1){
+		alert("<{$_lang.new.message_broadcast_note1}>");
+		return ;
+	}else{
+		if(confirm("<{$_lang.new.message_broadcast_note2}>")){
+//			alert(ids);
+			window.location.href = "?action=del&ids=" + ids;
+		}else{
+			return ;
+		}
+	}
+}
+</script>
+
+</body>
+</html>
+
